@@ -13,7 +13,7 @@ void draw() {
 
 	Rect rect{{0.75,0},{1,1}};
 
-	drawRect(rect, {50,0,0,1});
+	drawFilledRect(rect, {50,0,0,1});
 
 	al_flip_display();
 }

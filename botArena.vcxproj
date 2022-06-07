@@ -183,12 +183,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Arena.cpp" />
+    <ClCompile Include="src\bot.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\update.cpp" />
     <ClCompile Include="src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Arena.h" />
+    <ClInclude Include="src\bot.h" />
+    <ClInclude Include="src\component.h" />
     <ClInclude Include="src\update.h" />
     <ClInclude Include="src\utils.h" />
   </ItemGroup>

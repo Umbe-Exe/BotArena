@@ -34,4 +34,7 @@ struct Circle {
 
 void setWidthHeight(int width, int height);
 
-void drawRect(Rect rect, ALLEGRO_COLOR color);
+void drawFilledRect(Rect rect, ALLEGRO_COLOR color);
+void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness);
+void drawFilledCircle(Circle circle, ALLEGRO_COLOR color);
+void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness);
