@@ -37,7 +37,7 @@ void update(double delta) {
 
 void display() {
 
-	setHeightWidth(500, 300);
+	setWidthHeight(500, 300);
 
 	bool running = true;
 	ALLEGRO_EVENT event;
@@ -52,7 +52,7 @@ void display() {
 				break;
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				al_acknowledge_resize(window);
-				setHeightWidth(al_get_display_width(window), al_get_display_height(window));
+				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
 				break;
 		}
 

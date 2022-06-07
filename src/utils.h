@@ -32,6 +32,6 @@ struct Circle {
 	float radius;
 };
 
-void setHeightWidth(int width, int height);
+void setWidthHeight(int width, int height);
 
 void drawRect(Rect rect, ALLEGRO_COLOR color);

@@ -3,7 +3,7 @@
 static int win_h;
 static int win_w;
 
-void setHeightWidth(int width, int height) {
+void setWidthHeight(int width, int height) {
 	win_h = height;
 	win_w = width;
 }
