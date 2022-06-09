@@ -3,17 +3,24 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-struct Radar {
+struct Sensor {
 	float angle, width, range;
-	bool enabled;
+	ALLEGRO_COLOR color;
+
+	virtual void draw() = 0;
 };
 
-struct LaserRange {
-	float angle, range;
-	bool enabled;
+struct Radar : Sensor{
+	bool data;
+	void draw() override;
 };
 
-struct Bot : updatable, drawable {
+struct LaserRange : Sensor{
+	float data;
+	void draw() override;
+};
+
+struct Bot : drawable, updatable{
 
 	void *initFn;
 	void *updateFn;
@@ -21,17 +28,15 @@ struct Bot : updatable, drawable {
 	const char *name;
 	ALLEGRO_COLOR color;
 
-	float x, y, heading;
+	float x, y, heading, leftTreadSpeed, rightTreadSpeed;
 
 	uint16_t energy, shield, missile, laser;
 	uint8_t shieldChargeRate, missileChargeRate, laserChargeRate;
 
-	Radar radar1, radar2;
-	LaserRange laserRange1, laserRange2;
+	Sensor *sensor[4];
 
 	bool bumping;
 
-	void update(float delta) override;
 	void draw() override;
-
+	void update(float delta) override;
 };

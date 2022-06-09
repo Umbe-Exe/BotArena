@@ -44,10 +44,10 @@
     <ClInclude Include="src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\component.h">
+    <ClInclude Include="src\bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\bot.h">
+    <ClInclude Include="src\component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

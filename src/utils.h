@@ -2,6 +2,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+#define RAD_PER_DEG 1.7453292519943295E-2
+
 struct Coord {
 	float x, y;
 
