@@ -1,6 +1,7 @@
 #include "Arena.h"
 #include "update.h"
 #include "utils.h"
+#include "entities.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
@@ -72,4 +73,10 @@ void start() {
 	init();
 	display();
 	destroy();
+}
+
+void registerBot(const char *name, COLOR color, const char *img, void *updateFn, void *initFn) {
+
+
+
 }

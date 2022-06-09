@@ -5,7 +5,9 @@
 
 struct Sensor {
 	float angle, width, range;
+	bool enabled;
 	ALLEGRO_COLOR color;
+	ALLEGRO_BITMAP *bitmap;
 
 	virtual void draw() = 0;
 };
@@ -24,9 +26,10 @@ struct Bot : drawable, updatable{
 
 	void *initFn;
 	void *updateFn;
-
-	const char *name;
+	const char *name, *image;
 	ALLEGRO_COLOR color;
+
+	ALLEGRO_BITMAP *bitmap;
 
 	float x, y, heading, leftTreadSpeed, rightTreadSpeed;
 

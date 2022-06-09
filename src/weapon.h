@@ -1,5 +1,5 @@
 #pragma once
-#include "component.h";
+#include "component.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
