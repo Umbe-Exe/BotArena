@@ -4,7 +4,6 @@
 #include "entities.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 
 ALLEGRO_DISPLAY *window;
 ALLEGRO_EVENT_QUEUE *queue;
