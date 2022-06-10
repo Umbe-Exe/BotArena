@@ -37,6 +37,7 @@ struct Bot : drawable, updatable{
 	uint8_t shieldChargeRate, missileChargeRate, laserChargeRate;
 
 	Sensor *sensor[4];
+	uint8_t nOfSensors;
 
 	bool bumping, alive;
 
