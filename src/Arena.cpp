@@ -4,9 +4,12 @@
 #include "entities.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <iostream>
 
 ALLEGRO_DISPLAY *window;
 ALLEGRO_EVENT_QUEUE *queue;
+BotInitData *botsData = 0;
+uint8_t nOfBots = 0;
 
 void init() {
 
@@ -26,7 +29,10 @@ void init() {
 	al_install_keyboard();
 
 	al_register_event_source(queue, al_get_display_event_source(window));
-	al_register_event_source(queue, al_get_keyboard_event_source()); 
+	al_register_event_source(queue, al_get_keyboard_event_source());
+
+	createBots(botsData, nOfBots);
+	free(botsData);
 }
 
 void update(double delta) {
@@ -77,6 +83,10 @@ void start() {
 
 void registerBot(const char *name, COLOR color, const char *img, void *updateFn, void *initFn) {
 
+	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
 
+	if(!botsData) abort(); //not enough memory
 
+	botsData[nOfBots] = {name, color, img, updateFn, initFn};
+	++nOfBots;
 }
