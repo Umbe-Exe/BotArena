@@ -5,6 +5,7 @@
 
 struct Weapon : drawable, updatable{
 	float heading, x, y;
+	ALLEGRO_BITMAP *bitmap;
 };
 
 struct Missile : Weapon{

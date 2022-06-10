@@ -8,7 +8,7 @@
 ALLEGRO_DISPLAY *window;
 ALLEGRO_EVENT_QUEUE *queue;
 BotInitData *botsData = 0;
-uint8_t nOfBots = 0;
+static uint8_t nOfBots = 0;
 
 void init() {
 
@@ -69,7 +69,8 @@ void display() {
 }
 
 void destroy() {
-
+	destroyBots();
+	destroyWeapons();
 	al_destroy_display(window);
 	al_destroy_event_queue(queue);
 }

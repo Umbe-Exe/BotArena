@@ -6,9 +6,13 @@
 struct BotInitData {
 	const char *name;
 	COLOR color;
-	const char *img;
+	const char *image;
 	void *updateFn;
 	void *initFn;
 };
 
 void createBots(BotInitData *data, uint8_t nOfBots);
+
+void destroyBots();
+
+void destroyWeapons();
