@@ -38,7 +38,7 @@ struct Bot : drawable, updatable{
 
 	Sensor *sensor[4];
 
-	bool bumping;
+	bool bumping, alive;
 
 	void draw() override;
 	void update(float delta) override;
