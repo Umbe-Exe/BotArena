@@ -57,6 +57,8 @@ void destroyBots() {
 }
 
 void destroyWeapons() {
+	al_destroy_bitmap(missileBitmap);
+	al_destroy_bitmap(laserBitmap);
 	free(weapons);
 }
 
