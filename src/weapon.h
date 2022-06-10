@@ -3,6 +3,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
+
 struct Weapon : drawable, updatable{
 	float heading, x, y;
 };
