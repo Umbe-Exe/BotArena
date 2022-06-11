@@ -34,6 +34,8 @@ void init() {
 	free(botsData);
 	scatterBots();
 	primeBitmaps();
+
+	al_set_target_backbuffer(window);
 }
 
 void update(double delta) {
@@ -62,6 +64,7 @@ void display() {
 				al_acknowledge_resize(window);
 				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
 				primeBitmaps();
+				al_set_target_backbuffer(window);
 				break;
 		}
 
