@@ -194,6 +194,7 @@
     <ClInclude Include="src\Arena.h" />
     <ClInclude Include="src\bot.h" />
     <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\data.h" />
     <ClInclude Include="src\entities.h" />
     <ClInclude Include="src\update.h" />
     <ClInclude Include="src\utils.h" />

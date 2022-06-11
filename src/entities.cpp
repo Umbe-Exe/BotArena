@@ -1,14 +1,13 @@
 #include "entities.h"
-#include "bot.h"
-#include "weapon.h"
+#include "data.h"
 
-Bot *bots;
-uint8_t nOfBots;
+Bot *bots = nullptr;
+uint8_t nOfBots = 0;
 
-ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
+ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
 
-Weapon *weapons;
-uint8_t nOfWeapons;
+Weapon *weapons = nullptr;
+uint8_t nOfWeapons = 0;
 
 void createBots(BotInitData *data, uint8_t nOfBots) {
 
@@ -18,6 +17,8 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 
 		bots = (Bot *)realloc(bots, sizeof(Bot) * (i + 1));
 		if(!bots) abort();
+
+		bots[i] = {};
 
 		bots[i].name = data[i].name;
 		bots[i].image = data[i].image;
