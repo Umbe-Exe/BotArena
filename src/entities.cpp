@@ -48,7 +48,7 @@ void destroyBots() {
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) al_destroy_bitmap(bots[i].sensor[j]->bitmap);
+		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) al_destroy_bitmap(bots[i].sensor[j].bitmap);
 
 		al_destroy_bitmap(bots[i].bitmap);
 		free(bots[i].sensor);
