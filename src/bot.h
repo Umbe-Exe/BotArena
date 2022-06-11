@@ -24,8 +24,8 @@ struct LaserRange : Sensor{
 
 struct Bot : drawable, updatable{
 
-	void *initFn;
-	void *updateFn;
+	void (*initFn)();
+	void (*updateFn)();
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 
