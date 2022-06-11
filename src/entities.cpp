@@ -78,5 +78,12 @@ void scatterBots() {
 	}
 }
 
-void primeBitmaps() {}
+void primeBitmaps() {
+
+	for(uint8_t i = 0; i < nOfBots; ++i) {
+
+		bots[i].bitmap = al_create_bitmap(toWin_wCoord(botRadius * 2), toWin_hCoord(botRadius * 2));//wrong
+	}
+
+}
 
