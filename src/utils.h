@@ -34,6 +34,10 @@ struct Circle {
 	float radius;
 };
 
+float toWin_hCoord(float y);
+
+float toWin_wCoord(float x);
+
 void setWidthHeight(int width, int height);
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color);
