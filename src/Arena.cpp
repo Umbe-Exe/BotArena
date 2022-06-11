@@ -61,6 +61,7 @@ void display() {
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				al_acknowledge_resize(window);
 				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
+				primeBitmaps();
 				break;
 		}
 
