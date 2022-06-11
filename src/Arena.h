@@ -10,4 +10,4 @@ enum COLOR {
 
 void start();
 
-void registerBot(const char *name, COLOR color, const char *img, void *updateFn, void *initFn);
+void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(float), void (*initFn)());
