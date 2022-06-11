@@ -23,6 +23,8 @@ void init() {
 
 	window = al_create_display(500, 300);
 
+	setWidthHeight(500, 300);
+
 	queue = al_create_event_queue();
 
 	al_install_keyboard();
