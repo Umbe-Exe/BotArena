@@ -184,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\bot.cpp" />
+    <ClCompile Include="src\competition.cpp" />
     <ClCompile Include="src\entities.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\update.cpp" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="src\Arena.h" />
     <ClInclude Include="src\bot.h" />
+    <ClInclude Include="src\competition.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\data.h" />
     <ClInclude Include="src\entities.h" />

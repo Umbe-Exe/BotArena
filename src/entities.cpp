@@ -1,5 +1,6 @@
 #include "entities.h"
 #include "data.h"
+#include "utils.h"
 
 Bot *bots = nullptr;
 uint8_t nOfBots = 0;
@@ -42,6 +43,11 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 			default:
 				bots[i].color = {float(rand() % 200 + 56),float(rand() % 200 + 56),float(rand() % 200 + 56),1};
 		}
+
+		bots[i].alive = 1;
+
+		currBot = &bots[i];
+		currBot->initFn();
 	}
 }
 
@@ -62,4 +68,15 @@ void destroyWeapons() {
 	al_destroy_bitmap(laserBitmap);
 	free(weapons);
 }
+
+void scatterBots() {
+
+	for(uint8_t i = 0; i < nOfBots; ++i) {
+		bots[i].x = (Rect(battleBox).bottomRight.x - Rect(battleBox).topLeft.x - 2 * botRadius) / 100 * (rand() % 101) + botRadius;
+		bots[i].y = (Rect(battleBox).bottomRight.y - Rect(battleBox).topLeft.y - 2 * botRadius) / 100 * (rand() % 101) + botRadius;
+		bots[i].heading = rand() % 360;
+	}
+}
+
+void primeBitmaps() {}
 

@@ -15,7 +15,9 @@ void draw() {
 
 	drawFilledRect(rect, {50,0,0,1});
 
-	al_draw_arc(50, 50, 100, 0, RAD_PER_DEG *90, {0,0,50,0.5}, 200);
+	
 
 	al_flip_display();
 }
+
+//al_draw_arc(50, 50, 100, 0, RAD_PER_DEG *90, {0,0,50,0.5}, 200); draws circle sector

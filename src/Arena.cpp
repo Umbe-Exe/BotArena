@@ -32,6 +32,8 @@ void init() {
 
 	createBots(botsData, nOfBots);
 	free(botsData);
+	scatterBots();
+	primeBitmaps();
 }
 
 void update(double delta) {
