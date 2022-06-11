@@ -4,6 +4,7 @@
 
 Bot *bots = nullptr;
 uint8_t nOfBots = 0;
+Bot *currBot = nullptr;
 
 ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
 
@@ -46,8 +47,10 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 
 		bots[i].alive = 1;
 
-		currBot = &bots[i];
-		currBot->initFn();
+		if(data[i].initFn) {
+			currBot = &bots[i];
+			currBot->initFn();
+		}
 	}
 }
 
@@ -80,15 +83,21 @@ void scatterBots() {
 
 void primeBitmaps() {
 
-	int width = getWidth();
-	int height = getHeight();
-
-	int smallest = width < height ? width : height;
+	int smallest = getSmallestSide();
+	int botWidth = smallest * botRadius * 2;
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 
-		bots[i].bitmap = al_create_bitmap(smallest * botRadius * 2, smallest * botRadius * 2);
-	}
+		/* many problems are rising ... utils.h needs to be abstracted further to allow conversions to any container
+		
+		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
+		al_set_target_bitmap(bots[i].bitmap);
 
+		drawCircle({{botRadius/2,botRadius/2},botRadius}, bots[i].color, 2.f); 
+		drawFilledTriangle({
+			{botRadius,0},
+			{botRadius * 2,botRadius},
+			{0, botRadius}}, bots[i].color);*/
+	}
 }
 
