@@ -2,10 +2,12 @@
 
 static int win_h;
 static int win_w;
+static int smallest;
 
 void setWidthHeight(int width, int height) {
 	win_h = height;
 	win_w = width;
+	smallest = width < height ? width : height;
 }
 
 int getWidth() {
@@ -14,6 +16,10 @@ int getWidth() {
 
 int getHeight() {
 	return win_h;
+}
+
+int getSmallestSide() {
+	return smallest;
 }
 
 float toWin_hCoord(float y) {
@@ -49,7 +55,7 @@ void drawFilledCircle(Circle circle, ALLEGRO_COLOR color) {
 	al_draw_filled_circle(
 		toWin_wCoord(circle.center.x),
 		toWin_hCoord(circle.center.y),
-		circle.radius,
+		smallest * circle.radius,
 		color);
 }
 
@@ -58,6 +64,18 @@ void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness) {
 	al_draw_circle(
 		toWin_wCoord(circle.center.x),
 		toWin_hCoord(circle.center.y),
-		circle.radius,
+		smallest * circle.radius,
 		color, thickness);
+}
+
+void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color) {
+
+	al_draw_filled_triangle(
+		toWin_wCoord(triangle.a.x),
+		toWin_hCoord(triangle.a.y),
+		toWin_wCoord(triangle.b.x),
+		toWin_hCoord(triangle.b.y),
+		toWin_wCoord(triangle.c.x),
+		toWin_hCoord(triangle.c.y),
+		color);
 }

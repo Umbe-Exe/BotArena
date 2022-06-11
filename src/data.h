@@ -4,7 +4,7 @@
 #include "weapon.h"
 #define infoBox {{0.75,0},{1,1}}
 #define battleBox {{0,0},{0.75,1}}
-#define botRadius 0.1
+#define botRadius 0.1f
 
 extern Bot *bots;
 extern uint8_t nOfBots;

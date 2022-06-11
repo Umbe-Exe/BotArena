@@ -3,6 +3,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+#include "data.h"
+
 void logic(double delta) {
 
 
@@ -15,7 +17,7 @@ void draw() {
 
 	drawFilledRect(rect, {50,0,0,1});
 
-	
+	al_draw_bitmap(bots[0].bitmap, 50, 50, 0);
 
 	al_flip_display();
 }

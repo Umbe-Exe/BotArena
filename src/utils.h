@@ -34,8 +34,13 @@ struct Circle {
 	float radius;
 };
 
+struct Triangle {
+	Coord a, b, c;
+};
+
 int getWidth();
 int getHeight();
+int getSmallestSide();
 
 float toWin_hCoord(float y);
 float toWin_wCoord(float x);
@@ -46,3 +51,4 @@ void drawFilledRect(Rect rect, ALLEGRO_COLOR color);
 void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness);
 void drawFilledCircle(Circle circle, ALLEGRO_COLOR color);
 void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness);
+void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color);

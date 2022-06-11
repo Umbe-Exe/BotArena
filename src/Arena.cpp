@@ -23,6 +23,8 @@ void init() {
 
 	window = al_create_display(500, 300);
 
+	setWidthHeight(500, 300);
+
 	queue = al_create_event_queue();
 
 	al_install_keyboard();
@@ -34,6 +36,8 @@ void init() {
 	free(botsData);
 	scatterBots();
 	primeBitmaps();
+
+	al_set_target_backbuffer(window);
 }
 
 void update(double delta) {
@@ -62,6 +66,7 @@ void display() {
 				al_acknowledge_resize(window);
 				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
 				primeBitmaps();
+				al_set_target_backbuffer(window);
 				break;
 		}
 
@@ -84,7 +89,7 @@ void start() {
 	destroy();
 }
 
-void registerBot(const char *name, COLOR color, const char *img, void *updateFn, void *initFn) {
+void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(float), void (*initFn)()) {
 
 	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
 
