@@ -8,6 +8,14 @@ void setWidthHeight(int width, int height) {
 	win_w = width;
 }
 
+int getWidth() {
+	return win_w;
+}
+
+int getHeight() {
+	return win_h;
+}
+
 float toWin_hCoord(float y) {
 	return y * win_h;
 }

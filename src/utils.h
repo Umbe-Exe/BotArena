@@ -34,8 +34,10 @@ struct Circle {
 	float radius;
 };
 
-float toWin_hCoord(float y);
+int getWidth();
+int getHeight();
 
+float toWin_hCoord(float y);
 float toWin_wCoord(float x);
 
 void setWidthHeight(int width, int height);
