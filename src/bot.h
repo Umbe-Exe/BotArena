@@ -7,13 +7,13 @@ struct Sensor {
 	float angle, width, range;
 	bool enabled;
 	ALLEGRO_COLOR color;
+	ALLEGRO_BITMAP *bitmap;
 
 	virtual void draw() = 0;
 };
 
 struct Radar : Sensor{
 	bool data;
-	ALLEGRO_BITMAP *bitmap;
 	void draw() override;
 };
 
