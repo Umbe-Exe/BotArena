@@ -4,6 +4,7 @@
 #include "entities.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 
 ALLEGRO_DISPLAY *window;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -14,6 +15,7 @@ void init() {
 
 	al_init();
 	al_init_primitives_addon();
+	al_init_image_addon();
 
 	al_set_new_window_title("Arena");
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);

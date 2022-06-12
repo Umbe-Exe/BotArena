@@ -202,6 +202,27 @@
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\weapon.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\background.bmp" />
+    <Image Include="resources\images\basic_robot.bmp" />
+    <Image Include="resources\images\Benny_Lek.bmp" />
+    <Image Include="resources\images\capsule1337.bmp" />
+    <Image Include="resources\images\Coke.bmp" />
+    <Image Include="resources\images\grave_digger.bmp" />
+    <Image Include="resources\images\missile.bmp" />
+    <Image Include="resources\images\teemo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\entertain.wav" />
+    <Media Include="resources\sounds\fight.wav" />
+    <Media Include="resources\sounds\laser.wav" />
+    <Media Include="resources\sounds\laserhit.wav" />
+    <Media Include="resources\sounds\missile.wav" />
+    <Media Include="resources\sounds\missilehit.wav" />
+    <Media Include="resources\sounds\robotexplode.wav" />
+    <Media Include="resources\sounds\robotscollide.wav" />
+    <Media Include="resources\sounds\turboboost.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets" Condition="Exists('packages\AllegroDeps.1.12.1\build\native\AllegroDeps.targets')" />

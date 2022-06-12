@@ -1,6 +1,6 @@
 #include "Arena.h"
 
 int main() {
-	registerBot("hdgs", RANDCOL, 0, 0, 0);
+	registerBot(0, RANDCOL, "resources/images/Coke.bmp", 0, 0);
 	start();
 }
