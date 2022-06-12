@@ -84,6 +84,26 @@ void scatterBots() {
 void primeBitmaps() {
 
 	int smallest = getSmallestSide();
+
+	int missileWidth = smallest * weaponRadius * 2;
+
+	missileBitmap = al_create_bitmap(missileWidth, missileWidth);
+	al_set_target_bitmap(missileBitmap);
+
+	ALLEGRO_BITMAP *missile = al_load_bitmap("resources/images/missile.bmp");
+
+	al_convert_mask_to_alpha(missile, al_map_rgb(255, 0, 255));
+
+	int width = al_get_bitmap_width(missile), height = al_get_bitmap_height(missile);
+	float ratio = (float)height / width;
+
+	if(height > width)
+		al_draw_scaled_bitmap(missile, 0, 0, width, height, (missileWidth - missileWidth / ratio) / 2, 0, missileWidth / ratio, missileWidth, 0);
+	else
+		al_draw_scaled_bitmap(missile, 0, 0, width, height, 0, (missileWidth - missileWidth * ratio) / 2, missileWidth, missileWidth * ratio, 0);
+
+	al_destroy_bitmap(missile);
+
 	int botWidth = smallest * (botRadius + 0.01) * 2;
 	int small = botWidth * 0.9;
 
