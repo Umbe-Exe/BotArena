@@ -53,8 +53,8 @@ void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness) {
 void drawFilledCircle(Circle circle, ALLEGRO_COLOR color) {
 
 	al_draw_filled_circle(
-		toWin_wCoord(circle.center.x),
-		toWin_hCoord(circle.center.y),
+		smallest * circle.center.x,
+		smallest * circle.center.y,
 		smallest * circle.radius,
 		color);
 }
@@ -62,8 +62,8 @@ void drawFilledCircle(Circle circle, ALLEGRO_COLOR color) {
 void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness) {
 
 	al_draw_circle(
-		toWin_wCoord(circle.center.x),
-		toWin_hCoord(circle.center.y),
+		smallest * circle.center.x,
+		smallest * circle.center.y,
 		smallest * circle.radius,
 		color, thickness);
 }
@@ -71,11 +71,11 @@ void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness) {
 void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color) {
 
 	al_draw_filled_triangle(
-		toWin_wCoord(triangle.a.x),
-		toWin_hCoord(triangle.a.y),
-		toWin_wCoord(triangle.b.x),
-		toWin_hCoord(triangle.b.y),
-		toWin_wCoord(triangle.c.x),
-		toWin_hCoord(triangle.c.y),
+		smallest * triangle.a.x,
+		smallest * triangle.a.y,
+		smallest * triangle.b.x,
+		smallest * triangle.b.y,
+		smallest * triangle.c.x,
+		smallest * triangle.c.y,
 		color);
 }
