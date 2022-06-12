@@ -34,6 +34,8 @@ void init() {
 	al_register_event_source(queue, al_get_display_event_source(window));
 	al_register_event_source(queue, al_get_keyboard_event_source());
 
+	srand(time(0));
+
 	createBots(botsData, nOfBots);
 	free(botsData);
 	scatterBots();
