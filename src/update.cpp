@@ -19,6 +19,7 @@ void draw() {
 
 	al_draw_bitmap(bots[0].bitmap, 50, 50, 0);
 	al_draw_bitmap(missileBitmap, 300, 300, 0);
+	al_draw_bitmap(laserBitmap, 50, 300, 0);
 
 	al_flip_display();
 }
