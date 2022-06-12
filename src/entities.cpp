@@ -84,20 +84,22 @@ void scatterBots() {
 void primeBitmaps() {
 
 	int smallest = getSmallestSide();
-	int botWidth = smallest * botRadius * 2;
+	int botWidth = smallest * (botRadius + 0.01) * 2;
+	int small = botWidth * 0.9;
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 		
 		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bots[i].bitmap);
 
-		drawCircle({{botRadius,botRadius},botRadius}, bots[i].color, 1.f); 
+		drawCircle({{botRadius + 0.01,botRadius + 0.01},botRadius}, bots[i].color, 0.01f * smallest);
 		drawFilledTriangle({
-			{botRadius,0},
-			{botRadius * 2,botRadius},
-			{0, botRadius}}, bots[i].color);
+			{botRadius + 0.01,0.01f},
+			{botRadius * 2 + 0.01,botRadius + 0.01},
+			{0.01f, botRadius + 0.01}}, bots[i].color);
 
 		if(bots[i].image) {
+
 			ALLEGRO_BITMAP *image = al_load_bitmap(bots[i].image);
 
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
@@ -106,9 +108,9 @@ void primeBitmaps() {
 			float ratio = (float)height / width;
 
 			if(height > width)
-				al_draw_scaled_bitmap(image, 0, 0, width, height, (botWidth - botWidth / ratio) / 2, 0, botWidth / ratio, botWidth, 0);
+				al_draw_scaled_bitmap(image, 0, 0, width, height, (small - small / ratio) / 2 + 0.01f + (botWidth - small) / 2, 0.01f + (botWidth - small) / 2, small / ratio, small, 0);
 			else 
-				al_draw_scaled_bitmap(image, 0, 0, width, height, 0, (botWidth - botWidth * ratio) / 2, botWidth, botWidth * ratio, 0);
+				al_draw_scaled_bitmap(image, 0, 0, width, height, 0.01f + (botWidth - small) / 2, (small - small * ratio) / 2 + 0.01f + (botWidth - small) / 2, small, small * ratio, 0);
 
 			al_destroy_bitmap(image);
 		}
