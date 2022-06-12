@@ -42,7 +42,7 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 				break;
 			case RANDCOL:
 			default:
-				bots[i].color = {float(rand() % 200 + 56),float(rand() % 200 + 56),float(rand() % 200 + 56),1};
+				bots[i].color = al_map_rgb(rand() % 200 + 56.f,rand() % 200 + 56.f,rand() % 200 + 56.f);
 		}
 
 		bots[i].alive = 1;
