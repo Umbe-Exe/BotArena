@@ -13,11 +13,12 @@ void logic(double delta) {
 
 void draw() {
 
-	Rect rect{{0.75,0},{1,1}};
+	al_clear_to_color(al_map_rgb(200,200,200));
 
-	drawFilledRect(rect, {50,0,0,1});
+	drawFilledRect(infoBox, {50,0,0,1});
 
 	al_draw_bitmap(bots[0].bitmap, 50, 50, 0);
+	al_draw_bitmap(missileBitmap, 300, 300, 0);
 
 	al_flip_display();
 }
