@@ -85,9 +85,9 @@ void primeBitmaps() {
 
 	int smallest = getSmallestSide();
 
-	int missileWidth = smallest * weaponRadius * 2;
+	int weaponWidth = smallest * weaponRadius * 2;
 
-	missileBitmap = al_create_bitmap(missileWidth, missileWidth);
+	missileBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(missileBitmap);
 
 	ALLEGRO_BITMAP *missile = al_load_bitmap("resources/images/missile.bmp");
@@ -98,11 +98,20 @@ void primeBitmaps() {
 	float ratio = (float)height / width;
 
 	if(height > width)
-		al_draw_scaled_bitmap(missile, 0, 0, width, height, (missileWidth - missileWidth / ratio) / 2, 0, missileWidth / ratio, missileWidth, 0);
+		al_draw_scaled_bitmap(missile, 0, 0, width, height, (weaponWidth - weaponWidth / ratio) / 2, 0, weaponWidth / ratio, weaponWidth, 0);
 	else
-		al_draw_scaled_bitmap(missile, 0, 0, width, height, 0, (missileWidth - missileWidth * ratio) / 2, missileWidth, missileWidth * ratio, 0);
+		al_draw_scaled_bitmap(missile, 0, 0, width, height, 0, (weaponWidth - weaponWidth * ratio) / 2, weaponWidth, weaponWidth * ratio, 0);
 
 	al_destroy_bitmap(missile);
+
+/////////////////////////////////////////
+
+	laserBitmap = al_create_bitmap(weaponWidth, weaponWidth);
+	al_set_target_bitmap(laserBitmap);
+
+	al_draw_line(weaponWidth / 2, 0, weaponWidth / 2, weaponWidth, al_map_rgb(255, 0, 0), smallest * 0.01f);
+
+/////////////////////////////////////////
 
 	int botWidth = smallest * (botRadius + 0.01) * 2;
 	int small = botWidth * 0.9;
