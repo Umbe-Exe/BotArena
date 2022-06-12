@@ -34,8 +34,6 @@ void init() {
 	al_register_event_source(queue, al_get_display_event_source(window));
 	al_register_event_source(queue, al_get_keyboard_event_source());
 
-	al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-
 	createBots(botsData, nOfBots);
 	free(botsData);
 	scatterBots();
