@@ -87,17 +87,15 @@ void primeBitmaps() {
 	int botWidth = smallest * botRadius * 2;
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
-
-		/* many problems are rising ... utils.h needs to be abstracted further to allow conversions to any container
 		
 		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bots[i].bitmap);
 
-		drawCircle({{botRadius/2,botRadius/2},botRadius}, bots[i].color, 2.f); 
+		drawCircle({{botRadius,botRadius},botRadius}, bots[i].color, 2.f); 
 		drawFilledTriangle({
 			{botRadius,0},
 			{botRadius * 2,botRadius},
-			{0, botRadius}}, bots[i].color);*/
+			{0, botRadius}}, bots[i].color);
 	}
 }
 
