@@ -91,11 +91,21 @@ void primeBitmaps() {
 		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bots[i].bitmap);
 
-		drawCircle({{botRadius,botRadius},botRadius}, bots[i].color, 2.f); 
+		drawCircle({{botRadius,botRadius},botRadius}, bots[i].color, 1.f); 
 		drawFilledTriangle({
 			{botRadius,0},
 			{botRadius * 2,botRadius},
 			{0, botRadius}}, bots[i].color);
+
+		if(bots[i].image) {
+			ALLEGRO_BITMAP *image = al_load_bitmap(bots[i].image);
+
+			al_convert_mask_to_alpha(image, {255,0,255});
+
+			al_draw_scaled_bitmap(image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, botWidth, botWidth, 0);
+
+			al_destroy_bitmap(image);
+		}
 	}
 }
 

@@ -72,4 +72,59 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\basic_robot.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\Benny_Lek.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\capsule1337.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\Coke.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\grave_digger.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\missile.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\teemo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\entertain.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\fight.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\laser.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\laserhit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\missile.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\missilehit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\robotexplode.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\robotscollide.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\turboboost.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
