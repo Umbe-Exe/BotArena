@@ -102,10 +102,15 @@ void primeBitmaps() {
 
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
-			al_draw_scaled_bitmap(image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, botWidth, botWidth, 0);
+			int width = al_get_bitmap_width(image), height = al_get_bitmap_height(image);
+			float ratio = (float)height / width;
+
+			if(height > width)
+				al_draw_scaled_bitmap(image, 0, 0, width, height, (botWidth - botWidth / ratio) / 2, 0, botWidth / ratio, botWidth, 0);
+			else 
+				al_draw_scaled_bitmap(image, 0, 0, width, height, 0, (botWidth - botWidth * ratio) / 2, botWidth, botWidth * ratio, 0);
 
 			al_destroy_bitmap(image);
 		}
 	}
 }
-
