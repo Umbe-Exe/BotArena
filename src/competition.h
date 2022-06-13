@@ -16,6 +16,10 @@ int addRadarGetId(int angle, int width, int range);
 
 int addRangeGetId(int angle, int range);
 
+void setSensorStatus(int sensorId, bool enabled);
+
+int getSensorData(int sensorId);
+
 void setMotorSpeed(int leftTread, int rightTread);
 
 int getGeneratorOutput();
