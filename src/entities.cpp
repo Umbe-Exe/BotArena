@@ -22,6 +22,11 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 
 		bots[i] = {};
 
+		bots[i].energy = 100;
+		bots[i].shield = 100;
+		bots[i].missile = 100;
+		bots[i].laser = 100;
+
 		bots[i].name = data[i].name;
 		bots[i].image = data[i].image;
 		bots[i].updateFn = data[i].updateFn;
