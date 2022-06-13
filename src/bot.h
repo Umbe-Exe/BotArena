@@ -9,16 +9,18 @@ struct Sensor {
 	ALLEGRO_COLOR color;
 	ALLEGRO_BITMAP *bitmap;
 
+	int data;
+
 	virtual void draw() = 0;
 };
 
 struct Radar : Sensor{
-	bool data;
+
 	void draw() override;
 };
 
 struct LaserRange : Sensor{
-	float data;
+
 	void draw() override;
 };
 
