@@ -8,6 +8,7 @@
 #define weaponRadius 0.02f
 #define radarMaxRange 0.5f
 #define rangeMaxRange 0.55f
+#define sensorEnergyConsumption 2
 
 extern Bot *bots;
 extern uint8_t nOfBots;
