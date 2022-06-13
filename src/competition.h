@@ -1,8 +1,23 @@
 #pragma once
 
-enum SensorType {
-	RADAR,
-	RANGE
+enum System {
+	MISSILES, LASERS, SHIELDS
 };
 
-int getNewSensorId(SensorType type, int angle, int width, int range);
+enum Armament {
+	MISSILE, LASER
+};
+
+int addRadarGetId(int angle, int width, int range);
+
+int addRangeGetId(int angle, int range);
+
+void setMotorSpeed(int leftTread, int rightTread);
+
+int getGeneratorOutput();
+
+int getSystemEnergy(System system);
+
+void setSystemChargeRate(System system, int rate);
+
+void fireWeapon(Armament weapon, int heading);
