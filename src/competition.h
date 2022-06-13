@@ -8,6 +8,10 @@ enum Armament {
 	MISSILE, LASER
 };
 
+struct GPSdata {
+	float x, y, heading;
+};
+
 int addRadarGetId(int angle, int width, int range);
 
 int addRangeGetId(int angle, int range);
@@ -21,3 +25,7 @@ int getSystemEnergy(System system);
 void setSystemChargeRate(System system, int rate);
 
 void fireWeapon(Armament weapon, int heading);
+
+GPSdata getGPSdata();
+
+bool isBumping();
