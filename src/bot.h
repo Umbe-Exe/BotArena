@@ -3,6 +3,10 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+enum SensorType {
+	RANGE, RADAR
+};
+
 struct Sensor {
 	float angle, width, range;
 	bool enabled;
@@ -10,6 +14,7 @@ struct Sensor {
 	ALLEGRO_BITMAP *bitmap;
 
 	int data;
+	SensorType type;
 
 	virtual void draw() = 0;
 };
