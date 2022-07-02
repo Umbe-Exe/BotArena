@@ -18,7 +18,6 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 
 		bots = (Bot *)realloc(bots, sizeof(Bot) * (i + 1));
-		if(!bots) abort();
 
 		bots[i] = {};
 

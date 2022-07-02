@@ -5,8 +5,6 @@ int addRadarGetId(int angle, int width, int range) {
 	
 	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * currBot->nOfSensors);
 
-	if(currBot->sensor) abort();
-
 	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
 
 	++currBot->nOfSensors;
@@ -17,8 +15,6 @@ int addRadarGetId(int angle, int width, int range) {
 int addRangeGetId(int angle, int range) {
 	
 	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * currBot->nOfSensors);
-
-	if(currBot->sensor) abort();
 
 	currBot->sensor[currBot->nOfSensors] = new LaserRange(angle, range > 100 ? 100 : range, currBot->color);
 

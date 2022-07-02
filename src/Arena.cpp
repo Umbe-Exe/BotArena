@@ -97,8 +97,6 @@ void registerBot(const char *name, COLOR color, const char *img, void (*updateFn
 
 	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
 
-	if(!botsData) abort(); //not enough memory
-
 	botsData[nOfBots] = {name, color, img, updateFn, initFn};
 	++nOfBots;
 }
