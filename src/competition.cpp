@@ -3,16 +3,11 @@
 
 int addRadarGetId(int angle, int width, int range) {
 	
-	currBot->sensor = (Sensor *)realloc(currBot->sensor, sizeof(Sensor) * currBot->nOfSensors);
+	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * currBot->nOfSensors);
 
 	if(currBot->sensor) abort();
 
-	currBot->sensor[currBot->nOfSensors].type = RADAR;
-	currBot->sensor[currBot->nOfSensors].enabled = 1;
-	currBot->sensor[currBot->nOfSensors].color = currBot->color;
-	currBot->sensor[currBot->nOfSensors].angle = angle;
-	currBot->sensor[currBot->nOfSensors].width = width;
-	currBot->sensor[currBot->nOfSensors].range = range > 100 ? 100 : range;
+	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
 
 	++currBot->nOfSensors;
 
@@ -21,15 +16,11 @@ int addRadarGetId(int angle, int width, int range) {
 
 int addRangeGetId(int angle, int range) {
 	
-	currBot->sensor = (Sensor *)realloc(currBot->sensor, sizeof(Sensor) * currBot->nOfSensors);
+	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * currBot->nOfSensors);
 
 	if(currBot->sensor) abort();
 
-	currBot->sensor[currBot->nOfSensors].type = RANGE;
-	currBot->sensor[currBot->nOfSensors].enabled = 1;
-	currBot->sensor[currBot->nOfSensors].color = currBot->color;
-	currBot->sensor[currBot->nOfSensors].angle = angle;
-	currBot->sensor[currBot->nOfSensors].range = range > 100 ? 100 : range;
+	currBot->sensor[currBot->nOfSensors] = new LaserRange(angle, range > 100 ? 100 : range, currBot->color);
 
 	++currBot->nOfSensors;
 
@@ -39,13 +30,13 @@ int addRangeGetId(int angle, int range) {
 void setSensorStatus(int sensorId, bool enabled) {
 
 	if(currBot->nOfSensors >= sensorId)
-		currBot->sensor[sensorId].enabled = 0;
+		currBot->sensor[sensorId]->enabled = 0;
 }
 
 int getSensorData(int sensorId) {
 
 	if(currBot->nOfSensors >= sensorId)
-		return currBot->sensor[sensorId].data;
+		return currBot->sensor[sensorId]->data;
 	else return INT_MAX;
 }
 
@@ -67,6 +58,8 @@ int getSystemEnergy(System system) {
 			return currBot->shieldChargeRate;
 		case LASERS:
 			return currBot->laserChargeRate;
+		default:
+			return -1;
 	}
 }
 

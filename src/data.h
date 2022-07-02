@@ -16,7 +16,7 @@ extern Bot *currBot;
 
 extern ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
 
-extern Weapon *weapons;
+extern Weapon **weapons;
 extern uint8_t nOfWeapons;
 
 
