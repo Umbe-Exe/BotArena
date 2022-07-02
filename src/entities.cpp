@@ -8,7 +8,7 @@ Bot *currBot = nullptr;
 
 ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
 
-Weapon *weapons = nullptr;
+Weapon **weapons = nullptr;
 uint8_t nOfWeapons = 0;
 
 void createBots(BotInitData *data, uint8_t nOfBots) {
@@ -21,6 +21,11 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 		if(!bots) abort();
 
 		bots[i] = {};
+
+		bots[i].energy = 100;
+		bots[i].shield = 100;
+		bots[i].missile = 100;
+		bots[i].laser = 100;
 
 		bots[i].name = data[i].name;
 		bots[i].image = data[i].image;
@@ -58,9 +63,8 @@ void destroyBots() {
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) al_destroy_bitmap(bots[i].sensor[j].bitmap);
+		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) delete bots[i].sensor[j];
 
-		al_destroy_bitmap(bots[i].bitmap);
 		free(bots[i].sensor);
 	}
 	free(bots);
@@ -69,6 +73,8 @@ void destroyBots() {
 void destroyWeapons() {
 	al_destroy_bitmap(missileBitmap);
 	al_destroy_bitmap(laserBitmap);
+
+	for(uint8_t i = 0; i < nOfWeapons; ++i) delete weapons[i];
 	free(weapons);
 }
 

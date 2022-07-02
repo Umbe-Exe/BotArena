@@ -1,5 +1,7 @@
 #include "bot.h"
 
+void Radar::primeBitmap() {}
+
 void Radar::draw() {}
 
 void LaserRange::draw() {}
