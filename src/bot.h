@@ -3,13 +3,13 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-struct Sensor {
+struct Sensor : drawable, updatable {
 	float angle, range;
 	bool enabled;
 	int data;
 	ALLEGRO_COLOR color;
 
-	virtual void draw() = 0;
+	virtual void priming(int sideLength) = 0;
 	virtual ~Sensor(){};
 };
 
@@ -22,13 +22,12 @@ struct Radar : Sensor{
 		this->width = width;
 		this->range = range;
 		this->color = color;
-
-		primeBitmap();
 	}
 
-	void primeBitmap();
+	void priming(int sideLength) override;
 
 	void draw() override;
+	void update(float delta) override;
 	~Radar() override {
 		al_destroy_bitmap(bitmap);
 	}
@@ -42,7 +41,10 @@ struct LaserRange : Sensor{
 		this->color = color;
 	}
 
+	void priming(int sideLength) override {}
+
 	void draw() override;
+	void update(float delta) override;
 	~LaserRange() override {}
 };
 

@@ -90,6 +90,14 @@ void primeBitmaps() {
 
 	int smallest = getSmallestSide();
 
+	/////////////////////////////////////
+
+	for(uint8_t i = 0; i < nOfBots; ++i)
+		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j)
+			bots[i].sensor[j]->priming(smallest);
+
+	/////////////////////////////////////
+
 	int weaponWidth = smallest * weaponRadius * 2;
 
 	missileBitmap = al_create_bitmap(weaponWidth, weaponWidth);
