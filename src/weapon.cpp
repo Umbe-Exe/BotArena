@@ -1,4 +1,5 @@
 #include "weapon.h"
+#include "data.h"
 
 void Missile::draw() {}
 

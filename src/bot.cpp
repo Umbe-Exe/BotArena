@@ -1,4 +1,5 @@
 #include "bot.h"
+#include "data.h"
 
 void Radar::priming(int sideLength) {}
 
