@@ -9,7 +9,7 @@ int addRadarGetId(int angle, int width, int range) {
 		angle += 180;
 	}
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * currBot->nOfSensors);
+	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * (currBot->nOfSensors + 1));
 
 	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
 
@@ -25,7 +25,7 @@ int addRangeGetId(int angle, int range) {
 		angle += 180;
 	}
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * currBot->nOfSensors);
+	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * (currBot->nOfSensors + 1));
 
 	currBot->sensor[currBot->nOfSensors] = new LaserRange(angle, range > 100 ? 100 : range, currBot->color);
 
@@ -105,7 +105,25 @@ void setSystemChargeRate(System system, int rate) {
 
 void fireWeapon(Armament weapon, int heading) {
 
+	weapons = (Weapon **)realloc(weapons, sizeof(Weapon *) * (nOfWeapons + 1));
 
+	switch(weapon) {
+		case MISSILE:
+			weapons[nOfWeapons] = new Missile();
+			weapons[nOfWeapons]->bitmap = missileBitmap;
+			break;
+		case LASER:
+			weapons[nOfWeapons] = new Laser();
+			weapons[nOfWeapons]->bitmap = laserBitmap;
+			//speed and damage to be determined, i have no idea
+			break;
+	}
+
+	weapons[nOfWeapons]->heading = heading;
+	//x y coordinates to be determined
+	//i dont know the math to make a vector from an angle
+
+	++nOfWeapons;
 }
 
 GPSdata getGPSdata() {
