@@ -9,8 +9,8 @@ struct Sensor : drawable, updatable {
 	int data;
 	ALLEGRO_COLOR color;
 
-	virtual void priming(int sideLength) = 0;
-	virtual ~Sensor(){};
+	virtual void priming(int sideLength) {}
+	virtual ~Sensor() {}
 };
 
 struct Radar : Sensor{
@@ -28,6 +28,7 @@ struct Radar : Sensor{
 
 	void draw() override;
 	void update(float delta) override;
+
 	~Radar() override {
 		al_destroy_bitmap(bitmap);
 	}
@@ -41,11 +42,8 @@ struct LaserRange : Sensor{
 		this->color = color;
 	}
 
-	void priming(int sideLength) override {}
-
 	void draw() override;
 	void update(float delta) override;
-	~LaserRange() override {}
 };
 
 struct Bot : drawable, updatable{
