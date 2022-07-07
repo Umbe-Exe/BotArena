@@ -79,9 +79,33 @@ void destroyWeapons() {
 
 void scatterBots() {
 
+	uint8_t
+		rows = int(Rect(battleBox).bottomRight.y / (botRadius * 2 + 0.01f)),
+		cols = int(Rect(battleBox).bottomRight.x / (botRadius * 2 + 0.01f));
+
+	bool **sector;
+	sector = (bool **)_alloca(sizeof(bool *) * rows);
+	for(uint8_t i = 0; i < rows; ++i) 
+		sector[i] = (bool *)_alloca(sizeof(bool) * cols);
+
+	for(int i = 0; i < rows; ++i) 
+		for(int j = 0; j < cols; ++j) 
+			sector[i][j] = 0;
+
+	uint8_t col, row;
+
 	for(uint8_t i = 0; i < nOfBots; ++i) {
-		bots[i].x = (Rect(battleBox).bottomRight.x - Rect(battleBox).topLeft.x - 2 * botRadius) / 100 * (rand() % 101) + botRadius;
-		bots[i].y = (Rect(battleBox).bottomRight.y - Rect(battleBox).topLeft.y - 2 * botRadius) / 100 * (rand() % 101) + botRadius;
+
+		do {
+			col = rand() % cols;
+			row = rand() % rows;
+		} while(sector[row][col]);
+
+		sector[row][col] = 1;
+
+		bots[i].x = col * (botRadius * 2 + 0.01f) + botRadius;
+		bots[i].y = row * (botRadius * 2 + 0.01f) + botRadius;
+
 		bots[i].heading = rand() % 360;
 	}
 }
