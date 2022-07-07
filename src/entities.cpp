@@ -124,6 +124,8 @@ void primeBitmaps() {
 
 	int weaponWidth = smallest * weaponRadius * 2;
 
+	if(missileBitmap) al_destroy_bitmap(missileBitmap);
+
 	missileBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(missileBitmap);
 
@@ -143,6 +145,8 @@ void primeBitmaps() {
 
 /////////////////////////////////////////
 
+	if(laserBitmap) al_destroy_bitmap(laserBitmap);
+
 	laserBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(laserBitmap);
 
@@ -155,6 +159,8 @@ void primeBitmaps() {
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 		
+		if(bots[i].bitmap) al_destroy_bitmap(bots[i].bitmap);
+
 		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bots[i].bitmap);
 
@@ -180,5 +186,7 @@ void primeBitmaps() {
 
 			al_destroy_bitmap(image);
 		}
+
+		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) bots[i].sensor[j]->priming(smallest);
 	}
 }
