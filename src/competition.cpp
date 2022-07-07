@@ -1,5 +1,8 @@
 #include "competition.h"
 #include "data.h"
+#include "utils.h"
+
+#include <math.h>
 
 int addRadarGetId(int angle, int width, int range) {
 
@@ -44,7 +47,7 @@ int getSensorData(int sensorId) {
 
 	if(currBot->nOfSensors >= sensorId && sensorId >= 0)
 		return currBot->sensor[sensorId]->data;
-	else return INT_MAX;
+	else return 0;
 }
 
 void setMotorSpeed(int leftTread, int rightTread) {
@@ -113,15 +116,14 @@ void fireWeapon(Armament weapon, int heading) {
 			weapons[nOfWeapons]->bitmap = missileBitmap;
 			break;
 		case LASER:
-			weapons[nOfWeapons] = new Laser();
+			weapons[nOfWeapons] = new Laser(currBot->laser * laserDamageMoltiplicator);
 			weapons[nOfWeapons]->bitmap = laserBitmap;
-			//speed and damage to be determined, i have no idea
 			break;
 	}
 
 	weapons[nOfWeapons]->heading = heading;
-	//x y coordinates to be determined
-	//i dont know the math to make a vector from an angle
+	weapons[nOfWeapons]->x = cos(heading * RAD_PER_DEG) * botRadius * 0.005;
+	weapons[nOfWeapons]->x = sin(heading * RAD_PER_DEG) * botRadius * 0.005;
 
 	++nOfWeapons;
 }

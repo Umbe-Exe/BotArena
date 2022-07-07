@@ -6,7 +6,6 @@
 struct Weapon : drawable, updatable{
 	float heading, x, y;
 	ALLEGRO_BITMAP *bitmap;
-	float speed, damage;
 };
 
 struct Missile : Weapon{
@@ -15,6 +14,12 @@ struct Missile : Weapon{
 };
 
 struct Laser : Weapon {
+	float damage;
+
+	Laser(float damage) {
+		this->damage = damage;
+	}
+
 	void draw() override;
 	void update(float delta) override;
 };
