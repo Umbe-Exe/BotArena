@@ -118,11 +118,9 @@ void fireWeapon(Armament weapon, int heading) {
 	switch(weapon) {
 		case MISSILE:
 			weapons[nOfWeapons] = new Missile();
-			weapons[nOfWeapons]->bitmap = missileBitmap;
 			break;
 		case LASER:
 			weapons[nOfWeapons] = new Laser(currBot->laser * laserDamageMoltiplicator);
-			weapons[nOfWeapons]->bitmap = laserBitmap;
 			break;
 	}
 
