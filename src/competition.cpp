@@ -122,8 +122,8 @@ void fireWeapon(Armament weapon, int heading) {
 	}
 
 	weapons[nOfWeapons]->heading = heading;
-	weapons[nOfWeapons]->x = cos(heading * RAD_PER_DEG) * botRadius * 0.005;
-	weapons[nOfWeapons]->x = sin(heading * RAD_PER_DEG) * botRadius * 0.005;
+	weapons[nOfWeapons]->x = cos(heading * RAD_PER_DEG) * (botRadius + 0.005);
+	weapons[nOfWeapons]->y = sin(heading * RAD_PER_DEG) * (botRadius + 0.005);
 
 	++nOfWeapons;
 }
