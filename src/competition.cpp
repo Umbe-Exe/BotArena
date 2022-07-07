@@ -66,11 +66,11 @@ int getSystemEnergy(System system) {
 
 	switch(system) {
 		case MISSILES:
-			return currBot->missileChargeRate;
+			return currBot->missile;
 		case SHIELDS:
-			return currBot->shieldChargeRate;
+			return currBot->shield;
 		case LASERS:
-			return currBot->laserChargeRate;
+			return currBot->laser;
 		default:
 			return -1;
 	}
