@@ -11,6 +11,9 @@ int addRadarGetId(int angle, int width, int range) {
 		range *= -1;
 		angle += 180;
 	}
+
+	angle %= 360;
+	width %= 360;
 	
 	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * (currBot->nOfSensors + 1));
 
@@ -27,6 +30,8 @@ int addRangeGetId(int angle, int range) {
 		range *= -1;
 		angle += 180;
 	}
+
+	angle %= 360;
 	
 	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * (currBot->nOfSensors + 1));
 
