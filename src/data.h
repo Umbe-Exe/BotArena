@@ -16,6 +16,9 @@
 #define laserSpeed 0.15f
 #define missileSpeed 0.08f
 
+#define bumpForce 0.05f
+#define friction 0.02f // friction applied after bump
+
 extern Bot *bots;
 extern uint8_t nOfBots;
 extern Bot *currBot;
