@@ -85,12 +85,12 @@ void scatterBots() {
 
 	bool **sector;
 	sector = (bool **)_alloca(sizeof(bool *) * rows);
-	for(uint8_t i = 0; i < rows; ++i) 
+	for(uint8_t i = 0; i < rows; ++i) {
 		sector[i] = (bool *)_alloca(sizeof(bool) * cols);
 
-	for(int i = 0; i < rows; ++i) 
-		for(int j = 0; j < cols; ++j) 
+		for(int j = 0; j < cols; ++j)
 			sector[i][j] = 0;
+	}		
 
 	uint8_t col, row;
 
