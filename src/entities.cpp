@@ -17,7 +17,10 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
 
-		bots = (Bot *)realloc(bots, sizeof(Bot) * (i + 1));
+		currBot = bots;
+		bots = new Bot[i + 1];
+		memmove(bots, currBot, sizeof(Bot) * i);
+		delete[] currBot;
 
 		bots[i] = {};
 
@@ -59,7 +62,7 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 }
 
 void destroyBots() {
-	free(bots);
+	delete[] bots;
 	nOfBots = 0;
 }
 
