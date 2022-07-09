@@ -59,14 +59,8 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 }
 
 void destroyBots() {
-
-	for(uint8_t i = 0; i < nOfBots; ++i) {
-
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) delete bots[i].sensor[j];
-
-		free(bots[i].sensor);
-	}
 	free(bots);
+	nOfBots = 0;
 }
 
 void destroyWeapons() {
@@ -74,7 +68,9 @@ void destroyWeapons() {
 	al_destroy_bitmap(laserBitmap);
 
 	for(uint8_t i = 0; i < nOfWeapons; ++i) delete weapons[i];
+
 	free(weapons);
+	nOfWeapons = 0;
 }
 
 void scatterBots() {
