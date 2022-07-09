@@ -19,6 +19,8 @@ int addRadarGetId(int angle, int width, int range) {
 
 	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
 
+	currBot->sensor[currBot->nOfSensors]->priming(getSmallestSide());
+
 	++currBot->nOfSensors;
 
 	return currBot->nOfSensors - 1;
@@ -124,6 +126,7 @@ void fireWeapon(Armament weapon, int heading) {
 			break;
 	}
 
+	heading += currBot->heading;
 	weapons[nOfWeapons]->heading = heading;
 	weapons[nOfWeapons]->x = cos(heading * RAD_PER_DEG) * (botRadius + 0.005);
 	weapons[nOfWeapons]->y = sin(heading * RAD_PER_DEG) * (botRadius + 0.005);
