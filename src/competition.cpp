@@ -19,6 +19,8 @@ int addRadarGetId(int angle, int width, int range) {
 
 	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
 
+	currBot->sensor[currBot->nOfSensors]->priming(getSmallestSide());
+
 	++currBot->nOfSensors;
 
 	return currBot->nOfSensors - 1;
