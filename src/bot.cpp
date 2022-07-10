@@ -24,7 +24,7 @@ void Radar::draw() {
 	al_draw_rotated_bitmap(bitmap,
 						   al_get_bitmap_width(bitmap) / 2,
 						   al_get_bitmap_height(bitmap) / 2,
-						   currBot->coord.x, currBot->coord.y, currBot->heading + angle, 0);
+						   currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), currBot->heading + angle, 0);
 }
 
 void Radar::update(float delta) {}
@@ -33,9 +33,10 @@ void LaserRange::draw() {
 
 	Coord pointCoord = {(float)cos((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * (range - data), (float)sin((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * (range - data)};
 
-	al_draw_line(currBot->coord.x, currBot->coord.y, pointCoord.x, pointCoord.y, {color.r, color.g, color.b, 0.5f}, 0.005f * getSmallestSide());
+	al_draw_line(currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(),
+				 {color.r, color.g, color.b, 0.5f}, 0.005f * getSmallestSide());
 
-	al_draw_filled_circle(pointCoord.x, pointCoord.y, 0.008f * getSmallestSide(), {color.r, color.g, color.b, 0.5f});
+	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.008f * getSmallestSide(), {color.r, color.g, color.b, 0.5f});
 }
 
 void LaserRange::update(float delta) {}
@@ -49,7 +50,7 @@ void Bot::draw() {
 	al_draw_rotated_bitmap(bitmap,
 						   al_get_bitmap_width(bitmap) / 2,
 						   al_get_bitmap_height(bitmap) / 2,
-						   coord.x, coord.y, heading, 0);
+						   coord.x * getSmallestSide(), coord.y * getSmallestSide(), heading, 0);
 }
 
 void Bot::update(float delta) {}
