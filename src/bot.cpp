@@ -29,10 +29,27 @@ void Radar::draw() {
 
 void Radar::update(float delta) {}
 
-void LaserRange::draw() {}
+void LaserRange::draw() {
+
+	Coord pointCoord = {(float)cos((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * range, (float)sin((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * range};
+
+	al_draw_line(currBot->coord.x, currBot->coord.y, pointCoord.x, pointCoord.y, {color.r, color.g, color.b, 0.5f}, 0.005f * getSmallestSide());
+
+	al_draw_filled_circle(pointCoord.x, pointCoord.y, 0.008f * getSmallestSide(), {color.r, color.g, color.b, 0.5f});
+}
 
 void LaserRange::update(float delta) {}
 
-void Bot::draw() {}
+void Bot::draw() {
+
+	currBot = this;
+
+	for(uint8_t i = 0; i < nOfSensors; ++i) sensor[i]->draw();
+
+	al_draw_rotated_bitmap(bitmap,
+						   al_get_bitmap_height(bitmap) / 2,
+						   al_get_bitmap_width(bitmap) / 2,
+						   coord.x, coord.y, heading, 0);
+}
 
 void Bot::update(float delta) {}

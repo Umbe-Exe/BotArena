@@ -2,8 +2,6 @@
 #include "data.h"
 #include "utils.h"
 
-#include <math.h>
-
 int addRadarGetId(int angle, int width, int range) {
 
 	if(width < 0) width *= -1;
