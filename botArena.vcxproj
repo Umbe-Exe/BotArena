@@ -194,6 +194,7 @@
     <ClCompile Include="src\update.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\weapon.cpp" />
+    <ClCompile Include="test_bot\test_bot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Arena.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="src\update.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\weapon.h" />
+    <ClInclude Include="test_bot\test_bot.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\images\background.bmp" />
