@@ -2,8 +2,6 @@
 #include "data.h"
 #include "utils.h"
 
-#include <math.h>
-
 int addRadarGetId(int angle, int width, int range) {
 
 	if(width < 0) width *= -1;
@@ -128,14 +126,14 @@ void fireWeapon(Armament weapon, int heading) {
 
 	heading += currBot->heading;
 	weapons[nOfWeapons]->heading = heading;
-	weapons[nOfWeapons]->x = cos(heading * RAD_PER_DEG) * (botRadius + 0.005);
-	weapons[nOfWeapons]->y = sin(heading * RAD_PER_DEG) * (botRadius + 0.005);
+	weapons[nOfWeapons]->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
+	weapons[nOfWeapons]->coord += currBot->coord;
 
 	++nOfWeapons;
 }
 
 GPSdata getGPSdata() {
-	return {currBot->x, currBot->y, currBot->heading};
+	return {currBot->coord.x, currBot->coord.y, currBot->heading};
 }
 
 bool isBumping() {
