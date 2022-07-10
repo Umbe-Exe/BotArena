@@ -102,8 +102,10 @@ void scatterBots() {
 
 		sector[row][col] = 1;
 
-		bots[i].x = col * (botRadius * 2 + 0.01f) + botRadius;
-		bots[i].y = row * (botRadius * 2 + 0.01f) + botRadius;
+		bots[i].coord = {
+			col * (botRadius * 2 + 0.01f) + botRadius,
+			row * (botRadius * 2 + 0.01f) + botRadius
+		};
 
 		bots[i].heading = rand() % 360;
 	}

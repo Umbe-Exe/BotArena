@@ -8,19 +8,19 @@ struct Coord {
 	float x, y;
 
 	Coord operator+(Coord right) const {
-		return {this->x + right.x, this->x + right.y};
+		return {this->x + right.x, this->y + right.y};
 	}
 	Coord operator-(Coord right) const {
-		return {this->x - right.x, this->x - right.y};
+		return {this->x - right.x, this->y - right.y};
 	}
 	Coord operator+=(Coord right) {
 		this->x += right.x;
-		this->x += right.y;
+		this->y += right.y;
 		return *this;
 	}
 	Coord operator-=(Coord right) {
 		this->x -= right.x;
-		this->x -= right.y;
+		this->y -= right.y;
 		return *this;
 	}
 };

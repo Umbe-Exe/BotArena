@@ -1,5 +1,6 @@
 #pragma once
 #include "component.h"
+#include "utils.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
@@ -55,7 +56,8 @@ struct Bot : drawable, updatable{
 
 	ALLEGRO_BITMAP *bitmap;
 
-	float x, y, heading, leftTreadSpeed, rightTreadSpeed;
+	float heading, leftTreadSpeed, rightTreadSpeed;
+	Coord coord;
 
 	uint8_t energy, shield, missile, laser;
 	uint8_t shieldChargeRate, missileChargeRate, laserChargeRate;
