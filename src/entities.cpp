@@ -78,9 +78,12 @@ void destroyWeapons() {
 
 void scatterBots() {
 
+	uint16_t width = getWidth(), height = getHeight(), smallest = getSmallestSide();
+	uint16_t botWidth = (botRadius + 0.005f) * 2 * smallest;
+
 	uint8_t
-		rows = int(Rect(battleBox).bottomRight.y / (botRadius * 2 + 0.01f)),
-		cols = int(Rect(battleBox).bottomRight.x / (botRadius * 2 + 0.01f));
+		rows = int(Rect(battleBox).bottomRight.y * height / botWidth),
+		cols = int(Rect(battleBox).bottomRight.x * width / botWidth);
 
 	bool **sector;
 	sector = (bool **)_alloca(sizeof(bool *) * rows);
@@ -89,7 +92,7 @@ void scatterBots() {
 
 		for(int j = 0; j < cols; ++j)
 			sector[i][j] = 0;
-	}		
+	}
 
 	uint8_t col, row;
 
@@ -103,8 +106,8 @@ void scatterBots() {
 		sector[row][col] = 1;
 
 		bots[i].coord = {
-			col * (botRadius * 2 + 0.01f) + botRadius,
-			row * (botRadius * 2 + 0.01f) + botRadius
+			col * (botRadius + 0.005f) * 2 + botRadius + 0.005f,
+			row * (botRadius + 0.005f) * 2 + botRadius + 0.005f
 		};
 
 		bots[i].heading = rand() % 360;
@@ -149,7 +152,7 @@ void primeBitmaps() {
 
 /////////////////////////////////////////
 
-	int botWidth = smallest * (botRadius + 0.01) * 2;
+	int botWidth = smallest * (botRadius) * 2;
 	int small = botWidth * 0.9;
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
@@ -159,11 +162,11 @@ void primeBitmaps() {
 		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bots[i].bitmap);
 
-		drawCircle({{botRadius + 0.01,botRadius + 0.01},botRadius}, bots[i].color, 0.01f * smallest);
+		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bots[i].color, 0.01f * smallest);
 		drawFilledTriangle({
-			{botRadius + 0.01,0.01f},
-			{botRadius * 2 + 0.01,botRadius + 0.01},
-			{0.01f, botRadius + 0.01}}, bots[i].color);
+			{botRadius,0},
+			{botRadius * 2,botRadius },
+			{0, botRadius}}, bots[i].color);
 
 		if(bots[i].image) {
 
@@ -175,9 +178,9 @@ void primeBitmaps() {
 			float ratio = (float)height / width;
 
 			if(height > width)
-				al_draw_scaled_bitmap(image, 0, 0, width, height, (small - small / ratio) / 2 + 0.01f + (botWidth - small) / 2, 0.01f + (botWidth - small) / 2, small / ratio, small, 0);
+				al_draw_scaled_bitmap(image, 0, 0, width, height, (small - small / ratio) / 2 + (botWidth - small) / 2, (botWidth - small) / 2, small / ratio, small, 0);
 			else 
-				al_draw_scaled_bitmap(image, 0, 0, width, height, 0.01f + (botWidth - small) / 2, (small - small * ratio) / 2 + 0.01f + (botWidth - small) / 2, small, small * ratio, 0);
+				al_draw_scaled_bitmap(image, 0, 0, width, height, (botWidth - small) / 2, (small - small * ratio) / 2 + (botWidth - small) / 2, small, small * ratio, 0);
 
 			al_destroy_bitmap(image);
 		}
