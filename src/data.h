@@ -3,7 +3,7 @@
 #include "bot.h"
 #include "weapon.h"
 #define infoBox {{0.75,0},{1,1}}
-#define battleBox {{0,0},{0.75,1}}
+#define battleBox {{0,0},{0.73,1}}
 #define botRadius 0.05f
 #define weaponRadius 0.015f
 #define radarMaxRange 0.2f
