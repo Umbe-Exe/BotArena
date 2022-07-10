@@ -22,9 +22,9 @@ void Radar::priming(int sideLength) {
 void Radar::draw() {
 
 	al_draw_rotated_bitmap(bitmap,
-						   al_get_bitmap_width(bitmap) / 2,
-						   al_get_bitmap_height(bitmap) / 2,
-						   currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), currBot->heading + angle, 0);
+			       al_get_bitmap_width(bitmap) / 2,
+			       al_get_bitmap_height(bitmap) / 2,
+			       currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), currBot->heading + angle, 0);
 }
 
 void Radar::update(float delta) {}
@@ -48,9 +48,9 @@ void Bot::draw() {
 	for(uint8_t i = 0; i < nOfSensors; ++i) sensor[i]->draw();
 
 	al_draw_rotated_bitmap(bitmap,
-						   al_get_bitmap_width(bitmap) / 2,
-						   al_get_bitmap_height(bitmap) / 2,
-						   coord.x * getSmallestSide(), coord.y * getSmallestSide(), heading, 0);
+			       al_get_bitmap_width(bitmap) / 2,
+			       al_get_bitmap_height(bitmap) / 2,
+			       coord.x * getSmallestSide(), coord.y * getSmallestSide(), heading, 0);
 }
 
 void Bot::update(float delta) {}
