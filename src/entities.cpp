@@ -1,8 +1,14 @@
 #include "entities.h"
 #include "data.h"
 #include "utils.h"
+#include <vector>
+
+using std::vector;
+using std::begin;
+using std::end;
 
 Bot *bots = nullptr;
+std::vector<Bot> v2;
 uint8_t nOfBots = 0;
 Bot *currBot = nullptr;
 
@@ -55,6 +61,51 @@ void createBots(BotInitData *data, uint8_t nOfBots) {
 			currBot = &bots[i];
 			currBot->initFn();
 		}
+	}
+}
+
+void createBotsWithVector(const std::vector<BotInitData>& vect, uint8_t nOfBots) {
+
+	::nOfBots = nOfBots;
+
+	for (auto it = std::begin(vect); it != std::end(vect); ++it) {
+
+		v2.push_back(Bot());
+
+		v2[0].energy = 100;
+		v2[0].shield = 100;
+		v2[0].missile = 100;
+		v2[0].laser = 100;
+
+		v2[0].name = it->name;
+		v2[0].image = it->image;
+		v2[0].updateFn = it->updateFn;
+		v2[0].initFn = it->initFn;
+
+		switch(it->color) {
+			case RED:
+				v2[0].color = {255,0,0,1};
+				break;
+			case BLUE:
+				v2[0].color = {0,0,255,1};
+				break;
+			case GREEN:
+				v2[0].color = {0,255,0,1};
+				break;
+			case YELLOW:
+				v2[0].color = {255,255,0,1};
+				break;
+			case RANDCOL:
+			default:
+				v2[0].color = al_map_rgb(rand() % 150, rand() % 150, rand() % 150);
+		}
+
+		v2[0].alive = 1;
+
+		//if(v2[0].initFn) {
+		//	currBot = &bots[i];
+		//	currBot->initFn();
+		//}
 	}
 }
 
