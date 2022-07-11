@@ -30,7 +30,7 @@ void Radar::update(double delta) {}
 
 void LaserRange::draw() {
 
-	Coord pointCoord = {(float)cos((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range)), (float)sin((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range))};
+	Coord pointCoord = {(float)cos((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data)), (float)sin((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data))};
 	pointCoord += currBot->coord;
 
 	al_draw_line(currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(),
