@@ -53,3 +53,5 @@ void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness);
 void drawFilledCircle(Circle circle, ALLEGRO_COLOR color);
 void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness);
 void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color);
+
+float getDistance(Coord one, Coord two);

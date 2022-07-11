@@ -79,3 +79,7 @@ void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color) {
 		smallest * triangle.c.y,
 		color);
 }
+
+float getDistance(Coord one, Coord two) {
+	return sqrtf((one.x - two.x) * (one.x - two.x) + (one.y - two.y) * (one.y - two.y));
+}
