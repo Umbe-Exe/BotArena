@@ -63,13 +63,16 @@ void display() {
 		al_get_next_event(queue, &event);
 
 		switch(event.type) {
+			case ALLEGRO_EVENT_KEY_DOWN:
+				if(event.keyboard.keycode == ALLEGRO_KEY_S) scatterBots();
+				break;
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
 				running = false;
 				break;
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				al_acknowledge_resize(window);
 				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
-				primeBitmaps();
+				primeBitmaps(); 
 				al_set_target_backbuffer(window);
 				break;
 		}

@@ -1,6 +1,26 @@
 #include "Arena.h"
+#include "../test_bot/test_bot.h"
 
 int main() {
-	registerBot(0, RANDCOL, "resources/images/Coke.bmp", 0, 0);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
+	registerBot("test_bot", RANDCOL, "resources/images/Coke.bmp", 0, test_init);
 	start();
 }
