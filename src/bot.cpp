@@ -6,15 +6,15 @@ void Radar::priming(int sideLength) {
 
 	if(bitmap) al_destroy_bitmap(bitmap);
 
-	int w = sideLength * (radarMaxRange * range / 100) * 2;
+	int w = sideLength * (radarMaxRange / 100 * range) * 2;
 	int half = w / 2;
 
-	bitmap = al_create_bitmap(w, w);
+	bitmap = al_create_bitmap(w * 2, w * 2);
 
 	ALLEGRO_DISPLAY *target = al_get_current_display();
 	al_set_target_bitmap(bitmap);
 
-	al_draw_arc(half, half, half, RAD_PER_DEG * (angle - width / 2), RAD_PER_DEG * this->width, {color.r, color.g, color.b, 0.5f}, w);
+	al_draw_arc(w, w, half, RAD_PER_DEG * (angle - width / 2), RAD_PER_DEG * width, {color.r, color.g, color.b, 0.5f}, w);
 
 	al_set_target_backbuffer(target);
 }
