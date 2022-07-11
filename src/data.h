@@ -6,8 +6,8 @@
 #define battleBox {{0,0},{0.75,1}}
 #define botRadius 0.05f
 #define weaponRadius 0.015f
-#define radarMaxRange 0.2f
-#define rangeMaxRange 0.25f
+#define radarMaxRange 0.15f
+#define rangeMaxRange 0.2f
 #define sensorEnergyConsumption 2
 
 #define laserDamageMoltiplicator 0.05f // already normalized on the 100% laser system level (100 * 0.05 = 5 max damage)

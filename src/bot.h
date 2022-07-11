@@ -10,7 +10,7 @@ struct Sensor : drawable, updatable {
 	int data;
 	ALLEGRO_COLOR color;
 
-	virtual void priming(int sideLength) {}
+	virtual void priming() {}
 	virtual ~Sensor() {}
 };
 
@@ -25,7 +25,7 @@ struct Radar : Sensor{
 		this->color = color;
 	}
 
-	void priming(int sideLength) override;
+	void priming() override;
 
 	void draw() override;
 	void update(double delta) override;

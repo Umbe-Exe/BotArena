@@ -2,19 +2,18 @@
 #include "data.h"
 #include "utils.h"
 
-void Radar::priming(int sideLength) {
+void Radar::priming() {
 
 	if(bitmap) al_destroy_bitmap(bitmap);
 
-	int w = sideLength * (radarMaxRange / 100 * range) * 2;
-	int half = w / 2;
+	int radius = radarMaxRange / 100 * range * getSmallestSide();
 
-	bitmap = al_create_bitmap(w * 2, w * 2);
+	bitmap = al_create_bitmap(radius * 2, radius * 2);
 
 	ALLEGRO_DISPLAY *target = al_get_current_display();
 	al_set_target_bitmap(bitmap);
 
-	al_draw_arc(w, w, half, RAD_PER_DEG * (angle - width / 2 - 90), RAD_PER_DEG * (width), {color.r, color.g, color.b, 0.5f}, w);
+	al_draw_arc(radius, radius, radius/2, RAD_PER_DEG * (angle - width / 2 - 90), RAD_PER_DEG * (width), {color.r, color.g, color.b, 0.5f}, radius);
 
 	al_set_target_backbuffer(target);
 }
@@ -31,12 +30,13 @@ void Radar::update(double delta) {}
 
 void LaserRange::draw() {
 
-	Coord pointCoord = {(float)cos((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * (range - data), (float)sin((currBot->heading + angle) * RAD_PER_DEG) * rangeMaxRange / 100 * (range - data)};
+	Coord pointCoord = {(float)cos((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range)), (float)sin((currBot->heading + angle - 90) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range))};
+	pointCoord += currBot->coord;
 
 	al_draw_line(currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(),
-				 {color.r, color.g, color.b, 0.5f}, 0.005f * getSmallestSide());
+				 {color.r, color.g, color.b, 1.f}, 0.003f * getSmallestSide());
 
-	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.008f * getSmallestSide(), {color.r, color.g, color.b, 0.5f});
+	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.005f * getSmallestSide(), {color.r, color.g, color.b, 1.f});
 }
 
 void LaserRange::update(double delta) {}

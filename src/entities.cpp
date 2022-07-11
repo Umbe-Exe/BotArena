@@ -185,6 +185,6 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) bots[i].sensor[j]->priming(smallest);
+		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) bots[i].sensor[j]->priming();
 	}
 }
