@@ -4,7 +4,7 @@
 
 void Radar::priming(int sideLength) {
 
-	//if(bitmap) al_destroy_bitmap(bitmap);
+	if(bitmap) al_destroy_bitmap(bitmap);
 
 	int w = sideLength * (radarMaxRange / 100 * range) * 2;
 	int half = w / 2;
