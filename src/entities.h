@@ -8,7 +8,7 @@ struct BotInitData {
 	const char *name;
 	COLOR color;
 	const char *image;
-	void (*updateFn)(float);
+	void (*updateFn)(double);
 	void (*initFn)();
 };
 

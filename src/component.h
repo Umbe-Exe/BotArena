@@ -1,7 +1,7 @@
 #pragma once
 
 struct updatable {
-	virtual void update(float delta) = 0;
+	virtual void update(double delta) = 0;
 };
 
 struct drawable {

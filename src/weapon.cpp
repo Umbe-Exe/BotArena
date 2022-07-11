@@ -3,8 +3,8 @@
 
 void Missile::draw() {}
 
-void Missile::update(float delta) {}
+void Missile::update(double delta) {}
 
 void Laser::draw() {}
 
-void Laser::update(float delta) {}
+void Laser::update(double delta) {}

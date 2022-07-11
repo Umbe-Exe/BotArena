@@ -27,7 +27,7 @@ struct Radar : Sensor{
 	void priming(int sideLength) override;
 
 	void draw() override;
-	void update(float delta) override;
+	void update(double delta) override;
 
 	~Radar() override {
 		al_destroy_bitmap(bitmap);
@@ -43,13 +43,13 @@ struct LaserRange : Sensor{
 	}
 
 	void draw() override;
-	void update(float delta) override;
+	void update(double delta) override;
 };
 
 struct Bot : drawable, updatable{
 
 	void (*initFn)();
-	void (*updateFn)(float);
+	void (*updateFn)(double);
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 
@@ -73,5 +73,5 @@ struct Bot : drawable, updatable{
 	}
 
 	void draw() override;
-	void update(float delta) override;
+	void update(double delta) override;
 };

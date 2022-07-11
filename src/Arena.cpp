@@ -93,7 +93,7 @@ void start() {
 	destroy();
 }
 
-void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(float), void (*initFn)()) {
+void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)()) {
 
 	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
 

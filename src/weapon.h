@@ -9,7 +9,7 @@ struct Weapon : drawable, updatable{
 
 struct Missile : Weapon{
 	void draw() override;
-	void update(float delta) override;
+	void update(double delta) override;
 };
 
 struct Laser : Weapon {
@@ -20,5 +20,5 @@ struct Laser : Weapon {
 	}
 
 	void draw() override;
-	void update(float delta) override;
+	void update(double delta) override;
 };

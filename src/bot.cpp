@@ -17,12 +17,12 @@ void Radar::priming(int sideLength) {
 
 void Radar::draw() {}
 
-void Radar::update(float delta) {}
+void Radar::update(double delta) {}
 
 void LaserRange::draw() {}
 
-void LaserRange::update(float delta) {}
+void LaserRange::update(double delta) {}
 
 void Bot::draw() {}
 
-void Bot::update(float delta) {}
+void Bot::update(double delta) {}
