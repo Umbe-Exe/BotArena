@@ -126,7 +126,7 @@ void fireWeapon(Armament weapon, int heading) {
 
 	heading += currBot->heading;
 	weapons[nOfWeapons]->heading = heading;
-	weapons[nOfWeapons]->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
+	weapons[nOfWeapons]->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + weaponRadius + 0.001f)};
 	weapons[nOfWeapons]->coord += currBot->coord;
 
 	++nOfWeapons;
