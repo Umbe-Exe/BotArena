@@ -28,16 +28,16 @@ void Missile::update(double delta) {
 
 					uint8_t blastDamage = missileDamage - missileDamage * (getDistance(coord, bots[j].coord) / (missileBlastRadius + botRadius));
 
-					if(bots[i].shield > shieldLeakLevel)
-						bots[i].shield -= blastDamage;
+					if(bots[j].shield > shieldLeakLevel)
+						bots[j].shield -= blastDamage;
 					else {
-						uint8_t generatorDamage = blastDamage - blastDamage / 100 * bots[i].shield;
-						bots[i].shield -= blastDamage - generatorDamage;
-						bots[i].energy -= generatorDamage;
+						uint8_t generatorDamage = blastDamage - blastDamage / 100 * bots[j].shield;
+						bots[j].shield -= blastDamage - generatorDamage;
+						bots[j].energy -= generatorDamage;
 					}
 
-					if(bots[i].shield < 0) bots[i].shield = 0;
-					if(bots[i].energy <= 0); //subscribe bot to entity destroyer
+					if(bots[j].shield < 0) bots[j].shield = 0;
+					if(bots[j].energy <= 0); //subscribe bot to entity destroyer
 				}
 			//subscribe weapon to entity destroyer
 		}
