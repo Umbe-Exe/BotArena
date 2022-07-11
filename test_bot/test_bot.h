@@ -1,6 +1,6 @@
 #pragma once
 #include "../src/competition.h"
 
-void test_actions(float delta);
+void test_actions(double delta);
 
 void test_init();
