@@ -3,129 +3,66 @@
 #include "utils.h"
 #include <vector>
 
-using std::vector;
-using std::begin;
-using std::end;
-
-Bot *bots = nullptr;
-std::vector<Bot> v2;
-uint8_t nOfBots = 0;
-Bot *currBot = nullptr;
+std::vector<Bot> bots;
+std::vector<Bot>::iterator currBot;
 
 ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
 
-Weapon **weapons = nullptr;
-uint8_t nOfWeapons = 0;
+std::vector<Weapon *> weapons;
 
-void createBots(BotInitData *data, uint8_t nOfBots) {
+void createBots(std::vector<BotInitData> &data) {
 
-	::nOfBots = nOfBots;
+	for(auto& data : data) {
 
-	for(uint8_t i = 0; i < nOfBots; ++i) {
+		bots.push_back({});
 
-		bots = (Bot *)realloc(bots, sizeof(Bot) * (i + 1));
+		bots.back().energy = 100;
+		bots.back().shield = 100;
+		bots.back().missile = 100;
+		bots.back().laser = 100;
 
-		bots[i] = {};
+		bots.back().name = data.name;
+		bots.back().image = data.image;
+		bots.back().updateFn = data.updateFn;
+		bots.back().initFn = data.initFn;
 
-		bots[i].energy = 100;
-		bots[i].shield = 100;
-		bots[i].missile = 100;
-		bots[i].laser = 100;
-
-		bots[i].name = data[i].name;
-		bots[i].image = data[i].image;
-		bots[i].updateFn = data[i].updateFn;
-		bots[i].initFn = data[i].initFn;
-
-		switch(data[i].color) {
+		switch(data.color) {
 			case RED:
-				bots[i].color = {255,0,0,1};
+				bots.back().color = {255,0,0,1};
 				break;
 			case BLUE:
-				bots[i].color = {0,0,255,1};
+				bots.back().color = {0,0,255,1};
 				break;
 			case GREEN:
-				bots[i].color = {0,255,0,1};
+				bots.back().color = {0,255,0,1};
 				break;
 			case YELLOW:
-				bots[i].color = {255,255,0,1};
+				bots.back().color = {255,255,0,1};
 				break;
 			case RANDCOL:
 			default:
-				bots[i].color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
+				bots.back().color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
 		}
 
-		bots[i].alive = 1;
+		bots.back().alive = 1;
 
-		if(data[i].initFn) {
-			currBot = &bots[i];
+		if(data.initFn) {
+			currBot = bots.end();
 			currBot->initFn();
 		}
 	}
 }
 
-void createBotsWithVector(const std::vector<BotInitData>& vect, uint8_t nOfBots) {
-
-	::nOfBots = nOfBots;
-
-	for (auto it = std::begin(vect); it != std::end(vect); ++it) {
-
-		v2.push_back(Bot());
-
-		v2[0].energy = 100;
-		v2[0].shield = 100;
-		v2[0].missile = 100;
-		v2[0].laser = 100;
-
-		v2[0].name = it->name;
-		v2[0].image = it->image;
-		v2[0].updateFn = it->updateFn;
-		v2[0].initFn = it->initFn;
-
-		switch(it->color) {
-			case RED:
-				v2[0].color = {255,0,0,1};
-				break;
-			case BLUE:
-				v2[0].color = {0,0,255,1};
-				break;
-			case GREEN:
-				v2[0].color = {0,255,0,1};
-				break;
-			case YELLOW:
-				v2[0].color = {255,255,0,1};
-				break;
-			case RANDCOL:
-			default:
-				v2[0].color = al_map_rgb(rand() % 150, rand() % 150, rand() % 150);
-		}
-
-		v2[0].alive = 1;
-
-		//if(v2[0].initFn) {
-		//	currBot = &bots[i];
-		//	currBot->initFn();
-		//}
-	}
-}
-
 void destroyBots() {
-
-	for(uint8_t i = 0; i < nOfBots; ++i) {
-
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) delete bots[i].sensor[j];
-
-		free(bots[i].sensor);
-	}
-	free(bots);
+	bots.clear();
+	bots.shrink_to_fit();
 }
 
 void destroyWeapons() {
 	al_destroy_bitmap(missileBitmap);
 	al_destroy_bitmap(laserBitmap);
 
-	for(uint8_t i = 0; i < nOfWeapons; ++i) delete weapons[i];
-	free(weapons);
+	for(auto &i : weapons) delete i;
 }
 
 void scatterBots() {
@@ -145,7 +82,7 @@ void scatterBots() {
 
 	uint8_t col, row;
 
-	for(uint8_t i = 0; i < nOfBots; ++i) {
+	for(auto &bot : bots) {
 
 		do {
 			col = rand() % cols;
@@ -154,22 +91,16 @@ void scatterBots() {
 
 		sector[row][col] = 1;
 
-		bots[i].x = col * (botRadius * 2 + 0.01f) + botRadius;
-		bots[i].y = row * (botRadius * 2 + 0.01f) + botRadius;
+		bot.x = col * (botRadius * 2 + 0.01f) + botRadius;
+		bot.y = row * (botRadius * 2 + 0.01f) + botRadius;
 
-		bots[i].heading = rand() % 360;
+		bot.heading = rand() % 360;
 	}
 }
 
 void primeBitmaps() {
 
 	int smallest = getSmallestSide();
-
-	/////////////////////////////////////
-
-	for(uint8_t i = 0; i < nOfBots; ++i)
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j)
-			bots[i].sensor[j]->priming(smallest);
 
 	/////////////////////////////////////
 
@@ -208,22 +139,22 @@ void primeBitmaps() {
 	int botWidth = smallest * (botRadius + 0.01) * 2;
 	int small = botWidth * 0.9;
 
-	for(uint8_t i = 0; i < nOfBots; ++i) {
+	for(auto &bot : bots) {
 		
-		if(bots[i].bitmap) al_destroy_bitmap(bots[i].bitmap);
+		if(bot.bitmap) al_destroy_bitmap(bot.bitmap);
 
-		bots[i].bitmap = al_create_bitmap(botWidth, botWidth);
-		al_set_target_bitmap(bots[i].bitmap);
+		bot.bitmap = al_create_bitmap(botWidth, botWidth);
+		al_set_target_bitmap(bot.bitmap);
 
-		drawCircle({{botRadius + 0.01,botRadius + 0.01},botRadius}, bots[i].color, 0.01f * smallest);
+		drawCircle({{botRadius + 0.01,botRadius + 0.01},botRadius}, bot.color, 0.01f * smallest);
 		drawFilledTriangle({
 			{botRadius + 0.01,0.01f},
 			{botRadius * 2 + 0.01,botRadius + 0.01},
-			{0.01f, botRadius + 0.01}}, bots[i].color);
+			{0.01f, botRadius + 0.01}}, bot.color);
 
-		if(bots[i].image) {
+		if(bot.image) {
 
-			ALLEGRO_BITMAP *image = al_load_bitmap(bots[i].image);
+			ALLEGRO_BITMAP *image = al_load_bitmap(bot.image);
 
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
@@ -238,6 +169,7 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
-		for(uint8_t j = 0; j < bots[i].nOfSensors; ++j) bots[i].sensor[j]->priming(smallest);
+		for(auto &sensor : bot.sensors)
+			sensor->priming(smallest);
 	}
 }
