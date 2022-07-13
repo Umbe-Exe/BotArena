@@ -45,7 +45,7 @@ void Bot::draw() {
 
 	currBot = this;
 
-	for(auto &sensor : sensors) sensor->draw();
+	for(Sensor *sensor : sensors) sensor->draw();
 
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,

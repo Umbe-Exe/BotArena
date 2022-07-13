@@ -173,6 +173,7 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
+		currBot = bot;
 		for(Sensor *sensor : bot->sensors) sensor->priming();
 	}
 }
