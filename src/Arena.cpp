@@ -5,11 +5,12 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <vector>
 
 ALLEGRO_DISPLAY *window;
 ALLEGRO_EVENT_QUEUE *queue;
-BotInitData *botsData = 0;
-static uint8_t nOfBots = 0;
+
+std::vector<BotInitData> botsData;
 
 void init() {
 
@@ -36,8 +37,10 @@ void init() {
 
 	srand(time(0));
 
-	createBots(botsData, nOfBots);
-	free(botsData);
+	createBots(botsData);
+	botsData.clear();
+	botsData.shrink_to_fit();
+
 	scatterBots();
 	primeBitmaps();
 
@@ -96,10 +99,6 @@ void start() {
 	destroy();
 }
 
-void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)()) {
-
-	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
-
-	botsData[nOfBots] = {name, color, img, updateFn, initFn};
-	++nOfBots;
+void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(float), void (*initFn)()) {
+	botsData.push_back({ name, color, img, updateFn, initFn });
 }

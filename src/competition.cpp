@@ -13,15 +13,9 @@ int addRadarGetId(int angle, int width, int range) {
 	angle %= 360;
 	width %= 360;
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * (currBot->nOfSensors + 1));
+	currBot->sensors.push_back(new Radar(angle, width, range > 100 ? 100 : range, currBot->color));
 
-	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
-
-	currBot->sensor[currBot->nOfSensors]->priming();
-
-	++currBot->nOfSensors;
-
-	return currBot->nOfSensors - 1;
+	return currBot->sensors.size() - 1;
 }
 
 int addRangeGetId(int angle, int range) {
@@ -33,25 +27,21 @@ int addRangeGetId(int angle, int range) {
 
 	angle %= 360;
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * (currBot->nOfSensors + 1));
+	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range, currBot->color));
 
-	currBot->sensor[currBot->nOfSensors] = new LaserRange(angle, range > 100 ? 100 : range, currBot->color);
-
-	++currBot->nOfSensors;
-
-	return currBot->nOfSensors - 1;
+	return currBot->sensors.size() - 1;
 }
 
 void setSensorStatus(int sensorId, bool enabled) {
 
-	if(currBot->nOfSensors >= sensorId && sensorId >= 0)
-		currBot->sensor[sensorId]->enabled = 0;
+	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+		currBot->sensors[sensorId]->enabled = enabled;
 }
 
 int getSensorData(int sensorId) {
 
-	if(currBot->nOfSensors >= sensorId && sensorId >= 0)
-		return currBot->sensor[sensorId]->data;
+	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+		return currBot->sensors[sensorId]->data;
 	else return 0;
 }
 
@@ -113,23 +103,20 @@ void setSystemChargeRate(System system, int rate) {
 
 void fireWeapon(Armament weapon, int heading) {
 
-	weapons = (Weapon **)realloc(weapons, sizeof(Weapon *) * (nOfWeapons + 1));
+	weapons.push_back(0);
 
 	switch(weapon) {
 		case MISSILE:
-			weapons[nOfWeapons] = new Missile();
+			weapons.back() = new Missile();
 			break;
 		case LASER:
-			weapons[nOfWeapons] = new Laser(currBot->laser * laserDamageMoltiplicator);
+			weapons.back() = new Laser(currBot->laser * laserDamageMoltiplicator);
 			break;
 	}
 
-	heading += currBot->heading;
-	weapons[nOfWeapons]->heading = heading;
-	weapons[nOfWeapons]->coord = {(float)cos((heading - 90) * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin((heading - 90) * RAD_PER_DEG) * (botRadius + weaponRadius + 0.001f)};
-	weapons[nOfWeapons]->coord += currBot->coord;
-
-	++nOfWeapons;
+	weapons.back()->heading = heading;
+	weapons.back()->x = cos(heading * RAD_PER_DEG) * (botRadius + 0.005);
+	weapons.back()->y = sin(heading * RAD_PER_DEG) * (botRadius + 0.005);
 }
 
 GPSdata getGPSdata() {

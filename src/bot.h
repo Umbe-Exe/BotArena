@@ -3,6 +3,7 @@
 #include "utils.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <vector>
 
 struct Sensor : drawable, updatable {
 	float angle, range;
@@ -62,8 +63,7 @@ struct Bot : drawable, updatable{
 	uint8_t energy, shield, missile, laser;
 	uint8_t shieldChargeRate, missileChargeRate, laserChargeRate;
 
-	Sensor **sensor;
-	uint8_t nOfSensors;
+	std::vector<Sensor *> sensors;
 
 	bool bumping, alive;
 
