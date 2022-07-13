@@ -175,6 +175,6 @@ void primeBitmaps() {
 		}
 
 		for(auto &sensor : bot.sensors)
-			sensor->priming(smallest);
+			sensor->priming();
 	}
 }
