@@ -4,7 +4,7 @@
 
 void Radar::priming() {
 
-	//if(bitmap) al_destroy_bitmap(bitmap);
+	if(bitmap) al_destroy_bitmap(bitmap);
 
 	int radius = radarMaxRange / 100 * range * getSmallestSide();
 

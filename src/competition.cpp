@@ -15,7 +15,7 @@ int addRadarGetId(int angle, int width, int range) {
 	
 	currBot->sensors.push_back(new Radar(angle, width, range > 100 ? 100 : range, currBot->color));
 
-	return currBot->sensors.size() - 1;
+	return (int)currBot->sensors.size() - 1;
 }
 
 int addRangeGetId(int angle, int range) {
@@ -29,7 +29,7 @@ int addRangeGetId(int angle, int range) {
 	
 	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range, currBot->color));
 
-	return currBot->sensors.size() - 1;
+	return (int)currBot->sensors.size() - 1;
 }
 
 void setSensorStatus(int sensorId, bool enabled) {

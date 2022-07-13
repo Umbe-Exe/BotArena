@@ -8,7 +8,7 @@
 struct Sensor : drawable, updatable {
 	float angle, range;
 	bool enabled;
-	int data;
+	int data = 0;
 	ALLEGRO_COLOR color;
 
 	virtual void priming() {}
@@ -17,7 +17,7 @@ struct Sensor : drawable, updatable {
 
 struct Radar : Sensor{
 	float width;
-	ALLEGRO_BITMAP *bitmap;
+	ALLEGRO_BITMAP *bitmap = nullptr;
 
 	Radar(float angle, float width, float range, ALLEGRO_COLOR color) {
 		this->angle = angle;
