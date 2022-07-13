@@ -43,6 +43,8 @@ void LaserRange::update(double delta) {}
 
 void Bot::draw() {
 
+	currBot = this;
+
 	for(auto &sensor : sensors) sensor->draw();
 
 	al_draw_rotated_bitmap(bitmap,

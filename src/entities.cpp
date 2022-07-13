@@ -3,8 +3,8 @@
 #include "utils.h"
 #include <vector>
 
-std::vector<Bot> bots;
-std::vector<Bot>::iterator currBot;
+std::vector<Bot *> bots;
+Bot * currBot;
 
 ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
 
@@ -12,48 +12,50 @@ std::vector<Weapon *> weapons;
 
 void createBots(std::vector<BotInitData> &data) {
 
-	for(auto& data : data) {
+	for(auto &data : data) {
 
-		bots.push_back({});
+		bots.push_back(new Bot);
 
-		bots.back().energy = 100;
-		bots.back().shield = 100;
-		bots.back().missile = 100;
-		bots.back().laser = 100;
-
-		bots.back().name = data.name;
-		bots.back().image = data.image;
-		bots.back().updateFn = data.updateFn;
-		bots.back().initFn = data.initFn;
+		bots.back()->energy = 100;
+		bots.back()->shield = 100;
+		bots.back()->missile = 100;
+		bots.back()->laser = 100;
+				   
+		bots.back()->name = data.name;
+		bots.back()->image = data.image;
+		bots.back()->updateFn = data.updateFn;
+		bots.back()->initFn = data.initFn;
 
 		switch(data.color) {
 			case RED:
-				bots.back().color = {255,0,0,1};
+				bots.back()->color = {255,0,0,1};
 				break;
 			case BLUE:
-				bots.back().color = {0,0,255,1};
+				bots.back()->color = {0,0,255,1};
 				break;
 			case GREEN:
-				bots.back().color = {0,255,0,1};
+				bots.back()->color = {0,255,0,1};
 				break;
 			case YELLOW:
-				bots.back().color = {255,255,0,1};
+				bots.back()->color = {255,255,0,1};
 				break;
 			case RANDCOL:
 			default:
-				bots.back().color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
+				bots.back()->color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
 		}
 
-		bots.back().alive = 1;
+		bots.back()->alive = 1;
 
 		if(data.initFn) {
-			currBot = bots.end() - 1;
+			currBot = bots.back();
 			currBot->initFn();
 		}
 	}
 }
 
 void destroyBots() {
+	for(Bot *bot : bots) delete bot;
+
 	bots.clear();
 	bots.shrink_to_fit();
 }
@@ -63,6 +65,9 @@ void destroyWeapons() {
 	al_destroy_bitmap(laserBitmap);
 
 	for(auto &i : weapons) delete i;
+
+	weapons.clear();
+	weapons.shrink_to_fit();
 }
 
 void scatterBots() {
@@ -85,7 +90,7 @@ void scatterBots() {
 
 	uint8_t col, row;
 
-	for(auto &bot : bots) {
+	for(Bot *bot : bots) {
 
 		do {
 			col = rand() % cols;
@@ -94,12 +99,12 @@ void scatterBots() {
 
 		sector[row][col] = 1;
 
-		bot.coord = {
+		bot->coord = {
 			col * (botRadius + 0.005f) * 2 + botRadius + 0.005f,
 			row * (botRadius + 0.005f) * 2 + botRadius + 0.005f
 		};
 
-		bot.heading = rand() % 360;
+		bot->heading = rand() % 360;
 	}
 }
 
@@ -144,22 +149,22 @@ void primeBitmaps() {
 	int botWidth = smallest * (botRadius) * 2;
 	int small = botWidth * 0.9;
 
-	for(auto &bot : bots) {
+	for(Bot *bot : bots) {
 		
-		if(bot.bitmap) al_destroy_bitmap(bot.bitmap);
+		if(bot->bitmap) al_destroy_bitmap(bot->bitmap);
 
-		bot.bitmap = al_create_bitmap(botWidth, botWidth);
-		al_set_target_bitmap(bot.bitmap);
+		bot->bitmap = al_create_bitmap(botWidth, botWidth);
+		al_set_target_bitmap(bot->bitmap);
 
-		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot.color, 0.01f * smallest);
+		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot->color, 0.01f * smallest);
 		drawFilledTriangle({
 			{botRadius,0},
 			{botRadius * 2,botRadius },
-			{0, botRadius}}, bot.color);
+			{0, botRadius}}, bot->color);
 
-		if(bot.image) {
+		if(bot->image) {
 
-			ALLEGRO_BITMAP *image = al_load_bitmap(bot.image);
+			ALLEGRO_BITMAP *image = al_load_bitmap(bot->image);
 
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
@@ -174,7 +179,7 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
-		for(auto &sensor : bot.sensors)
+		for(auto &sensor : bot->sensors)
 			sensor->priming();
 	}
 }

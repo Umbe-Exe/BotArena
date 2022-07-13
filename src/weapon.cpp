@@ -11,7 +11,7 @@ void Missile::draw() {
 
 void Missile::update(double delta) {
 
-	for(auto bot = bots.begin(); bot != bots.end(); ++bot)
+	for(Bot *bot : bots)
 		if(getDistance(coord, bot->coord) < botRadius + weaponRadius) {
 			if(bot->shield > shieldLeakLevel) bot->shield -= missileDamage;
 			else {
@@ -23,7 +23,7 @@ void Missile::update(double delta) {
 			if(bot->shield < 0) bot->shield = 0;
 			if(bot->energy <= 0); //subscribe bot to entity destroyer
 
-			for(auto botAround = bots.begin(); botAround != bots.end(); ++botAround)
+			for(Bot *botAround : bots)
 				if(botAround != bot && getDistance(coord, botAround->coord) < missileBlastRadius + botRadius) {
 
 					uint8_t blastDamage = missileDamage - missileDamage * (getDistance(coord, botAround->coord) / (missileBlastRadius + botRadius));
@@ -56,17 +56,17 @@ void Laser::draw() {
 
 void Laser::update(double delta) {
 
-	for(auto &bot : bots)
-		if(getDistance(coord, bot.coord) < botRadius + weaponRadius) {
-			if(bot.shield > shieldLeakLevel) bot.shield -= damage;
+	for(Bot *bot : bots)
+		if(getDistance(coord, bot->coord) < botRadius + weaponRadius) {
+			if(bot->shield > shieldLeakLevel) bot->shield -= damage;
 			else {
-				uint8_t generatorDamage = damage - damage / 100 * bot.shield;
-				bot.shield -= damage - generatorDamage;
-				bot.energy -= generatorDamage;
+				uint8_t generatorDamage = damage - damage / 100 * bot->shield;
+				bot->shield -= damage - generatorDamage;
+				bot->energy -= generatorDamage;
 			}
 
-			if(bot.shield < 0) bot.shield = 0;
-			if(bot.energy <= 0); //subscribe bot to entity destroyer
+			if(bot->shield < 0) bot->shield = 0;
+			if(bot->energy <= 0); //subscribe bot to entity destroyer
 
 			//subscribe weapon to entity destroyer
 		}

@@ -55,7 +55,7 @@ struct Bot : drawable, updatable{
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 
-	ALLEGRO_BITMAP *bitmap;
+	ALLEGRO_BITMAP *bitmap = nullptr;
 
 	float heading, leftTreadSpeed, rightTreadSpeed;
 	Coord coord;

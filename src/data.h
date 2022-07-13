@@ -21,8 +21,8 @@
 #define bumpForce 0.05f
 #define friction 0.02f // friction applied after bump
 
-extern std::vector<Bot> bots;
-extern std::vector<Bot>::iterator currBot;
+extern std::vector<Bot *> bots;
+extern Bot *currBot;
 
 extern ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
 
