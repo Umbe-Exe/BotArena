@@ -56,8 +56,6 @@ void update(double delta) {
 
 void display() {
 
-	setWidthHeight(500, 300);
-
 	bool running = true;
 	ALLEGRO_EVENT event;
 	double previous = al_get_time(), current;
