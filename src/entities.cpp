@@ -54,7 +54,7 @@ void destroyWeapons() {
 	al_destroy_bitmap(missileBitmap);
 	al_destroy_bitmap(laserBitmap);
 
-	for(auto &i : weapons) delete i;
+	for(Weapon *i : weapons) delete i;
 
 	weapons.clear();
 	weapons.shrink_to_fit();
@@ -173,7 +173,6 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
-		for(auto &sensor : bot->sensors)
-			sensor->priming();
+		for(Sensor *sensor : bot->sensors) sensor->priming();
 	}
 }
