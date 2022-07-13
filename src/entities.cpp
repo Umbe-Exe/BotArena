@@ -147,7 +147,7 @@ void primeBitmaps() {
 /////////////////////////////////////////
 
 	int botWidth = smallest * (botRadius) * 2;
-	int small = botWidth * 0.9;
+	float small = botWidth * 0.9;
 
 	for(Bot *bot : bots) {
 		
@@ -159,8 +159,8 @@ void primeBitmaps() {
 		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot->color, 0.01f * smallest);
 		drawFilledTriangle({
 			{botRadius,0},
-			{botRadius * 2,botRadius },
-			{0, botRadius}}, bot->color);
+			{botRadius * 2,botRadius},
+			{botRadius, botRadius * 2}}, bot->color);
 
 		if(bot->image) {
 
@@ -169,12 +169,16 @@ void primeBitmaps() {
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
 			int width = al_get_bitmap_width(image), height = al_get_bitmap_height(image);
-			float ratio = (float)height / width;
+
+			float scale;
+
+			if(height > width) scale = small / height;
+			else scale = scale = small / width;
 
 			if(height > width)
-				al_draw_scaled_bitmap(image, 0, 0, width, height, (small - small / ratio) / 2 + (botWidth - small) / 2, (botWidth - small) / 2, small / ratio, small, 0);
+				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * RAD_PER_DEG, 0);
 			else 
-				al_draw_scaled_bitmap(image, 0, 0, width, height, (botWidth - small) / 2, (small - small * ratio) / 2 + (botWidth - small) / 2, small, small * ratio, 0);
+				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * RAD_PER_DEG, 0);
 
 			al_destroy_bitmap(image);
 		}

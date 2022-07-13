@@ -114,7 +114,7 @@ void fireWeapon(Armament weapon, int heading) {
 			break;
 	}
 
-	weapons.back()->heading = heading;
+	weapons.back()->heading = currBot->heading + heading;
 	weapons.back()->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
 }
 
