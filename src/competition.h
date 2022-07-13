@@ -9,7 +9,8 @@ enum Armament {
 };
 
 struct GPSdata {
-	float x, y, heading;
+	float x, y;
+	int heading;
 };
 
 int addRadarGetId(int angle, int width, int range);
@@ -28,7 +29,7 @@ int getSystemEnergy(System system);
 
 void setSystemChargeRate(System system, int rate);
 
-void fireWeapon(Armament weapon, int heading);
+void fireWeapon(Armament weapon, float heading);
 
 GPSdata getGPSdata();
 

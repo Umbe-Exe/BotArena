@@ -13,7 +13,7 @@ void Radar::priming() {
 	ALLEGRO_DISPLAY *target = al_get_current_display();
 	al_set_target_bitmap(bitmap);
 
-	al_draw_arc(radius, radius, radius / 2.f, RAD_PER_DEG * (angle - width / 2), RAD_PER_DEG * (width), {color.r, color.g, color.b, 0.5f}, radius);
+	al_draw_arc(radius, radius, radius / 2.f, RAD_PER_DEG * (angle - width / 2), RAD_PER_DEG * (width), {currBot->color.r, currBot->color.g, currBot->color.b, 0.5f}, radius);
 
 	al_set_target_backbuffer(target);
 }
@@ -34,9 +34,9 @@ void LaserRange::draw() {
 	pointCoord += currBot->coord;
 
 	al_draw_line(currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(),
-				 {color.r, color.g, color.b, 1.f}, 0.003f * getSmallestSide());
+				 {currBot->color.r, currBot->color.g, currBot->color.b, 1.f}, 0.003f * getSmallestSide());
 
-	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.005f * getSmallestSide(), {color.r, color.g, color.b, 1.f});
+	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.005f * getSmallestSide(), {currBot->color.r, currBot->color.g, currBot->color.b, 1.f});
 }
 
 void LaserRange::update(double delta) {}

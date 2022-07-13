@@ -12,39 +12,29 @@ std::vector<Weapon *> weapons;
 
 void createBots(std::vector<BotInitData> &data) {
 
+	ALLEGRO_COLOR color;
+
 	for(auto &data : data) {
-
-		bots.push_back(new Bot);
-
-		bots.back()->energy = 100;
-		bots.back()->shield = 100;
-		bots.back()->missile = 100;
-		bots.back()->laser = 100;
-				   
-		bots.back()->name = data.name;
-		bots.back()->image = data.image;
-		bots.back()->updateFn = data.updateFn;
-		bots.back()->initFn = data.initFn;
 
 		switch(data.color) {
 			case RED:
-				bots.back()->color = {255,0,0,1};
+				color = {255,0,0,1};
 				break;
 			case BLUE:
-				bots.back()->color = {0,0,255,1};
+				color = {0,0,255,1};
 				break;
 			case GREEN:
-				bots.back()->color = {0,255,0,1};
+				color = {0,255,0,1};
 				break;
 			case YELLOW:
-				bots.back()->color = {255,255,0,1};
+				color = {255,255,0,1};
 				break;
 			case RANDCOL:
 			default:
-				bots.back()->color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
+				color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
 		}
 
-		bots.back()->alive = 1;
+		bots.push_back(new Bot(data.name, data.image, color, data.initFn, data.updateFn));
 
 		if(data.initFn) {
 			currBot = bots.back();

@@ -13,7 +13,7 @@ int addRadarGetId(int angle, int width, int range) {
 	angle %= 360;
 	width %= 360;
 	
-	currBot->sensors.push_back(new Radar(angle, width, range > 100 ? 100 : range, currBot->color));
+	currBot->sensors.push_back(new Radar(width, angle, range > 100 ? 100 : range));
 
 	return (int)currBot->sensors.size() - 1;
 }
@@ -27,7 +27,7 @@ int addRangeGetId(int angle, int range) {
 
 	angle %= 360;
 	
-	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range, currBot->color));
+	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range));
 
 	return (int)currBot->sensors.size() - 1;
 }
@@ -69,8 +69,6 @@ int getSystemEnergy(System system) {
 			return currBot->shield;
 		case LASERS:
 			return currBot->laser;
-		default:
-			return -1;
 	}
 }
 
@@ -78,21 +76,18 @@ void setSystemChargeRate(System system, int rate) {
 
 	switch(system) {
 		case MISSILES:
-
 			if(currBot->shieldChargeRate + currBot->laserChargeRate + rate > 100) 
 				rate = 100 - currBot->shieldChargeRate + currBot->laserChargeRate;
 
 			currBot->missileChargeRate = rate;
 			break;
 		case SHIELDS:
-
 			if(currBot->missileChargeRate + currBot->laserChargeRate + rate > 100)
 				rate = 100 - currBot->missileChargeRate + currBot->laserChargeRate;
 
 			currBot->shieldChargeRate = rate;
 			break;
 		case LASERS:
-
 			if(currBot->missileChargeRate + currBot->shieldChargeRate + rate > 100)
 				rate = 100 - currBot->missileChargeRate + currBot->shieldChargeRate;
 
@@ -101,21 +96,19 @@ void setSystemChargeRate(System system, int rate) {
 	}
 }
 
-void fireWeapon(Armament weapon, int heading) {
+void fireWeapon(Armament weapon, float heading) {
 
-	weapons.push_back(0);
+	heading += currBot->heading;
+	Coord coord = currBot->coord + Coord{(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
 
 	switch(weapon) {
 		case MISSILE:
-			weapons.back() = new Missile();
+			weapons.push_back(new Missile(heading, coord));
 			break;
 		case LASER:
-			weapons.back() = new Laser(currBot->laser * laserDamageMoltiplicator);
+			weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
 			break;
 	}
-
-	weapons.back()->heading = currBot->heading + heading;
-	weapons.back()->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
 }
 
 GPSdata getGPSdata() {
