@@ -115,8 +115,7 @@ void fireWeapon(Armament weapon, int heading) {
 	}
 
 	weapons.back()->heading = heading;
-	weapons.back()->x = cos(heading * RAD_PER_DEG) * (botRadius + 0.005);
-	weapons.back()->y = sin(heading * RAD_PER_DEG) * (botRadius + 0.005);
+	weapons.back()->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
 }
 
 GPSdata getGPSdata() {

@@ -47,7 +47,7 @@ void createBots(std::vector<BotInitData> &data) {
 		bots.back().alive = 1;
 
 		if(data.initFn) {
-			currBot = bots.end();
+			currBot = bots.end() - 1;
 			currBot->initFn();
 		}
 	}
@@ -94,7 +94,7 @@ void scatterBots() {
 
 		sector[row][col] = 1;
 
-		bots[i].coord = {
+		bot.coord = {
 			col * (botRadius + 0.005f) * 2 + botRadius + 0.005f,
 			row * (botRadius + 0.005f) * 2 + botRadius + 0.005f
 		};

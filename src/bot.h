@@ -68,8 +68,7 @@ struct Bot : drawable, updatable{
 	bool bumping, alive;
 
 	~Bot() {
-		for(uint8_t j = 0; j < this->nOfSensors; ++j) delete this->sensor[j];
-		free(this->sensor);
+		for(auto &sensor : sensors) delete sensor;
 
 		al_destroy_bitmap(bitmap);
 	}

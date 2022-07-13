@@ -4,7 +4,7 @@
 
 void Radar::priming() {
 
-	if(bitmap) al_destroy_bitmap(bitmap);
+	//if(bitmap) al_destroy_bitmap(bitmap);
 
 	int radius = radarMaxRange / 100 * range * getSmallestSide();
 
@@ -43,9 +43,7 @@ void LaserRange::update(double delta) {}
 
 void Bot::draw() {
 
-	currBot = this;
-
-	for(uint8_t i = 0; i < nOfSensors; ++i) sensor[i]->draw();
+	for(auto &sensor : sensors) sensor->draw();
 
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,
