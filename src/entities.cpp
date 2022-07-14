@@ -64,16 +64,9 @@ void scatterBots() {
 
 	uint16_t botWidth = (botRadius + 0.005f) * 2 * arenaSize;
 
-	uint8_t size = arenaSize / botWidth; 
+	const uint8_t size = 1.f / ((botRadius + 0.005f) * 2);
 
-	bool **sector;
-	sector = (bool **)_alloca(sizeof(bool *) * size);
-	for(uint8_t i = 0; i < size; ++i) {
-		sector[i] = (bool *)_alloca(sizeof(bool) * size);
-
-		for(int j = 0; j < size; ++j)
-			sector[i][j] = 0;
-	}
+	bool sector[size][size]{};
 
 	uint8_t col, row;
 
