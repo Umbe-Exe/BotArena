@@ -7,7 +7,7 @@
 #include <allegro5/allegro_image.h>
 #include <vector>
 
-ALLEGRO_DISPLAY *window;
+ALLEGRO_DISPLAY *window = nullptr;
 ALLEGRO_EVENT_QUEUE *queue;
 
 std::vector<BotInitData> botsData;
@@ -26,8 +26,6 @@ void init() {
 
 	window = al_create_display(500, 300);
 
-	setWidthHeight(500, 300);
-
 	queue = al_create_event_queue();
 
 	al_install_keyboard();
@@ -36,6 +34,8 @@ void init() {
 	al_register_event_source(queue, al_get_keyboard_event_source());
 
 	srand(time(0));
+
+	makeBattleBox();
 
 	createBots(botsData);
 	botsData.clear();
@@ -72,7 +72,7 @@ void display() {
 				break;
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				al_acknowledge_resize(window);
-				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
+				makeBattleBox();
 				primeBitmaps(); 
 				al_set_target_backbuffer(window);
 				break;

@@ -3,7 +3,9 @@
 #include "bot.h"
 #include "weapon.h"
 #define infoBox {{0.75,0},{1,1}}
-#define battleBox {{0,0},{0.75,1}}
+
+extern Rect battleBox;
+
 #define botRadius 0.05f
 #define weaponRadius 0.015f
 #define radarMaxRange 0.15f
@@ -27,6 +29,9 @@ extern Bot *currBot;
 extern ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
 
 extern std::vector<Weapon *> weapons;
+
+extern ALLEGRO_DISPLAY *window;
+extern int arenaSize;
 
 /*
 IMPORTANT INFO

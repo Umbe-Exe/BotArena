@@ -39,14 +39,9 @@ struct Triangle {
 	Coord a, b, c;
 };
 
-int getWidth();
-int getHeight();
-int getSmallestSide();
+extern int win_w, win_h;
 
-float toWin_hCoord(float y);
-float toWin_wCoord(float x);
-
-void setWidthHeight(int width, int height);
+void makeBattleBox();
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color);
 void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness);

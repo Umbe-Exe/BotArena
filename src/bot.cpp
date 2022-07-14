@@ -6,7 +6,7 @@ void Radar::priming() {
 
 	if(bitmap) al_destroy_bitmap(bitmap);
 
-	float radius = radarMaxRange / 100 * range * getSmallestSide();
+	float radius = radarMaxRange / 100 * range * arenaSize;
 
 	bitmap = al_create_bitmap(radius * 2, radius * 2);
 
@@ -23,7 +23,7 @@ void Radar::draw() {
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,
 			       al_get_bitmap_height(bitmap) / 2,
-						   currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), RAD_PER_DEG * (currBot->heading + angle), 0);
+						   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, RAD_PER_DEG * (currBot->heading + angle), 0);
 }
 
 void Radar::update(double delta) {}
@@ -33,10 +33,10 @@ void LaserRange::draw() {
 	Coord pointCoord = {(float)cos((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data)), (float)sin((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data))};
 	pointCoord += currBot->coord;
 
-	al_draw_line(currBot->coord.x * getSmallestSide(), currBot->coord.y * getSmallestSide(), pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(),
-				 {currBot->color.r, currBot->color.g, currBot->color.b, 1.f}, 0.003f * getSmallestSide());
+	al_draw_line(currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, pointCoord.x * arenaSize, pointCoord.y * arenaSize,
+				 {currBot->color.r, currBot->color.g, currBot->color.b, 1.f}, 0.003f * arenaSize);
 
-	al_draw_filled_circle(pointCoord.x * getSmallestSide(), pointCoord.y * getSmallestSide(), 0.005f * getSmallestSide(), {currBot->color.r, currBot->color.g, currBot->color.b, 1.f});
+	al_draw_filled_circle(pointCoord.x * arenaSize, pointCoord.y * arenaSize, 0.005f * arenaSize, {currBot->color.r, currBot->color.g, currBot->color.b, 1.f});
 }
 
 void LaserRange::update(double delta) {}
@@ -50,7 +50,7 @@ void Bot::draw() {
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,
 			       al_get_bitmap_height(bitmap) / 2,
-			       coord.x * getSmallestSide(), coord.y * getSmallestSide(), RAD_PER_DEG * heading, 0);
+			       coord.x * arenaSize, coord.y * arenaSize, RAD_PER_DEG * heading, 0);
 }
 
 void Bot::update(double delta) {}
