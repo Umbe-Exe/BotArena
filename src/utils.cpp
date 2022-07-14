@@ -18,7 +18,7 @@ void makeBattleBox() {
 	if(Rect(infoBox).topLeft.x * win_w < win_h) arenaSize = Rect(infoBox).topLeft.x * win_w;
 	else arenaSize = win_h;
 
-	Coord location = {(Rect(infoBox).topLeft.x / 2.f - arenaSize / win_w / 2.f) * win_w / arenaSize,(0.5f - arenaSize / win_h / 2.f) * win_w / arenaSize};
+	Coord location = {(Rect(infoBox).topLeft.x / 2.f * win_w - arenaSize / 2.f) / arenaSize,(win_h / 2.f - arenaSize / 2.f) / arenaSize};
 
 	transposeEntities(location - battleBox.topLeft);
 
