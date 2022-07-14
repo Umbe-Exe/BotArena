@@ -18,11 +18,11 @@ void makeBattleBox() {
 	if(Rect(infoBox).topLeft.x * win_w < win_h) arenaSize = Rect(infoBox).topLeft.x * win_w;
 	else arenaSize = win_h;
 
-	Coord location = {Rect(infoBox).topLeft.x / 2.f - arenaSize / win_w / 2.f,  0.5f - arenaSize / win_h / 2.f};
+	Coord location = {(Rect(infoBox).topLeft.x / 2.f - arenaSize / win_w / 2.f) * win_w / arenaSize,(0.5f - arenaSize / win_h / 2.f) * win_w / arenaSize};
 
 	transposeEntities(location - battleBox.topLeft);
 
-	battleBox = {location,location + Coord{arenaSize / win_w,arenaSize / win_h}};
+	battleBox = {location,location + Coord{1,1}};
 }
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
@@ -38,10 +38,10 @@ void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
 void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness) {
 
 	al_draw_rectangle(
-		win_w * rect.topLeft.x,
-		win_h * rect.topLeft.y,
-		win_w * rect.bottomRight.x,
-		win_h * rect.bottomRight.y,
+		arenaSize * rect.topLeft.x,
+		arenaSize * rect.topLeft.y,
+		arenaSize * rect.bottomRight.x,
+		arenaSize * rect.bottomRight.y,
 		color, thickness);
 }
 

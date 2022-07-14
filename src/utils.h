@@ -39,8 +39,6 @@ struct Triangle {
 	Coord a, b, c;
 };
 
-extern int win_w, win_h;
-
 void makeBattleBox();
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color);
