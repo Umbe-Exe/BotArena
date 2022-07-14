@@ -8,7 +8,7 @@ Rect battleBox{};
 
 void transposeEntities(Coord vector) {
 	for(Bot *bot : bots) bot->coord += vector;
-	for(Bot *weapons : bots) weapons->coord += vector;
+	for(Weapon *weapon : weapons) weapon->coord += vector;
 }
 
 void makeBattleBox() {
@@ -18,14 +18,11 @@ void makeBattleBox() {
 	if(Rect(infoBox).topLeft.x * win_w < win_h) arenaSize = Rect(infoBox).topLeft.x * win_w;
 	else arenaSize = win_h;
 
-	Coord location = {(Rect(infoBox).topLeft.x * win_w / 2.f - arenaSize / 2.f) / win_w,  (win_h / 2.f - arenaSize / 2.f) / win_h};
+	Coord location = {Rect(infoBox).topLeft.x / 2.f - arenaSize / win_w / 2.f,  0.5f - arenaSize / win_h / 2.f};
 
 	transposeEntities(location - battleBox.topLeft);
 
-	if(arenaSize == win_h)
-		battleBox = {location,location + Coord{(float)arenaSize / win_h,(float)arenaSize / win_h}};
-	else
-		battleBox = {location,location + Coord{(float)arenaSize / win_w,(float)arenaSize / win_w}};
+	battleBox = {location,location + Coord{(float)arenaSize / win_w,(float)arenaSize / win_h}};
 }
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
