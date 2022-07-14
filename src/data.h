@@ -31,7 +31,7 @@ extern ALLEGRO_BITMAP *missileBitmap, *laserBitmap;
 extern std::vector<Weapon *> weapons;
 
 extern ALLEGRO_DISPLAY *window;
-extern int arenaSize;
+extern float arenaSize;
 
 /*
 IMPORTANT INFO

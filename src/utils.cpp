@@ -2,7 +2,7 @@
 #include "data.h"
 
 int win_w, win_h;
-int arenaSize = 0;
+float arenaSize;
 
 Rect battleBox{};
 
@@ -22,7 +22,7 @@ void makeBattleBox() {
 
 	transposeEntities(location - battleBox.topLeft);
 
-	battleBox = {location,location + Coord{(float)arenaSize / win_w,(float)arenaSize / win_h}};
+	battleBox = {location,location + Coord{arenaSize / win_w,arenaSize / win_h}};
 }
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
