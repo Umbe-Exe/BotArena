@@ -9,20 +9,42 @@ struct Coord {
 	float x, y;
 
 	Coord operator+(Coord right) const {
-		return {this->x + right.x, this->y + right.y};
+		return {x + right.x, y + right.y};
 	}
 	Coord operator-(Coord right) const {
-		return {this->x - right.x, this->y - right.y};
+		return {x - right.x, y - right.y};
 	}
 	Coord operator+=(Coord right) {
-		this->x += right.x;
-		this->y += right.y;
+		x += right.x;
+		y += right.y;
 		return *this;
 	}
 	Coord operator-=(Coord right) {
-		this->x -= right.x;
-		this->y -= right.y;
+		x -= right.x;
+		y -= right.y;
 		return *this;
+	}
+	Coord operator+(float right) const {
+		return {x + right, y + right};
+	}
+	Coord operator-(float right) const {
+		return {x - right, y - right};
+	}
+	Coord operator+=(float right) {
+		x += right;
+		y += right;
+		return *this;
+	}
+	Coord operator-=(float right) {
+		x -= right;
+		y -= right;
+		return *this;
+	}
+	Coord operator*(float right) const {
+		return {x * right, y * right};
+	}
+	float dot(Coord right) const {
+		return x * right.x + y * right.y;
 	}
 };
 

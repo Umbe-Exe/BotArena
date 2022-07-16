@@ -7,7 +7,8 @@
 
 void logic(double delta) {
 
-
+	for(Bot *bot : bots) bot->update(delta);
+	for(Weapon *weapon : weapons) weapon->update(delta);
 
 }
 

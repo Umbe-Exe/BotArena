@@ -6,9 +6,9 @@
 #include <vector>
 
 struct Sensor : drawable, updatable {
-	int angle, range;
-	bool enabled = 0;
-	int data = 0;
+	float angle, range;
+	bool enabled = 1;
+	float data = 0;
 
 	Sensor(float angle, float range) : angle(angle), range(range) {}
 
