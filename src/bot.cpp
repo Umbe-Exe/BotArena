@@ -44,15 +44,11 @@ void LaserRange::draw() {
 	}
 }
 
-inline float fakeDistance(Coord a, Coord b) {
-	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
-}
-
 inline float Signed2DTriArea(Coord a, Coord b, Coord c) {
 	return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
 }
 
-inline void segment_segment_intersection(Coord a, Coord b, Coord c, Coord d, std::set<float> &distance) {
+inline void segment_segment_intersection(Coord a, Coord b, Coord c, Coord d, std::set<float> &t) {
 	float a1 = Signed2DTriArea(a, b, d);
 	float a2 = Signed2DTriArea(a, b, c);
 
@@ -60,11 +56,7 @@ inline void segment_segment_intersection(Coord a, Coord b, Coord c, Coord d, std
 		float a3 = Signed2DTriArea(c, d, a);
 		float a4 = a3 + a2 - a1;
 
-		if(a3 * a4 < 0.f) {
-			float t = a3 / (a3 - a4);
-
-			distance.insert(fakeDistance(currBot->coord, a + (b - a) * t));
-		}
+		if(a3 * a4 < 0.f) t.insert(a3 / (a3 - a4));
 	}
 }
 
@@ -72,11 +64,11 @@ void LaserRange::update(double delta) {
 
 	data = 0;
 
-	std::set<float> distance;
+	std::set<float> t;
 
-	Coord d = {cosf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * range), sinf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * range)};
+	Coord d = {cosf((currBot->heading + angle) * RAD_PER_DEG), sinf((currBot->heading + angle) * RAD_PER_DEG)};
 	Coord m;
-	float b, c, discr, t;
+	float b, c, discr, tmp;
 
 	for(Bot *bot : bots)
 		if(bot != currBot) {
@@ -88,19 +80,20 @@ void LaserRange::update(double delta) {
 			if((c > 0.f && b > 0.f) ||
 			   (discr = b * b - c) < 0.f) continue;
 
-			t = -b - sqrtf(discr);
+			tmp = (-b - sqrtf(discr)) / rangeMaxRange;
 
-			distance.insert(fakeDistance(currBot->coord, currBot->coord + d * t));
+			if(tmp < 1.f) t.insert(tmp);
 		}
 
+	d *= rangeMaxRange / 100 * range;
 	d += currBot->coord;
 
-	segment_segment_intersection(currBot->coord, d, battleBox.topLeft, {battleBox.bottomRight.x,battleBox.topLeft.y}, distance);
-	segment_segment_intersection(currBot->coord, d, {battleBox.bottomRight.x,battleBox.topLeft.y}, battleBox.bottomRight, distance);
-	segment_segment_intersection(currBot->coord, d, battleBox.bottomRight, {battleBox.topLeft.x,battleBox.bottomRight.y}, distance);
-	segment_segment_intersection(currBot->coord, d, {battleBox.topLeft.x,battleBox.bottomRight.y}, battleBox.topLeft, distance);
+	segment_segment_intersection(currBot->coord, d, battleBox.topLeft, {battleBox.bottomRight.x,battleBox.topLeft.y}, t);
+	segment_segment_intersection(currBot->coord, d, {battleBox.bottomRight.x,battleBox.topLeft.y}, battleBox.bottomRight, t);
+	segment_segment_intersection(currBot->coord, d, battleBox.bottomRight, {battleBox.topLeft.x,battleBox.bottomRight.y}, t);
+	segment_segment_intersection(currBot->coord, d, {battleBox.topLeft.x,battleBox.bottomRight.y}, battleBox.topLeft, t);
 
-	if(distance.size()) data = 100 - (*distance.begin()) / rangeMaxRange * 100;
+	if(t.size()) data = 100 - *t.begin() * 100;
 }
 
 void Bot::draw() {

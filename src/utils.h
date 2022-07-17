@@ -43,6 +43,11 @@ struct Coord {
 	Coord operator*(float right) const {
 		return {x * right, y * right};
 	}
+	Coord operator*=(float right) {
+		x *= right;
+		y *= right;
+		return *this;
+	}
 	float dot(Coord right) const {
 		return x * right.x + y * right.y;
 	}
