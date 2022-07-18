@@ -1,81 +1,80 @@
 #include "utils.h"
+#include "data.h"
 
-static int win_h;
-static int win_w;
-static int smallest;
+int win_w, win_h;
+float arenaSize;
 
-void setWidthHeight(int width, int height) {
-	win_h = height;
-	win_w = width;
-	smallest = width < height ? width : height;
+Rect battleBox{};
+
+void transposeEntities(Coord vector) {
+	for(Bot *bot : bots) bot->coord += vector;
+	for(Weapon *weapon : weapons) weapon->coord += vector;
 }
 
-int getWidth() {
-	return win_w;
-}
+void makeBattleBox() {
+	win_w = al_get_display_width(window);
+	win_h = al_get_display_height(window);
 
-int getHeight() {
-	return win_h;
-}
+	if(Rect(infoBox).topLeft.x * win_w < win_h) arenaSize = Rect(infoBox).topLeft.x * win_w;
+	else arenaSize = win_h;
 
-int getSmallestSide() {
-	return smallest;
-}
+	Coord location = {(Rect(infoBox).topLeft.x / 2.f * win_w - arenaSize / 2.f) / arenaSize,(win_h / 2.f - arenaSize / 2.f) / arenaSize};
 
-float toWin_hCoord(float y) {
-	return y * win_h;
-}
+	transposeEntities(location - battleBox.topLeft);
 
-float toWin_wCoord(float x) {
-	return x * win_w;
+	battleBox = {location,location + Coord{1,1}};
 }
 
 void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
 
 	al_draw_filled_rectangle(
-		toWin_wCoord(rect.topLeft.x),
-		toWin_hCoord(rect.topLeft.y),
-		toWin_wCoord(rect.bottomRight.x),
-		toWin_hCoord(rect.bottomRight.y),
+		win_w * rect.topLeft.x,
+		win_h * rect.topLeft.y,
+		win_w * rect.bottomRight.x,
+		win_h * rect.bottomRight.y,
 		color);
 }
 
 void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness) {
 
 	al_draw_rectangle(
-		toWin_wCoord(rect.topLeft.x),
-		toWin_hCoord(rect.topLeft.y),
-		toWin_wCoord(rect.bottomRight.x),
-		toWin_hCoord(rect.bottomRight.y),
+		arenaSize * rect.topLeft.x,
+		arenaSize * rect.topLeft.y,
+		arenaSize * rect.bottomRight.x,
+		arenaSize * rect.bottomRight.y,
 		color, thickness);
 }
 
 void drawFilledCircle(Circle circle, ALLEGRO_COLOR color) {
 
 	al_draw_filled_circle(
-		smallest * circle.center.x,
-		smallest * circle.center.y,
-		smallest * circle.radius,
+		arenaSize * circle.center.x,
+		arenaSize * circle.center.y,
+		arenaSize * circle.radius,
 		color);
 }
 
 void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness) {
 
 	al_draw_circle(
-		smallest * circle.center.x,
-		smallest * circle.center.y,
-		smallest * circle.radius,
+		arenaSize * circle.center.x,
+		arenaSize * circle.center.y,
+		arenaSize * circle.radius,
 		color, thickness);
 }
 
 void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color) {
 
 	al_draw_filled_triangle(
-		smallest * triangle.a.x,
-		smallest * triangle.a.y,
-		smallest * triangle.b.x,
-		smallest * triangle.b.y,
-		smallest * triangle.c.x,
-		smallest * triangle.c.y,
+		arenaSize * triangle.a.x,
+		arenaSize * triangle.a.y,
+		arenaSize * triangle.b.x,
+		arenaSize * triangle.b.y,
+		arenaSize * triangle.c.x,
+		arenaSize * triangle.c.y,
 		color);
+}
+
+float getDistance(Coord one, Coord two) {
+	return sqrtf((one.x - two.x) * (one.x - two.x) + (one.y - two.y) * (one.y - two.y));
 }

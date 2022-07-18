@@ -3,6 +3,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <vector>
 
 struct BotInitData {
 	const char *name;
@@ -12,7 +13,7 @@ struct BotInitData {
 	void (*initFn)();
 };
 
-void createBots(BotInitData *data, uint8_t nOfBots);
+void createBots(std::vector<BotInitData> &data);
 
 void destroyBots();
 

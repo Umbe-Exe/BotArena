@@ -13,12 +13,14 @@ void logic(double delta) {
 
 void draw() {
 
-	al_clear_to_color(al_map_rgb(200,200,200));
+	al_clear_to_color(al_map_rgb(200, 200, 200));
 
-	for(uint8_t i = 0; i < nOfBots; ++i) bots[i].draw();
-	for(uint8_t i = 0; i < nOfWeapons; ++i) weapons[i]->draw();
+	for(Bot *bot : bots) bot->draw();
+	for(Weapon *weapon : weapons) weapon->draw();
 
 	drawFilledRect(infoBox, {50,0,0,1});
 
+	drawRect(battleBox, {255,255,255,255}, 1);
+
 	al_flip_display();
-}
+};

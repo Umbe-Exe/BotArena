@@ -5,11 +5,12 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <vector>
 
-ALLEGRO_DISPLAY *window;
+ALLEGRO_DISPLAY *window = nullptr;
 ALLEGRO_EVENT_QUEUE *queue;
-BotInitData *botsData = 0;
-static uint8_t nOfBots = 0;
+
+std::vector<BotInitData> botsData;
 
 void init() {
 
@@ -25,8 +26,6 @@ void init() {
 
 	window = al_create_display(500, 300);
 
-	setWidthHeight(500, 300);
-
 	queue = al_create_event_queue();
 
 	al_install_keyboard();
@@ -36,8 +35,12 @@ void init() {
 
 	srand(time(0));
 
-	createBots(botsData, nOfBots);
-	free(botsData);
+	makeBattleBox();
+
+	createBots(botsData);
+	botsData.clear();
+	botsData.shrink_to_fit();
+
 	scatterBots();
 	primeBitmaps();
 
@@ -52,8 +55,6 @@ void update(double delta) {
 }
 
 void display() {
-
-	setWidthHeight(500, 300);
 
 	bool running = true;
 	ALLEGRO_EVENT event;
@@ -71,7 +72,7 @@ void display() {
 				break;
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				al_acknowledge_resize(window);
-				setWidthHeight(al_get_display_width(window), al_get_display_height(window));
+				makeBattleBox();
 				primeBitmaps(); 
 				al_set_target_backbuffer(window);
 				break;
@@ -97,9 +98,5 @@ void start() {
 }
 
 void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)()) {
-
-	botsData = (BotInitData *)realloc(botsData, sizeof(BotInitData) * (nOfBots + 1));
-
-	botsData[nOfBots] = {name, color, img, updateFn, initFn};
-	++nOfBots;
+	botsData.push_back({ name, color, img, updateFn, initFn });
 }

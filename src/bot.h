@@ -3,29 +3,26 @@
 #include "utils.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <vector>
 
 struct Sensor : drawable, updatable {
-	float angle, range;
-	bool enabled;
-	int data;
-	ALLEGRO_COLOR color;
+	int angle, range;
+	bool enabled = 0;
+	int data = 0;
 
-	virtual void priming(int sideLength) {}
+	Sensor(float angle, float range) : angle(angle), range(range) {}
+
+	virtual void priming() {}
 	virtual ~Sensor() {}
 };
 
-struct Radar : Sensor{
-	float width;
-	ALLEGRO_BITMAP *bitmap;
+struct Radar : Sensor {
+	int width;
+	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	Radar(float angle, float width, float range, ALLEGRO_COLOR color) {
-		this->angle = angle;
-		this->width = width;
-		this->range = range;
-		this->color = color;
-	}
+	Radar(int width, int angle, int range) : width(width), Sensor(angle, range) {}
 
-	void priming(int sideLength) override;
+	void priming() override;
 
 	void draw() override;
 	void update(double delta) override;
@@ -37,11 +34,7 @@ struct Radar : Sensor{
 
 struct LaserRange : Sensor{
 
-	LaserRange(float angle, float range, ALLEGRO_COLOR color) {
-		this->angle = angle;
-		this->range = range;
-		this->color = color;
-	}
+	LaserRange(int angle, int range) : Sensor(angle, range) {}
 
 	void draw() override;
 	void update(double delta) override;
@@ -49,27 +42,31 @@ struct LaserRange : Sensor{
 
 struct Bot : drawable, updatable{
 
+	Bot(const char *name, const char *image, ALLEGRO_COLOR color, void (*initFn)(), void (*updateFn)(double)) :
+		name(name),
+		image(image),
+		color(color),
+		initFn(initFn), updateFn(updateFn) {}
+
 	void (*initFn)();
 	void (*updateFn)(double);
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 
-	ALLEGRO_BITMAP *bitmap;
+	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	float heading, leftTreadSpeed, rightTreadSpeed;
+	int heading=0, leftTreadSpeed=0, rightTreadSpeed=0;
 	Coord coord;
 
-	uint8_t energy, shield, missile, laser;
-	uint8_t shieldChargeRate, missileChargeRate, laserChargeRate;
+	uint8_t energy=100, shield=100, missile=100, laser=100;
+	uint8_t shieldChargeRate=0, missileChargeRate=0, laserChargeRate=0;
 
-	Sensor **sensor;
-	uint8_t nOfSensors;
+	std::vector<Sensor *> sensors;
 
-	bool bumping, alive;
+	bool bumping = 0;
 
 	~Bot() {
-		for(uint8_t j = 0; j < this->nOfSensors; ++j) delete this->sensor[j];
-		free(this->sensor);
+		for(Sensor *sensor : sensors) delete sensor;
 
 		al_destroy_bitmap(bitmap);
 	}

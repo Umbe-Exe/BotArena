@@ -13,15 +13,9 @@ int addRadarGetId(int angle, int width, int range) {
 	angle %= 360;
 	width %= 360;
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor *) * (currBot->nOfSensors + 1));
+	currBot->sensors.push_back(new Radar(width, angle, range > 100 ? 100 : range));
 
-	currBot->sensor[currBot->nOfSensors] = new Radar(angle, width, range > 100 ? 100 : range, currBot->color);
-
-	currBot->sensor[currBot->nOfSensors]->priming(getSmallestSide());
-
-	++currBot->nOfSensors;
-
-	return currBot->nOfSensors - 1;
+	return (int)currBot->sensors.size() - 1;
 }
 
 int addRangeGetId(int angle, int range) {
@@ -33,25 +27,21 @@ int addRangeGetId(int angle, int range) {
 
 	angle %= 360;
 	
-	currBot->sensor = (Sensor **)realloc(currBot->sensor, sizeof(Sensor*) * (currBot->nOfSensors + 1));
+	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range));
 
-	currBot->sensor[currBot->nOfSensors] = new LaserRange(angle, range > 100 ? 100 : range, currBot->color);
-
-	++currBot->nOfSensors;
-
-	return currBot->nOfSensors - 1;
+	return (int)currBot->sensors.size() - 1;
 }
 
 void setSensorStatus(int sensorId, bool enabled) {
 
-	if(currBot->nOfSensors >= sensorId && sensorId >= 0)
-		currBot->sensor[sensorId]->enabled = 0;
+	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+		currBot->sensors[sensorId]->enabled = enabled;
 }
 
 int getSensorData(int sensorId) {
 
-	if(currBot->nOfSensors >= sensorId && sensorId >= 0)
-		return currBot->sensor[sensorId]->data;
+	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+		return currBot->sensors[sensorId]->data;
 	else return 0;
 }
 
@@ -79,8 +69,6 @@ int getSystemEnergy(System system) {
 			return currBot->shield;
 		case LASERS:
 			return currBot->laser;
-		default:
-			return -1;
 	}
 }
 
@@ -88,21 +76,18 @@ void setSystemChargeRate(System system, int rate) {
 
 	switch(system) {
 		case MISSILES:
-
 			if(currBot->shieldChargeRate + currBot->laserChargeRate + rate > 100) 
 				rate = 100 - currBot->shieldChargeRate + currBot->laserChargeRate;
 
 			currBot->missileChargeRate = rate;
 			break;
 		case SHIELDS:
-
 			if(currBot->missileChargeRate + currBot->laserChargeRate + rate > 100)
 				rate = 100 - currBot->missileChargeRate + currBot->laserChargeRate;
 
 			currBot->shieldChargeRate = rate;
 			break;
 		case LASERS:
-
 			if(currBot->missileChargeRate + currBot->shieldChargeRate + rate > 100)
 				rate = 100 - currBot->missileChargeRate + currBot->shieldChargeRate;
 
@@ -111,25 +96,19 @@ void setSystemChargeRate(System system, int rate) {
 	}
 }
 
-void fireWeapon(Armament weapon, int heading) {
+void fireWeapon(Armament weapon, float heading) {
 
-	weapons = (Weapon **)realloc(weapons, sizeof(Weapon *) * (nOfWeapons + 1));
+	heading += currBot->heading;
+	Coord coord = currBot->coord + Coord{(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
 
 	switch(weapon) {
 		case MISSILE:
-			weapons[nOfWeapons] = new Missile();
+			weapons.push_back(new Missile(heading, coord));
 			break;
 		case LASER:
-			weapons[nOfWeapons] = new Laser(currBot->laser * laserDamageMoltiplicator);
+			weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
 			break;
 	}
-
-	heading += currBot->heading;
-	weapons[nOfWeapons]->heading = heading;
-	weapons[nOfWeapons]->coord = {(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
-	weapons[nOfWeapons]->coord += currBot->coord;
-
-	++nOfWeapons;
 }
 
 GPSdata getGPSdata() {
