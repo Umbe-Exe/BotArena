@@ -20,5 +20,7 @@ void draw() {
 
 	drawFilledRect(infoBox, {50,0,0,1});
 
+	drawRect(battleBox, {255,255,255,255}, 1);
+
 	al_flip_display();
 };

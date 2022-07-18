@@ -62,29 +62,19 @@ void destroyWeapons() {
 
 void scatterBots() {
 
-	uint16_t width = getWidth(), height = getHeight(), smallest = getSmallestSide();
-	uint16_t botWidth = (botRadius + 0.005f) * 2 * smallest;
+	uint16_t botWidth = (botRadius + 0.005f) * 2 * arenaSize;
 
-	uint8_t
-		rows = int(Rect(battleBox).bottomRight.y * height / botWidth),
-		cols = int(Rect(battleBox).bottomRight.x * width / botWidth);
+	const uint8_t size = 1.f / ((botRadius + 0.005f) * 2);
 
-	bool **sector;
-	sector = (bool **)_alloca(sizeof(bool *) * rows);
-	for(uint8_t i = 0; i < rows; ++i) {
-		sector[i] = (bool *)_alloca(sizeof(bool) * cols);
-
-		for(int j = 0; j < cols; ++j)
-			sector[i][j] = 0;
-	}
+	bool sector[size][size]{};
 
 	uint8_t col, row;
 
 	for(Bot *bot : bots) {
 
 		do {
-			col = rand() % cols;
-			row = rand() % rows;
+			col = rand() % size;
+			row = rand() % size;
 		} while(sector[row][col]);
 
 		sector[row][col] = 1;
@@ -94,17 +84,15 @@ void scatterBots() {
 			row * (botRadius + 0.005f) * 2 + botRadius + 0.005f
 		};
 
+		bot->coord += battleBox.topLeft;
+
 		bot->heading = rand() % 360;
 	}
 }
 
 void primeBitmaps() {
 
-	int smallest = getSmallestSide();
-
-	/////////////////////////////////////
-
-	int weaponWidth = smallest * weaponRadius * 2;
+	int weaponWidth = arenaSize * weaponRadius * 2;
 
 	if(missileBitmap) al_destroy_bitmap(missileBitmap);
 
@@ -132,11 +120,11 @@ void primeBitmaps() {
 	laserBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(laserBitmap);
 
-	al_draw_line(weaponWidth / 2, 0, weaponWidth / 2, weaponWidth, al_map_rgb(255, 0, 0), smallest * 0.01f);
+	al_draw_line(weaponWidth / 2, 0, weaponWidth / 2, weaponWidth, al_map_rgb(255, 0, 0), arenaSize * 0.01f);
 
 /////////////////////////////////////////
 
-	int botWidth = smallest * (botRadius) * 2;
+	int botWidth = arenaSize * (botRadius) * 2;
 	float small = botWidth * 0.9;
 
 	for(Bot *bot : bots) {
@@ -146,7 +134,7 @@ void primeBitmaps() {
 		bot->bitmap = al_create_bitmap(botWidth, botWidth);
 		al_set_target_bitmap(bot->bitmap);
 
-		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot->color, 0.01f * smallest);
+		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot->color, 0.01f * arenaSize);
 		drawFilledTriangle({
 			{botRadius,0},
 			{botRadius * 2,botRadius},
