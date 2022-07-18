@@ -29,12 +29,52 @@ void Radar::draw() {
 	}
 }
 
-void Radar::update(double delta) {}
+bool testRayBot(Coord p, Coord d, Coord s) {
+	Coord m = p - s;
+	float c = m.dot(m) - botRadius * botRadius;
+
+	if(c <= 0.f) return 1;
+	float b = m.dot(d);
+
+	if(b > 0.f) return 0;
+	float disc = b * b - c;
+
+	if(disc < 0.f) return 0;
+
+	return 1;
+}
+
+bool isClockwiseAngle(Coord a, Coord b, Coord c) {
+	if((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y) < 0) return 1;
+	return 0;
+}
+
+void Radar::update(double delta) {
+
+	data = -1;
+
+	Coord
+		start = {cosf((currBot->heading + angle - width / 2) * RAD_PER_DEG), sinf((currBot->heading + angle - width / 2) * RAD_PER_DEG)},
+		end = {cosf((currBot->heading + angle + width / 2) * RAD_PER_DEG), sinf((currBot->heading + angle + width / 2) * RAD_PER_DEG)};
+
+	for(Bot *bot : bots)
+		if(bot != currBot) {
+
+			if(getDistance(bot->coord, currBot->coord) < botRadius + radarMaxRange / 100 * range && (
+				testRayBot(currBot->coord, start, bot->coord) ||
+				testRayBot(currBot->coord, end, bot->coord) || (
+					isClockwiseAngle(start, currBot->coord, bot->coord) &&
+					isClockwiseAngle(bot->coord, currBot->coord, end)))) {
+				data = +1;
+				break;
+			}
+		}
+}
 
 void LaserRange::draw() {
 
 	if(enabled) {
-		Coord pointCoord = {(float)cos((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data)), (float)sin((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data))};
+		Coord pointCoord = {cosf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data)), sinf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data))};
 		pointCoord += currBot->coord;
 
 		al_draw_line(currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, pointCoord.x * arenaSize, pointCoord.y * arenaSize,
