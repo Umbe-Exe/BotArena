@@ -154,9 +154,9 @@ void primeBitmaps() {
 			else scale = scale = small / width;
 
 			if(height > width)
-				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * RAD_PER_DEG, 0);
+				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * DEG_PER_RAD, 0);
 			else 
-				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * RAD_PER_DEG, 0);
+				al_draw_scaled_rotated_bitmap(image, width / 2.f, height / 2.f, botWidth / 2.f, botWidth / 2.f, scale, scale, 90 * DEG_PER_RAD, 0);
 
 			al_destroy_bitmap(image);
 		}

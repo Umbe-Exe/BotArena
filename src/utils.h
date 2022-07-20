@@ -3,7 +3,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <math.h>
 
-#define RAD_PER_DEG 1.7453292519943295E-2
+#define DEG_PER_RAD 1.7453292519943295E-2
 
 struct Coord {
 	float x, y;

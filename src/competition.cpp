@@ -99,7 +99,7 @@ void setSystemChargeRate(System system, int rate) {
 void fireWeapon(Armament weapon, float heading) {
 
 	heading += currBot->heading;
-	Coord coord = currBot->coord + Coord{(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
+	Coord coord = currBot->coord + Coord{(float)cos(heading * DEG_PER_RAD) * (botRadius + 0.005f), (float)sin(heading * DEG_PER_RAD) * (botRadius + 0.005f)};
 
 	switch(weapon) {
 		case MISSILE:

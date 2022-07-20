@@ -14,7 +14,7 @@ void Radar::priming() {
 	ALLEGRO_DISPLAY *target = al_get_current_display();
 	al_set_target_bitmap(bitmap);
 
-	al_draw_arc(radius, radius, radius / 2.f, RAD_PER_DEG * (angle - width / 2), RAD_PER_DEG * (width), {currBot->color.r, currBot->color.g, currBot->color.b, 0.5f}, radius);
+	al_draw_arc(radius, radius, radius / 2.f, DEG_PER_RAD * (angle - width / 2), DEG_PER_RAD * (width), {currBot->color.r, currBot->color.g, currBot->color.b, 0.5f}, radius);
 
 	al_set_target_backbuffer(target);
 }
@@ -25,7 +25,7 @@ void Radar::draw() {
 		al_draw_rotated_bitmap(bitmap,
 							   al_get_bitmap_width(bitmap) / 2,
 							   al_get_bitmap_height(bitmap) / 2,
-							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, RAD_PER_DEG * (currBot->heading + angle), 0);
+							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, DEG_PER_RAD * (currBot->heading + angle), 0);
 	}
 }
 
@@ -54,8 +54,8 @@ void Radar::update(double delta) {
 	data = -1;
 
 	Coord
-		start = {cosf((currBot->heading + angle - width / 2) * RAD_PER_DEG), sinf((currBot->heading + angle - width / 2) * RAD_PER_DEG)},
-		end = {cosf((currBot->heading + angle + width / 2) * RAD_PER_DEG), sinf((currBot->heading + angle + width / 2) * RAD_PER_DEG)};
+		start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD)},
+		end = {cosf((currBot->heading + angle + width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle + width / 2) * DEG_PER_RAD)};
 
 	for(Bot *bot : bots)
 		if(bot != currBot) {
@@ -74,7 +74,7 @@ void Radar::update(double delta) {
 void LaserRange::draw() {
 
 	if(enabled) {
-		Coord pointCoord = {cosf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data)), sinf((currBot->heading + angle) * RAD_PER_DEG) * (rangeMaxRange / 100 * (range - data))};
+		Coord pointCoord = {cosf((currBot->heading + angle) * DEG_PER_RAD) * (rangeMaxRange / 100 * (range - data)), sinf((currBot->heading + angle) * DEG_PER_RAD) * (rangeMaxRange / 100 * (range - data))};
 		pointCoord += currBot->coord;
 
 		al_draw_line(currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, pointCoord.x * arenaSize, pointCoord.y * arenaSize,
@@ -106,7 +106,7 @@ void LaserRange::update(double delta) {
 
 	std::set<float> t;
 
-	Coord d = {cosf((currBot->heading + angle) * RAD_PER_DEG), sinf((currBot->heading + angle) * RAD_PER_DEG)};
+	Coord d = {cosf((currBot->heading + angle) * DEG_PER_RAD), sinf((currBot->heading + angle) * DEG_PER_RAD)};
 	Coord m;
 	float b, c, discr, tmp;
 
@@ -145,7 +145,7 @@ void Bot::draw() {
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,
 			       al_get_bitmap_height(bitmap) / 2,
-			       coord.x * arenaSize, coord.y * arenaSize, RAD_PER_DEG * heading, 0);
+			       coord.x * arenaSize, coord.y * arenaSize, DEG_PER_RAD * heading, 0);
 }
 
 void Bot::update(double delta) {
