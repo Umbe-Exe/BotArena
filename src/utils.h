@@ -4,6 +4,7 @@
 #include <math.h>
 
 #define DEG_PER_RAD 1.7453292519943295E-2
+#define PI 3.14159265359
 
 struct Coord {
 	float x, y;

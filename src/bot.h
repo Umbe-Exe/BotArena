@@ -55,15 +55,17 @@ struct Bot : drawable, updatable{
 
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	int heading=0, leftTreadSpeed=0, rightTreadSpeed=0;
+	int heading = 0, leftTreadSpeed = 0, rightTreadSpeed = 0;
 	Coord coord;
 
-	uint8_t energy=100, shield=100, missile=100, laser=100;
-	uint8_t shieldChargeRate=0, missileChargeRate=0, laserChargeRate=0;
+	uint8_t energy = 100, shield = 100, missile = 100, laser = 100;
+	uint8_t shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
 
 	bool bumping = 0;
+	float impulseSpeed = 0, impulseHeading = 0;
+	int turboTime = 0;
 
 	~Bot() {
 		for(Sensor *sensor : sensors) delete sensor;

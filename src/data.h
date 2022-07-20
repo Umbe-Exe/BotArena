@@ -21,7 +21,8 @@ extern Rect battleBox;
 #define shieldLeakLevel 80
 
 #define bumpForce 0.05f
-#define friction 0.02f // friction applied after bump
+#define friction 0.02f
+#define maxSpeed 0.1f
 
 extern std::vector<Bot *> bots;
 extern Bot *currBot;
