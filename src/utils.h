@@ -3,26 +3,55 @@
 #include <allegro5/allegro_primitives.h>
 #include <math.h>
 
-#define RAD_PER_DEG 1.7453292519943295E-2
+#define DEG_PER_RAD 1.7453292519943295E-2
+#define RAD_PER_DEG 5.7295779513082320E1 
+#define PI 3.14159265359
 
 struct Coord {
 	float x, y;
 
 	Coord operator+(Coord right) const {
-		return {this->x + right.x, this->y + right.y};
+		return {x + right.x, y + right.y};
 	}
 	Coord operator-(Coord right) const {
-		return {this->x - right.x, this->y - right.y};
+		return {x - right.x, y - right.y};
 	}
 	Coord operator+=(Coord right) {
-		this->x += right.x;
-		this->y += right.y;
+		x += right.x;
+		y += right.y;
 		return *this;
 	}
 	Coord operator-=(Coord right) {
-		this->x -= right.x;
-		this->y -= right.y;
+		x -= right.x;
+		y -= right.y;
 		return *this;
+	}
+	Coord operator+(float right) const {
+		return {x + right, y + right};
+	}
+	Coord operator-(float right) const {
+		return {x - right, y - right};
+	}
+	Coord operator+=(float right) {
+		x += right;
+		y += right;
+		return *this;
+	}
+	Coord operator-=(float right) {
+		x -= right;
+		y -= right;
+		return *this;
+	}
+	Coord operator*(float right) const {
+		return {x * right, y * right};
+	}
+	Coord operator*=(float right) {
+		x *= right;
+		y *= right;
+		return *this;
+	}
+	float dot(Coord right) const {
+		return x * right.x + y * right.y;
 	}
 };
 

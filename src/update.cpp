@@ -1,13 +1,13 @@
 #include "update.h"
 #include "utils.h"
+#include "data.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-#include "data.h"
-
 void logic(double delta) {
 
-
+	for(Bot *bot : bots) bot->update(delta);
+	for(Weapon *weapon : weapons) weapon->update(delta);
 
 }
 

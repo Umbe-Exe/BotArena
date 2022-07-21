@@ -6,7 +6,7 @@ void Missile::draw() {
 	al_draw_rotated_bitmap(missileBitmap,
 			       al_get_bitmap_width(missileBitmap) / 2,
 			       al_get_bitmap_height(missileBitmap) / 2,
-			       coord.x * arenaSize, coord.y * arenaSize, RAD_PER_DEG * heading, 0);
+			       coord.x * arenaSize, coord.y * arenaSize, DEG_PER_RAD * heading, 0);
 }
 
 void Missile::update(double delta) {
@@ -42,8 +42,15 @@ void Missile::update(double delta) {
 			//subscribe weapon to entity destroyer
 		}
 
-	coord.x += missileSpeed * cos(heading * RAD_PER_DEG);
-	coord.y += missileSpeed * sin(heading * RAD_PER_DEG);
+	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
+	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD) * delta;
+
+	if(
+		coord.x < battleBox.topLeft.x + weaponRadius ||
+		coord.x > battleBox.bottomRight.x - weaponRadius ||
+		coord.y < battleBox.topLeft.y + weaponRadius ||
+		coord.y > battleBox.bottomRight.y - weaponRadius)
+		;//subscribe weapon to entity destroyer
 }
 
 void Laser::draw() {
@@ -51,7 +58,7 @@ void Laser::draw() {
 	al_draw_rotated_bitmap(laserBitmap,
 			       al_get_bitmap_width(laserBitmap) / 2,
 			       al_get_bitmap_height(laserBitmap) / 2,
-			       coord.x * arenaSize, coord.y * arenaSize, RAD_PER_DEG * heading, 0);
+			       coord.x * arenaSize, coord.y * arenaSize, DEG_PER_RAD * heading, 0);
 }
 
 void Laser::update(double delta) {
@@ -71,6 +78,13 @@ void Laser::update(double delta) {
 			//subscribe weapon to entity destroyer
 		}
 
-	coord.x += missileSpeed * cos(heading * RAD_PER_DEG);
-	coord.y += missileSpeed * sin(heading * RAD_PER_DEG);
+	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
+	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD) * delta;
+
+	if(
+		coord.x < battleBox.topLeft.x + weaponRadius ||
+		coord.x > battleBox.bottomRight.x - weaponRadius ||
+		coord.y < battleBox.topLeft.y + weaponRadius ||
+		coord.y > battleBox.bottomRight.y - weaponRadius)
+		;//subscribe weapon to entity destroyer
 }

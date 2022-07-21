@@ -99,20 +99,26 @@ void setSystemChargeRate(System system, int rate) {
 void fireWeapon(Armament weapon, float heading) {
 
 	heading += currBot->heading;
-	Coord coord = currBot->coord + Coord{(float)cos(heading * RAD_PER_DEG) * (botRadius + 0.005f), (float)sin(heading * RAD_PER_DEG) * (botRadius + 0.005f)};
+	Coord coord = currBot->coord + Coord{(float)cos(heading * DEG_PER_RAD) * (botRadius + 0.005f), (float)sin(heading * DEG_PER_RAD) * (botRadius + 0.005f)};
 
 	switch(weapon) {
 		case MISSILE:
-			weapons.push_back(new Missile(heading, coord));
+			if(currBot->missile == 100) {
+				weapons.push_back(new Missile(heading, coord));
+				currBot->missile = 0;
+			}
 			break;
 		case LASER:
-			weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
+			if(currBot->laser >= 20) {
+				weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
+				currBot->laser = 0;
+			}
 			break;
 	}
 }
 
 GPSdata getGPSdata() {
-	return {currBot->coord.x, currBot->coord.y, currBot->heading};
+	return {currBot->coord.x - battleBox.topLeft.x, currBot->coord.y - battleBox.topLeft.y, currBot->heading};
 }
 
 bool isBumping() {

@@ -6,9 +6,9 @@
 #include <vector>
 
 struct Sensor : drawable, updatable {
-	int angle, range;
-	bool enabled = 0;
-	int data = 0;
+	float angle, range;
+	bool enabled = 1;
+	float data = 0;
 
 	Sensor(float angle, float range) : angle(angle), range(range) {}
 
@@ -55,15 +55,18 @@ struct Bot : drawable, updatable{
 
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	int heading=0, leftTreadSpeed=0, rightTreadSpeed=0;
+	float heading = 0;
+	int leftTreadSpeed = 0, rightTreadSpeed = 0;
 	Coord coord;
 
-	uint8_t energy=100, shield=100, missile=100, laser=100;
-	uint8_t shieldChargeRate=0, missileChargeRate=0, laserChargeRate=0;
+	uint8_t energy = 100, shield = 100, missile = 100, laser = 100;
+	uint8_t shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
 
 	bool bumping = 0;
+	float impulseSpeed = 0, impulseHeading = 0;
+	int turboTime = 0;
 
 	~Bot() {
 		for(Sensor *sensor : sensors) delete sensor;
@@ -74,3 +77,5 @@ struct Bot : drawable, updatable{
 	void draw() override;
 	void update(double delta) override;
 };
+
+void BotsColliding();
