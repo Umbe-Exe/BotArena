@@ -9,8 +9,7 @@ enum Armament {
 };
 
 struct GPSdata {
-	float x, y;
-	int heading;
+	float x, y, heading;
 };
 
 int addRadarGetId(int angle, int width, int range);

@@ -55,7 +55,8 @@ struct Bot : drawable, updatable{
 
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	int heading = 0, leftTreadSpeed = 0, rightTreadSpeed = 0;
+	float heading = 0;
+	int leftTreadSpeed = 0, rightTreadSpeed = 0;
 	Coord coord;
 
 	uint8_t energy = 100, shield = 100, missile = 100, laser = 100;

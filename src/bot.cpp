@@ -156,57 +156,57 @@ void Bot::update(double delta) {
 
 	if(updateFn) updateFn(delta);
 
-	float rotAngle, startAngle , lTreadDist , rTreadDist , x , y , innerRad , midRad ,
+	float rotAngle, startAngle, lTreadDist, rTreadDist, x, y, innerRad, midRad,
 		u, v, radians, dist;
 	int lTreadSpeed, rTreadSpeed;
 
-	if(impulseSpeed != 0) {                                     
+	if(impulseSpeed != 0) {
 
-		radians = impulseHeading * DEG_PER_RAD; 
-		dist = impulseSpeed * delta;    
+		radians = impulseHeading * DEG_PER_RAD;
+		dist = impulseSpeed * delta;
 		coord += {dist *cosf(radians), dist * sinf(radians)};
 		impulseSpeed -= friction * delta;
 		if(impulseSpeed < 0) impulseSpeed = 0;
 	}
 
-	if(turboTime) {                                                   
+	if(turboTime) {
 
 		lTreadSpeed = leftTreadSpeed + 200;
-		rTreadSpeed = rightTreadSpeed + 200;  
+		rTreadSpeed = rightTreadSpeed + 200;
 		turboTime--;
-	} else { 
+	} else {
 
-		lTreadSpeed = leftTreadSpeed;            
+		lTreadSpeed = leftTreadSpeed;
 		rTreadSpeed = rightTreadSpeed;
 	}
 	lTreadDist = maxSpeed * lTreadSpeed / (100.0 / delta);
 	rTreadDist = maxSpeed * rTreadSpeed / (100.0 / delta);
 
-	if(lTreadSpeed == rTreadSpeed) {   
+	if(lTreadSpeed == rTreadSpeed) {
 
-		radians = heading * DEG_PER_RAD;   
-		coord += {lTreadDist * cosf(radians), lTreadDist * sinf(radians)};  
+		radians = heading * DEG_PER_RAD;
+		coord += {lTreadDist * cosf(radians), lTreadDist * sinf(radians)};
 	} else {
 
-		if(rTreadSpeed == 0) {                        
+		if(rTreadSpeed == 0) {
 
-			midRad = botRadius; 
+			midRad = botRadius;
 			rotAngle = -lTreadDist * 360.0 / (2 * PI * 2 * botRadius);
-			startAngle = heading + 90; 
-		} else if(lTreadSpeed == 0) {   
-	
-			midRad = botRadius;               
-			rotAngle = rTreadDist * 360.0 / (2 * PI * 2 * botRadius); 
+			startAngle = heading + 90;
+		} else if(lTreadSpeed == 0) {
+
+			midRad = botRadius;
+			rotAngle = rTreadDist * 360.0 / (2 * PI * 2 * botRadius);
 			startAngle = heading + 270;
 		} else {
-			
-			if(abs(lTreadSpeed) > abs(rTreadSpeed)) {                             
 
-				innerRad = rTreadDist * 2 * botRadius / (lTreadDist - rTreadDist); 
-				midRad = innerRad + 2 * botRadius / 2; 
+			if(abs(lTreadSpeed) > abs(rTreadSpeed)) {
+
+				innerRad = rTreadDist * 2 * botRadius / (lTreadDist - rTreadDist);
+				midRad = innerRad + 2 * botRadius / 2;
 				rotAngle = -rTreadDist * 360.0 / (2 * PI * innerRad);
-				startAngle = heading + 90; 											  
-			} else {                                     
+				startAngle = heading + 90;
+			} else {
 				innerRad = lTreadDist * 2 * botRadius / (rTreadDist - lTreadDist);
 				midRad = innerRad + 2 * botRadius / 2;
 				rotAngle = lTreadDist * 360.0 / (2 * PI * innerRad);
@@ -214,14 +214,16 @@ void Bot::update(double delta) {
 			}
 		}
 		radians = startAngle * DEG_PER_RAD;
-		x = midRad * cosf(radians);           
-		y = midRad * sinf(radians);       
-		radians = rotAngle * DEG_PER_RAD; 
-		u = x * cosf(radians) - y * sinf(radians); 
+		x = midRad * cosf(radians);
+		y = midRad * sinf(radians);
+		radians = rotAngle * DEG_PER_RAD;
+		u = x * cosf(radians) - y * sinf(radians);
 		v = y * cosf(radians) + x * sinf(radians);
-		coord += {u - x, v - y};               
-		heading += rotAngle;      
-		heading %= 360;
+		coord += {u - x, v - y};
+		heading += rotAngle;
+
+		if(heading >= 360) heading -= 360;
+		else if(heading < 0) heading += 360;
 	}
 
 }
