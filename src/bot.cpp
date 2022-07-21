@@ -237,9 +237,9 @@ void Bot::update(double delta) {
 			y = coord.y - bot->coord.y;
 			dist = sqrtf(powf(x, 2) + powf(y, 2));
 
-			if(dist < botRadius*2) {
+			if(dist < botRadius * 2) {
 				impulseSpeed = bumpForce;
-				if(y >= 0) angle = acosf(x / dist);             
+				if(y >= 0) angle = acosf(x / dist);
 				else angle = 2 * PI - acosf(x / dist);
 				angle *= RAD_PER_DEG;
 				impulseHeading = angle;
