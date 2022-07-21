@@ -251,6 +251,9 @@ void Bot::update(double delta) {
 					shield -= bumpDamage - generatorDamage;
 					energy -= generatorDamage;
 				}
+
+				if(shield < 0) shield = 0;
+				if(energy <= 0); //subscribe bot to entity destroyer
 			}
 		}
 	}
