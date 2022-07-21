@@ -227,37 +227,6 @@ void Bot::update(double delta) {
 		else if(heading < 0) heading += 360;
 	}
 ////////////////////////
-////////////////////////BOTS COLLIDING
-	float /*x, y, dist,*/ angle;
-
-	for(Bot *bot : bots) {
-		if(bot != this) {
-
-			x = coord.x - bot->coord.x;
-			y = coord.y - bot->coord.y;
-			dist = sqrtf(powf(x, 2) + powf(y, 2));
-
-			if(dist < botRadius * 2) {
-				impulseSpeed = bumpForce;
-				if(y >= 0) angle = acosf(x / dist);
-				else angle = 2 * PI - acosf(x / dist);
-				angle *= RAD_PER_DEG;
-				impulseHeading = angle;
-				bumping = 1;
-
-				if(shield > shieldLeakLevel) shield -= bumpDamage;
-				else {
-					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * shield;
-					shield -= bumpDamage - generatorDamage;
-					energy -= generatorDamage;
-				}
-
-				if(shield < 0) shield = 0;
-				if(energy <= 0); //subscribe bot to entity destroyer
-			}
-		}
-	}
-////////////////////////
 ////////////////////////WALL HIT
 	bool hitWall = 0;
 	if(coord.x < battleBox.topLeft.x + botRadius) {
@@ -276,4 +245,49 @@ void Bot::update(double delta) {
 		hitWall = 1;
 	}
 	if(hitWall) bumping = 1;
+}
+
+void BotsColliding() {
+
+	float x, y, dist, angle;
+
+	for(uint8_t i = 0; i < bots.size() - 1; ++i)
+		for(uint8_t j = i + 1; j < bots.size(); ++j) {
+
+			x = bots[i]->coord.x - bots[j]->coord.x;
+			y = bots[i]->coord.y - bots[j]->coord.y;
+			dist = sqrtf(powf(x, 2) + powf(y, 2));
+
+			if(dist < botRadius * 2) {
+				bots[i]->impulseSpeed = bumpForce;
+				bots[j]->impulseSpeed = bumpForce;
+				if(y >= 0) angle = acosf(x / dist);
+				else angle = 2 * PI - acosf(x / dist);
+				angle *= RAD_PER_DEG;
+				bots[i]->impulseHeading = angle;
+				bots[j]->impulseHeading = angle + 180;
+				bots[i]->bumping = 1;
+				bots[j]->bumping = 1;
+
+				if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
+				else {
+					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * bots[i]->shield;
+					bots[i]->shield -= bumpDamage - generatorDamage;
+					bots[i]->energy -= generatorDamage;
+				}
+
+				if(bots[i]->shield < 0) bots[i]->shield = 0;
+				if(bots[i]->energy <= 0); //subscribe bot to entity destroyer
+
+				if(bots[j]->shield > shieldLeakLevel) bots[j]->shield -= bumpDamage;
+				else {
+					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * bots[j]->shield;
+					bots[j]->shield -= bumpDamage - generatorDamage;
+					bots[j]->energy -= generatorDamage;
+				}
+
+				if(bots[j]->shield < 0) bots[j]->shield = 0;
+				if(bots[j]->energy <= 0); //subscribe bot to entity destroyer
+			}
+		}
 }

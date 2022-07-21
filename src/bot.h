@@ -77,3 +77,5 @@ struct Bot : drawable, updatable{
 	void draw() override;
 	void update(double delta) override;
 };
+
+void BotsColliding();
