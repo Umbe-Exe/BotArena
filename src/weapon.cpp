@@ -42,8 +42,8 @@ void Missile::update(double delta) {
 			//subscribe weapon to entity destroyer
 		}
 
-	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD);
-	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD);
+	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
+	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD) * delta;
 
 	if(
 		coord.x < battleBox.topLeft.x + weaponRadius ||
@@ -78,8 +78,8 @@ void Laser::update(double delta) {
 			//subscribe weapon to entity destroyer
 		}
 
-	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD);
-	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD);
+	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
+	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD) * delta;
 
 	if(
 		coord.x < battleBox.topLeft.x + weaponRadius ||

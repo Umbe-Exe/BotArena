@@ -103,10 +103,16 @@ void fireWeapon(Armament weapon, float heading) {
 
 	switch(weapon) {
 		case MISSILE:
-			weapons.push_back(new Missile(heading, coord));
+			if(currBot->missile == 100) {
+				weapons.push_back(new Missile(heading, coord));
+				currBot->missile = 0;
+			}
 			break;
 		case LASER:
-			weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
+			if(currBot->laser >= 20) {
+				weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
+				currBot->laser = 0;
+			}
 			break;
 	}
 }
