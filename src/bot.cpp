@@ -155,7 +155,8 @@ void Bot::update(double delta) {
 	for(Sensor *sensor : sensors) sensor->update(delta);
 
 	if(updateFn) updateFn(delta);
-
+////////////////////////
+////////////////////////MOVEMENT
 	float rotAngle, startAngle, lTreadDist, rTreadDist, x, y, innerRad, midRad,
 		u, v, radians, dist;
 	int lTreadSpeed, rTreadSpeed;
@@ -225,5 +226,51 @@ void Bot::update(double delta) {
 		if(heading >= 360) heading -= 360;
 		else if(heading < 0) heading += 360;
 	}
+////////////////////////
+////////////////////////BOTS COLLIDING
+	float /*x, y, dist,*/ angle;
 
+	for(Bot *bot : bots) {
+		if(bot != this) {
+
+			x = coord.x - bot->coord.x;
+			y = coord.y - bot->coord.y;
+			dist = sqrtf(powf(x, 2) + powf(y, 2));
+
+			if(dist < botRadius*2) {
+				impulseSpeed = bumpForce;
+				if(y >= 0) angle = acosf(x / dist);             
+				else angle = 2 * PI - acosf(x / dist);
+				angle *= RAD_PER_DEG;
+				impulseHeading = angle;
+				bumping = 1;
+
+				if(shield > shieldLeakLevel) shield -= bumpDamage;
+				else {
+					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * shield;
+					shield -= bumpDamage - generatorDamage;
+					energy -= generatorDamage;
+				}
+			}
+		}
+	}
+////////////////////////
+////////////////////////WALL HIT
+	bool hitWall = 0;
+	if(coord.x < battleBox.topLeft.x + botRadius) {
+		coord.x = battleBox.topLeft.x + botRadius;
+		hitWall = 1;
+	} else if(coord.x > battleBox.bottomRight.x - botRadius) {
+		coord.x = battleBox.bottomRight.x - botRadius;
+		hitWall = 1;
+	}
+
+	if(coord.y < battleBox.topLeft.y + botRadius) {
+		coord.y = battleBox.topLeft.y + botRadius;
+		hitWall = 1;
+	} else if(coord.y > battleBox.bottomRight.y - botRadius) {
+		coord.y = battleBox.bottomRight.y - botRadius;
+		hitWall = 1;
+	}
+	if(hitWall) bumping = 1;
 }

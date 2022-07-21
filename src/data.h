@@ -20,6 +20,7 @@ extern Rect battleBox;
 
 #define shieldLeakLevel 80
 
+#define bumpDamage 15
 #define bumpForce 0.05f
 #define friction 0.02f
 #define maxSpeed 0.1f

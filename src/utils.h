@@ -4,6 +4,7 @@
 #include <math.h>
 
 #define DEG_PER_RAD 1.7453292519943295E-2
+#define RAD_PER_DEG 5.7295779513082320E1 
 #define PI 3.14159265359
 
 struct Coord {
