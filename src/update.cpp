@@ -6,8 +6,6 @@
 
 void logic(double delta) {
 
-	BotsColliding();
-
 	for(Bot *bot : bots) bot->update(delta);
 	for(Weapon *weapon : weapons) weapon->update(delta);
 
