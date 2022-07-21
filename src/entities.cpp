@@ -92,7 +92,7 @@ void scatterBots() {
 
 void primeBitmaps() {
 
-	int weaponWidth = arenaSize * weaponRadius * 2;
+	float weaponWidth = arenaSize * weaponRadius * 2;
 
 	if(missileBitmap) al_destroy_bitmap(missileBitmap);
 
@@ -103,13 +103,16 @@ void primeBitmaps() {
 
 	al_convert_mask_to_alpha(missile, al_map_rgb(255, 0, 255));
 
+	float scale;
 	int width = al_get_bitmap_width(missile), height = al_get_bitmap_height(missile);
-	float ratio = (float)height / width;
+
+	if(height > width) scale = weaponWidth / height;
+	else scale = scale = weaponWidth / width;
 
 	if(height > width)
-		al_draw_scaled_bitmap(missile, 0, 0, width, height, (weaponWidth - weaponWidth / ratio) / 2, 0, weaponWidth / ratio, weaponWidth, 0);
+		al_draw_scaled_rotated_bitmap(missile, width / 2.f, height / 2.f, weaponWidth / 2.f, weaponWidth / 2.f, scale, scale, 90 * DEG_PER_RAD, 0);
 	else
-		al_draw_scaled_bitmap(missile, 0, 0, width, height, 0, (weaponWidth - weaponWidth * ratio) / 2, weaponWidth, weaponWidth * ratio, 0);
+		al_draw_scaled_rotated_bitmap(missile, width / 2.f, height / 2.f, weaponWidth / 2.f, weaponWidth / 2.f, scale, scale, 90 * DEG_PER_RAD, 0);
 
 	al_destroy_bitmap(missile);
 
@@ -120,11 +123,11 @@ void primeBitmaps() {
 	laserBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(laserBitmap);
 
-	al_draw_line(weaponWidth / 2, 0, weaponWidth / 2, weaponWidth, al_map_rgb(255, 0, 0), arenaSize * 0.01f);
+	al_draw_line(0, weaponWidth / 2, weaponWidth, weaponWidth / 2, al_map_rgb(255, 0, 0), arenaSize * 0.01f);
 
 /////////////////////////////////////////
 
-	int botWidth = arenaSize * (botRadius) * 2;
+	float botWidth = arenaSize * botRadius * 2;
 	float small = botWidth * 0.9;
 
 	for(Bot *bot : bots) {
@@ -148,7 +151,7 @@ void primeBitmaps() {
 
 			int width = al_get_bitmap_width(image), height = al_get_bitmap_height(image);
 
-			float scale;
+			//float scale;
 
 			if(height > width) scale = small / height;
 			else scale = scale = small / width;
