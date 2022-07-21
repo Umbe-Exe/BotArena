@@ -118,7 +118,7 @@ void fireWeapon(Armament weapon, float heading) {
 }
 
 GPSdata getGPSdata() {
-	return {currBot->coord.x, currBot->coord.y, currBot->heading};
+	return {currBot->coord.x - battleBox.topLeft.x, currBot->coord.y - battleBox.topLeft.y, currBot->heading};
 }
 
 bool isBumping() {
