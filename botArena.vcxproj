@@ -190,6 +190,7 @@
     <ClCompile Include="src\bot.cpp" />
     <ClCompile Include="src\competition.cpp" />
     <ClCompile Include="src\entities.cpp" />
+    <ClCompile Include="src\infobox.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\update.cpp" />
     <ClCompile Include="src\utils.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\data.h" />
     <ClInclude Include="src\entities.h" />
+    <ClInclude Include="src\infobox.h" />
     <ClInclude Include="src\update.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\weapon.h" />
