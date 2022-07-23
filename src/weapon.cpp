@@ -49,8 +49,25 @@ void Missile::update(double delta) {
 		coord.x < battleBox.topLeft.x + weaponRadius ||
 		coord.x > battleBox.bottomRight.x - weaponRadius ||
 		coord.y < battleBox.topLeft.y + weaponRadius ||
-		coord.y > battleBox.bottomRight.y - weaponRadius)
-		;//subscribe weapon to entity destroyer
+		coord.y > battleBox.bottomRight.y - weaponRadius) {
+		for(Bot *botAround : bots)
+			if(getDistance(coord, botAround->coord) < missileBlastRadius + botRadius) {
+
+				uint8_t blastDamage = missileDamage - missileDamage * (getDistance(coord, botAround->coord) / (missileBlastRadius + botRadius));
+
+				if(botAround->shield > shieldLeakLevel)
+					botAround->shield -= blastDamage;
+				else {
+					uint8_t generatorDamage = blastDamage - blastDamage / 100 * botAround->shield;
+					botAround->shield -= blastDamage - generatorDamage;
+					botAround->energy -= generatorDamage;
+				}
+
+				if(botAround->shield < 0) botAround->shield = 0;
+				if(botAround->energy <= 0); //subscribe bot to entity destroyer
+			}
+		//subscribe weapon to entity destroyer
+	}
 }
 
 void Laser::draw() {
