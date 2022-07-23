@@ -34,7 +34,7 @@ void primeInfoboxBitmap() {
 	bool labels = 1;
 
 	if(sysFontWidth > width / 2.f) {
-		(win_h - nameFontHeight * q) / q / 4.f;
+		sysFontHeight = (win_h - nameFontHeight * q) / q / 4.f;
 		sysFontWidth = 0;
 		labels = 0;
 	}
