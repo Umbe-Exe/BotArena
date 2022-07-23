@@ -1,5 +1,6 @@
 #include "update.h"
 #include "data.h"
+#include "infobox.h"
 
 void logic(double delta) {
 
@@ -15,9 +16,9 @@ void draw() {
 	for(Bot *bot : bots) bot->draw();
 	for(Weapon *weapon : weapons) weapon->draw();
 
-	drawFilledRect(infoBox, {50,0,0,1});
-
 	drawRect(battleBox, {255,255,255,255}, 1);
+
+	drawInfobox();
 
 	al_flip_display();
 };

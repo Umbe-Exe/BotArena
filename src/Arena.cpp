@@ -2,9 +2,10 @@
 #include "entities.h"
 #include "utils.h"
 #include "update.h"
-#include <allegro5/allegro.h>
+#include "infobox.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
 
 ALLEGRO_DISPLAY *window = nullptr;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -16,6 +17,8 @@ void init() {
 	al_init();
 	al_init_primitives_addon();
 	al_init_image_addon();
+	al_init_font_addon();
+	al_init_ttf_addon();
 
 	al_set_new_window_title("Arena");
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
@@ -86,6 +89,7 @@ void display() {
 void destroy() {
 	destroyBots();
 	destroyWeapons();
+	destroyInfobox();
 	al_destroy_display(window);
 	al_destroy_event_queue(queue);
 }

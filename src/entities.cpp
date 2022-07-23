@@ -1,7 +1,6 @@
 #include "entities.h"
-#include "bot.h"
-#include "weapon.h"
 #include "data.h"
+#include "infobox.h"
 #include <allegro5/allegro_primitives.h>
 
 std::vector<Bot *> bots;
@@ -168,4 +167,8 @@ void primeBitmaps() {
 		currBot = bot;
 		for(Sensor *sensor : bot->sensors) sensor->priming();
 	}
+
+/////////////////////////////////////////
+
+	primeInfoboxBitmap();
 }
