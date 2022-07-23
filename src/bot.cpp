@@ -1,7 +1,7 @@
 #include "bot.h"
 #include "data.h"
-#include "utils.h"
-#include "set"
+#include <allegro5/allegro_primitives.h>
+#include <set>
 
 void Radar::priming() {
 

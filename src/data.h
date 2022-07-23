@@ -1,7 +1,8 @@
 #pragma once
-
 #include "bot.h"
 #include "weapon.h"
+#include "utils.h"
+
 #define infoBox {{0.75,0},{1,1}}
 
 extern Rect battleBox;

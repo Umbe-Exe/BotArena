@@ -1,7 +1,5 @@
 #pragma once
 #include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
-#include <math.h>
 
 #define DEG_PER_RAD 1.7453292519943295E-2
 #define RAD_PER_DEG 5.7295779513082320E1 

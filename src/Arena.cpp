@@ -1,11 +1,10 @@
 #include "Arena.h"
-#include "update.h"
-#include "utils.h"
 #include "entities.h"
+#include "utils.h"
+#include "update.h"
 #include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
-#include <vector>
+#include <allegro5/allegro_primitives.h>
 
 ALLEGRO_DISPLAY *window = nullptr;
 ALLEGRO_EVENT_QUEUE *queue;

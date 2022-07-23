@@ -2,7 +2,6 @@
 #include "component.h"
 #include "utils.h"
 #include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
 #include <vector>
 
 struct Sensor : drawable, updatable {
@@ -77,5 +76,3 @@ struct Bot : drawable, updatable{
 	void draw() override;
 	void update(double delta) override;
 };
-
-void BotsColliding();

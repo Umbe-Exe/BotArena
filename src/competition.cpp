@@ -1,6 +1,5 @@
 #include "competition.h"
 #include "data.h"
-#include "utils.h"
 
 int addRadarGetId(int angle, int width, int range) {
 

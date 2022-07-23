@@ -1,8 +1,6 @@
 #pragma once
 #include "component.h"
 #include "utils.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
 
 struct Weapon : drawable, updatable{
 	float heading;

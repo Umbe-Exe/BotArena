@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "data.h"
+#include <allegro5/allegro_primitives.h>
 
 int win_w, win_h;
 float arenaSize;
