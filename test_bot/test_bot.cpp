@@ -6,7 +6,7 @@ void test_actions(double delta) {
 
 	elapsed += delta;
 
-	if((int)elapsed % 50 == 0)
+	if(elapsed > 10)
 		fireWeapon(MISSILE, 50);
 }
 
