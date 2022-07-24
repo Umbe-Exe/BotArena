@@ -16,8 +16,8 @@ void Missile::update(double delta) {
 		if(getDistance(coord, bot->coord) < botRadius + weaponRadius) {
 			if(bot->shield > shieldLeakLevel) bot->shield -= missileDamage;
 			else {
-				uint8_t generatorDamage = missileDamage - missileDamage / 100 * bot->shield;
-				bot->shield -= missileDamage - generatorDamage;
+				uint8_t generatorDamage = missileDamage - missileDamage / maxShield * bot->shield;
+				bot->shield -= missileDamage + generatorDamage;
 				bot->energy -= generatorDamage;
 			}
 
@@ -32,8 +32,8 @@ void Missile::update(double delta) {
 					if(botAround->shield > shieldLeakLevel)
 						botAround->shield -= blastDamage;
 					else {
-						uint8_t generatorDamage = blastDamage - blastDamage / 100 * botAround->shield;
-						botAround->shield -= blastDamage - generatorDamage;
+						uint8_t generatorDamage = blastDamage - blastDamage / maxShield * botAround->shield;
+						botAround->shield -= blastDamage + generatorDamage;
 						botAround->energy -= generatorDamage;
 					}
 
@@ -59,8 +59,8 @@ void Missile::update(double delta) {
 				if(botAround->shield > shieldLeakLevel)
 					botAround->shield -= blastDamage;
 				else {
-					uint8_t generatorDamage = blastDamage - blastDamage / 100 * botAround->shield;
-					botAround->shield -= blastDamage - generatorDamage;
+					uint8_t generatorDamage = blastDamage - blastDamage / maxShield * botAround->shield;
+					botAround->shield -= blastDamage + generatorDamage;
 					botAround->energy -= generatorDamage;
 				}
 
@@ -85,8 +85,8 @@ void Laser::update(double delta) {
 		if(getDistance(coord, bot->coord) < botRadius + weaponRadius) {
 			if(bot->shield > shieldLeakLevel) bot->shield -= damage;
 			else {
-				uint8_t generatorDamage = damage - damage / 100 * bot->shield;
-				bot->shield -= damage - generatorDamage;
+				uint8_t generatorDamage = damage - damage / maxShield * bot->shield;
+				bot->shield -= damage + generatorDamage;
 				bot->energy -= generatorDamage;
 			}
 

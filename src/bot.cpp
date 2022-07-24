@@ -249,8 +249,8 @@ void Bot::update(double delta) {
 
 				if(shield > shieldLeakLevel) shield -= bumpDamage;
 				else {
-					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * shield;
-					shield -= bumpDamage - generatorDamage;
+					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * shield;
+					shield -= bumpDamage + generatorDamage;
 					energy -= generatorDamage;
 				}
 
@@ -259,8 +259,8 @@ void Bot::update(double delta) {
 
 				if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
 				else {
-					uint8_t generatorDamage = bumpDamage - bumpDamage / 100 * bots[i]->shield;
-					bots[i]->shield -= bumpDamage - generatorDamage;
+					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * bots[i]->shield;
+					bots[i]->shield -= bumpDamage + generatorDamage;
 					bots[i]->energy -= generatorDamage;
 				}
 

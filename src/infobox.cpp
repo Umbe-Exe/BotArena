@@ -116,6 +116,7 @@ void drawInfobox() {
 	} else {
 		start = scrollPos / (nameFontHeight + sysFontHeight * 4);
 		end = (scrollPos + win_h) / (nameFontHeight + sysFontHeight * 4) + 1;
+		if(end > nOfBots) --end;
 	}
 
 	for(uint8_t i = start; i < end; ++i) {
