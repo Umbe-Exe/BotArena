@@ -159,49 +159,38 @@ void Bot::update(double delta) {
 ////////////////////////MOVEMENT
 	float rotAngle, startAngle, lTreadDist, rTreadDist, x, y, innerRad, midRad,
 		u, v, radians, dist;
-	int lTreadSpeed, rTreadSpeed;
 
 	if(impulseSpeed != 0) {
 
 		radians = impulseHeading * DEG_PER_RAD;
 		dist = impulseSpeed * delta;
-		coord += {dist *cosf(radians), dist * sinf(radians)};
+		coord += {dist * cosf(radians), dist * sinf(radians)};
 		impulseSpeed -= friction * delta;
 		if(impulseSpeed < 0) impulseSpeed = 0;
 	}
 
-	if(turboTime) {
+	lTreadDist = maxSpeed * leftTreadSpeed / (100.0 / delta);
+	rTreadDist = maxSpeed * rightTreadSpeed / (100.0 / delta);
 
-		lTreadSpeed = leftTreadSpeed + 200;
-		rTreadSpeed = rightTreadSpeed + 200;
-		turboTime--;
-	} else {
-
-		lTreadSpeed = leftTreadSpeed;
-		rTreadSpeed = rightTreadSpeed;
-	}
-	lTreadDist = maxSpeed * lTreadSpeed / (100.0 / delta);
-	rTreadDist = maxSpeed * rTreadSpeed / (100.0 / delta);
-
-	if(lTreadSpeed == rTreadSpeed) {
+	if(leftTreadSpeed == rightTreadSpeed) {
 
 		radians = heading * DEG_PER_RAD;
 		coord += {lTreadDist * cosf(radians), lTreadDist * sinf(radians)};
 	} else {
 
-		if(rTreadSpeed == 0) {
+		if(rightTreadSpeed == 0) {
 
 			midRad = botRadius;
 			rotAngle = -lTreadDist * 360.0 / (2 * PI * 2 * botRadius);
 			startAngle = heading + 90;
-		} else if(lTreadSpeed == 0) {
+		} else if(leftTreadSpeed == 0) {
 
 			midRad = botRadius;
 			rotAngle = rTreadDist * 360.0 / (2 * PI * 2 * botRadius);
 			startAngle = heading + 270;
 		} else {
 
-			if(abs(lTreadSpeed) > abs(rTreadSpeed)) {
+			if(abs(leftTreadSpeed) > abs(rightTreadSpeed)) {
 
 				innerRad = rTreadDist * 2 * botRadius / (lTreadDist - rTreadDist);
 				midRad = innerRad + 2 * botRadius / 2;

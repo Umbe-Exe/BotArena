@@ -67,7 +67,6 @@ struct Bot : drawable, updatable{
 
 	bool bumping = 0;
 	float impulseSpeed = 0, impulseHeading = 0;
-	int turboTime = 0;
 
 	~Bot() {
 		for(Sensor *sensor : sensors) delete sensor;
