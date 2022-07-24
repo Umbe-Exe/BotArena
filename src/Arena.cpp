@@ -31,9 +31,11 @@ void init() {
 	queue = al_create_event_queue();
 
 	al_install_keyboard();
+	al_install_mouse();
 
 	al_register_event_source(queue, al_get_display_event_source(window));
 	al_register_event_source(queue, al_get_keyboard_event_source());
+	al_register_event_source(queue, al_get_mouse_event_source());
 
 	srand(time(0));
 
@@ -59,7 +61,7 @@ void update(double delta) {
 void display() {
 
 	bool running = true;
-	ALLEGRO_EVENT event;
+	ALLEGRO_EVENT event{};
 	double previous = al_get_time(), current;
 
 	while(running) {
@@ -76,9 +78,13 @@ void display() {
 				al_acknowledge_resize(window);
 				makeBattleBox();
 				primeBitmaps(); 
+				infoBoxScroll(0);
 				al_set_target_backbuffer(window);
 				break;
-		}
+			case ALLEGRO_EVENT_MOUSE_AXES:
+				if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
+				break;
+		} event = {};
 
 		current = al_get_time();
 		update(current - previous);

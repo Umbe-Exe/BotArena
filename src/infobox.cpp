@@ -6,82 +6,91 @@
 ALLEGRO_BITMAP *bitmap = 0;
 ALLEGRO_FONT *nameFont = 0, *sysFont = 0;
 
+uint8_t nOfBots;
+
+uint16_t bitmapHeight, bitmapWidth;
+float scrollPos = 0;
+
+int nameFontHeight;
+int sysFontHeight;
+
 void primeInfoboxBitmap() {
 
-	uint8_t q = (bots.size() > 7 ? 7 : bots.size());
+	nOfBots = bots.size();
 
 	if(nameFont) al_destroy_font(nameFont);
-	nameFont = al_load_ttf_font("resources/font/typed.ttf", 0.05f * arenaSize / (q / 4.f), 0);
-
-	float nameFontHeight = (float)al_get_font_line_height(nameFont);
+	nameFont = al_load_ttf_font("resources/font/typed.ttf", 0.05f * arenaSize, 0);
 
 	if(sysFont) al_destroy_font(sysFont);
-	sysFont = al_load_ttf_font("resources/font/typed.ttf", (win_h - nameFontHeight * q) / q / 5.f, 0);
+	sysFont = al_load_ttf_font("resources/font/typed.ttf", 0.02f * arenaSize, 0);
+
+	nameFontHeight = al_get_font_line_height(nameFont);
+	sysFontHeight = al_get_font_line_height(sysFont);
 
 	if(bitmap) al_destroy_bitmap(bitmap);
 	bitmap = al_create_bitmap(
 		(Rect(infoBox).bottomRight.x - Rect(infoBox).topLeft.x) * win_w,
-		Rect(infoBox).bottomRight.y * win_h);
+		(nameFontHeight + sysFontHeight * 4) * nOfBots);
 
 	al_set_target_bitmap(bitmap);
 	al_clear_to_color(al_map_rgb(200, 200, 200));
 
-	uint16_t width = al_get_bitmap_width(bitmap);
+	bitmapWidth = al_get_bitmap_width(bitmap);
+	bitmapHeight = al_get_bitmap_height(bitmap);
 
-	float sysFontHeight = (float)al_get_font_line_height(sysFont);
-	float sysFontWidth = (float)al_get_text_width(sysFont, "Generator");
+	float sysFontWidth = al_get_text_width(sysFont, "Generator");
 
-	bool labels = 1;
+	for(uint8_t i = 0; i < nOfBots; ++i) {
+		al_draw_text(nameFont, bots[i]->color, bitmapWidth / 2.f, bitmapHeight / nOfBots * i, ALLEGRO_ALIGN_CENTER, (bots[i]->name ? bots[i]->name : "UNNAMED"));
 
-	if(sysFontWidth > width / 2.f) {
-		sysFontHeight = (win_h - nameFontHeight * q) / q / 4.f;
-		sysFontWidth = 0;
-		labels = 0;
-	}
+		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i, 0, "Generator");
+		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight, 0, "Shield");
+		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 2.f, 0, "Missile");
+		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 3.f, 0, "Laser");
 
-	for(uint8_t i = 0; i < q; ++i) {
-		al_draw_text(nameFont, bots[i]->color, width / 2, win_h / q * i, ALLEGRO_ALIGN_CENTER, (bots[i]->name ? bots[i]->name : "UNNAMED"));
-
-		if(labels) {
-			al_draw_text(sysFont, bots[i]->color, 0, win_h / q * i + nameFontHeight, 0, "Generator");
-			al_draw_text(sysFont, bots[i]->color, 0, win_h / q * i + sysFontHeight + nameFontHeight, 0, "Shield");
-			al_draw_text(sysFont, bots[i]->color, 0, win_h / q * i + sysFontHeight * 2.f + nameFontHeight, 0, "Missile");
-			al_draw_text(sysFont, bots[i]->color, 0, win_h / q * i + sysFontHeight * 3.f + nameFontHeight, 0, "Laser");
-		}
 
 		al_draw_rectangle(
 			sysFontWidth + sysFontWidth / 9.f,
-			win_h / q * i + nameFontHeight,
-			width,
-			win_h / q * i + sysFontHeight + nameFontHeight,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i,
+			bitmapWidth * 0.9f,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight,
 			bots[i]->color, 0.005f * arenaSize);
 
 		al_draw_rectangle(
 			sysFontWidth + sysFontWidth / 9.f,
-			win_h / q * i + sysFontHeight + nameFontHeight,
-			width,
-			win_h / q * i + sysFontHeight * 2.f + nameFontHeight,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight,
+			bitmapWidth * 0.9f,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 2.f,
 			bots[i]->color, 0.005f * arenaSize);
 
 		al_draw_rectangle(
 			sysFontWidth + sysFontWidth / 9.f,
-			win_h / q * i + sysFontHeight * 2.f + nameFontHeight,
-			width,
-			win_h / q * i + sysFontHeight * 3.f + nameFontHeight,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 2.f,
+			bitmapWidth * 0.9f,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 3.f,
 			bots[i]->color, 0.005f * arenaSize);
 
 		al_draw_rectangle(
 			sysFontWidth + sysFontWidth / 9.f,
-			win_h / q * i + sysFontHeight * 3.f + nameFontHeight,
-			width,
-			win_h / q * i + sysFontHeight * 4.f + nameFontHeight,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 3.f,
+			bitmapWidth * 0.9f,
+			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 4.f,
 			bots[i]->color, 0.005f * arenaSize);
 	}
 }
 
-void drawInfobox() {
+void infoBoxScroll(float to) {
+	if(bitmapHeight < win_h) scrollPos = 0;
+	else {
+		scrollPos -= to * nameFontHeight;
+		if(scrollPos < 0) scrollPos = 0;
+		else if(scrollPos > bitmapHeight - win_h) scrollPos = bitmapHeight - win_h;
+	}
+}
 
-	al_draw_bitmap(bitmap, Rect(infoBox).topLeft.x * win_w, 0, 0);
+void drawInfobox() {
+	al_draw_bitmap_region(bitmap, 0, scrollPos, bitmapWidth, win_h, win_w - bitmapWidth, 0, 0);
+
 
 }
 
