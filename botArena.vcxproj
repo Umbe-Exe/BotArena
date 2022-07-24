@@ -202,6 +202,7 @@
     <ClInclude Include="src\bot.h" />
     <ClInclude Include="src\competition.h" />
     <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\config.h" />
     <ClInclude Include="src\data.h" />
     <ClInclude Include="src\entities.h" />
     <ClInclude Include="src\infobox.h" />

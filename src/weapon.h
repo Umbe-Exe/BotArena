@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
 #include "utils.h"
+#include "config.h"
 
 struct Weapon : drawable, updatable{
 	float heading;

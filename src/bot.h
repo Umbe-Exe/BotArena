@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
 #include "utils.h"
+#include "config.h"
 #include <allegro5/allegro.h>
 #include <vector>
 
@@ -60,7 +61,7 @@ struct Bot : drawable, updatable{
 	int leftTreadSpeed = 0, rightTreadSpeed = 0;
 	Coord coord;
 
-	uint8_t energy = 100, shield = 100, missile = 100, laser = 100;
+	uint8_t energy = maxEnergy, shield = maxShield, missile = maxMissile, laser = maxLaser;
 	uint8_t shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
