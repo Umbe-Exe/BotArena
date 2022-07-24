@@ -61,8 +61,8 @@ struct Bot : drawable, updatable{
 	int leftTreadSpeed = 0, rightTreadSpeed = 0;
 	Coord coord;
 
-	uint8_t energy = maxEnergy, shield = maxShield, missile = maxMissile, laser = maxLaser;
-	uint8_t shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
+	float energy = maxEnergy, shield = maxShield, missile = maxMissile, laser = maxLaser;
+	int shieldChargeRate = 0, missileChargeRate = 20, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
 

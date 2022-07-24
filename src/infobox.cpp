@@ -110,28 +110,28 @@ void drawInfobox() {
 		al_draw_filled_rectangle(
 			bitmapX + sysFontWidth + sysFontWidth / 9.f,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i - scrollPos,
-			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - sysFontWidth + sysFontWidth / 9.f) / bots[i]->energy,
+			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxEnergy * bots[i]->energy,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight - scrollPos,
 			bots[i]->color);
 
 		al_draw_filled_rectangle(
 			bitmapX + sysFontWidth + sysFontWidth / 9.f,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight - scrollPos,
-			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - sysFontWidth + sysFontWidth / 9.f) / bots[i]->shield,
+			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxShield * bots[i]->shield,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 2.f - scrollPos,
 			bots[i]->color);
 
 		al_draw_filled_rectangle(
 			bitmapX + sysFontWidth + sysFontWidth / 9.f,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 2.f - scrollPos,
-			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - sysFontWidth + sysFontWidth / 9.f) / bots[i]->missile,
+			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxMissile * bots[i]->missile,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 3.f - scrollPos,
 			bots[i]->color);
 
 		al_draw_filled_rectangle(
 			bitmapX + sysFontWidth + sysFontWidth / 9.f,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 3.f - scrollPos,
-			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - sysFontWidth + sysFontWidth / 9.f) / bots[i]->laser,
+			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxLaser * bots[i]->laser,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 4.f - scrollPos,
 			bots[i]->color);
 	}

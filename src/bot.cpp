@@ -156,6 +156,14 @@ void Bot::update(double delta) {
 
 	if(updateFn) updateFn(delta);
 ////////////////////////
+////////////////////////ENERGY HANDLING
+	shield += energy / 100 * shieldChargeRate * delta;
+	missile += energy / 100 * missileChargeRate * delta;
+	laser += energy / 100 * laserChargeRate * delta;
+	if(shield > maxShield) shield = maxShield;
+	if(missile > maxMissile) missile = maxMissile;
+	if(laser > maxLaser) laser = maxLaser;
+////////////////////////
 ////////////////////////MOVEMENT
 	float rotAngle, startAngle, lTreadDist, rTreadDist, x, y, innerRad, midRad,
 		u, v, radians, dist;
