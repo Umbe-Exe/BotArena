@@ -76,19 +76,19 @@ void setSystemChargeRate(System system, int rate) {
 	switch(system) {
 		case MISSILES:
 			if(currBot->shieldChargeRate + currBot->laserChargeRate + rate > 100) 
-				rate = 100 - currBot->shieldChargeRate + currBot->laserChargeRate;
+				rate = 100 - (currBot->shieldChargeRate + currBot->laserChargeRate);
 
 			currBot->missileChargeRate = rate;
 			break;
 		case SHIELDS:
 			if(currBot->missileChargeRate + currBot->laserChargeRate + rate > 100)
-				rate = 100 - currBot->missileChargeRate + currBot->laserChargeRate;
+				rate = 100 - (currBot->missileChargeRate + currBot->laserChargeRate);
 
 			currBot->shieldChargeRate = rate;
 			break;
 		case LASERS:
 			if(currBot->missileChargeRate + currBot->shieldChargeRate + rate > 100)
-				rate = 100 - currBot->missileChargeRate + currBot->shieldChargeRate;
+				rate = 100 - (currBot->missileChargeRate + currBot->shieldChargeRate);
 
 			currBot->laserChargeRate = rate;
 			break;
@@ -102,13 +102,13 @@ void fireWeapon(Armament weapon, float heading) {
 
 	switch(weapon) {
 		case MISSILE:
-			if(currBot->missile == 100) {
+			if(currBot->missile == maxMissile) {
 				weapons.push_back(new Missile(heading, coord));
 				currBot->missile = 0;
 			}
 			break;
 		case LASER:
-			if(currBot->laser >= 20) {
+			if(currBot->laser >= minLaser) {
 				weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
 				currBot->laser = 0;
 			}
