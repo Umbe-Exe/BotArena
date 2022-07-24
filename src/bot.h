@@ -19,7 +19,9 @@ struct Radar : Sensor {
 	int width;
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	Radar(int width, int angle, int range) : width(width), Sensor(angle, range) {}
+	Radar(int width, int angle, int range) : width(width), Sensor(angle, range) {
+		priming();
+	}
 
 	void priming() override;
 
