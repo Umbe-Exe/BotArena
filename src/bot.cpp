@@ -1,5 +1,6 @@
 #include "bot.h"
 #include "data.h"
+#include "remover.h"
 #include <allegro5/allegro_primitives.h>
 #include <set>
 
@@ -254,7 +255,7 @@ void Bot::update(double delta) {
 				}
 
 				if(shield < 0) shield = 0;
-				if(energy <= 0); //subscribe bot to entity destroyer
+				if(energy <= 0) addBotToDestroy(this);
 
 				if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
 				else {
@@ -264,7 +265,7 @@ void Bot::update(double delta) {
 				}
 
 				if(bots[i]->shield < 0) bots[i]->shield = 0;
-				if(bots[i]->energy <= 0); //subscribe bot to entity destroyer
+				if(bots[i]->energy <= 0) addBotToDestroy(bots[i]);
 			}
 		}
 ////////////////////////

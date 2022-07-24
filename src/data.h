@@ -15,3 +15,5 @@ extern std::vector<Weapon *> weapons;
 extern ALLEGRO_DISPLAY *window;
 extern int win_w, win_h;
 extern float arenaSize;
+
+extern std::vector<const char *> terminatedBots;

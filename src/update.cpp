@@ -1,11 +1,14 @@
 #include "update.h"
 #include "data.h"
 #include "infobox.h"
+#include "remover.h"
 
 void logic(double delta) {
 
 	for(Bot *bot : bots) bot->update(delta);
 	for(Weapon *weapon : weapons) weapon->update(delta);
+
+	destroyTheStuff();
 
 }
 

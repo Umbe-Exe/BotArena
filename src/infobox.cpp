@@ -33,7 +33,7 @@ void primeInfoboxBitmap() {
 	if(bitmap) al_destroy_bitmap(bitmap);
 	bitmap = al_create_bitmap(
 		(Rect(infoBox).bottomRight.x - Rect(infoBox).topLeft.x) * win_w,
-		(nameFontHeight + sysFontHeight * 4) * nOfBots);
+		(nameFontHeight + sysFontHeight * 4) * nOfBots + (nameFontHeight + sysFontHeight) * terminatedBots.size());
 
 	al_set_target_bitmap(bitmap);
 	al_clear_to_color(al_map_rgb(200, 200, 200));
@@ -46,7 +46,7 @@ void primeInfoboxBitmap() {
 	sysFontWidth = al_get_text_width(sysFont, "Generator");
 
 	for(uint8_t i = 0; i < nOfBots; ++i) {
-		al_draw_text(nameFont, bots[i]->color, bitmapWidth / 2.f, bitmapHeight / nOfBots * i, ALLEGRO_ALIGN_CENTER, (bots[i]->name ? bots[i]->name : "UNNAMED"));
+		al_draw_text(nameFont, bots[i]->color, bitmapWidth / 2.f, (nameFontHeight + sysFontHeight * 4) * i, ALLEGRO_ALIGN_CENTER, (bots[i]->name ? bots[i]->name : "UNNAMED"));
 
 		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i, 0, "Generator");
 		al_draw_text(sysFont, bots[i]->color, 0, nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight, 0, "Shield");
@@ -81,6 +81,14 @@ void primeInfoboxBitmap() {
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight * 4.f,
 			bots[i]->color, 0.005f * arenaSize);
 	}
+
+	ALLEGRO_COLOR color;
+	for(uint8_t i = 0; i < terminatedBots.size(); ++i) {
+
+		color = al_map_rgb(rand() % 150, rand() % 150, rand() % 150);
+		al_draw_text(nameFont, color, bitmapWidth / 2.f, (nameFontHeight + sysFontHeight * 4) * nOfBots + (nameFontHeight + sysFontHeight) * i, ALLEGRO_ALIGN_CENTER, (terminatedBots[i] ? terminatedBots[i] : "UNNAMED"));
+		al_draw_text(sysFont, color, bitmapWidth / 2.f, (nameFontHeight + sysFontHeight * 4) * nOfBots + (nameFontHeight + sysFontHeight) * i + nameFontHeight, ALLEGRO_ALIGN_CENTER, "terminated");
+	}
 }
 
 void infoBoxScroll(float to) {
@@ -100,9 +108,14 @@ void drawInfobox() {
 	if(bitmapHeight < win_h) {
 		start = 0;
 		end = nOfBots;
+	} else if(bitmapHeight - scrollPos - (nameFontHeight + sysFontHeight) * terminatedBots.size() < win_h) {
+		if(bitmapHeight - scrollPos - (nameFontHeight + sysFontHeight) * terminatedBots.size() > 0) {
+			start = scrollPos / (nameFontHeight + sysFontHeight * 4);
+			end = nOfBots;
+		}
 	} else {
 		start = scrollPos / (nameFontHeight + sysFontHeight * 4);
-		end = (scrollPos + win_h) / (nameFontHeight + sysFontHeight * 4);
+		end = (scrollPos + win_h) / (nameFontHeight + sysFontHeight * 4) + 1;
 	}
 
 	for(uint8_t i = start; i < end; ++i) {

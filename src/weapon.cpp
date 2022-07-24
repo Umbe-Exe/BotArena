@@ -1,5 +1,6 @@
 #include "weapon.h"
 #include "data.h"
+#include "remover.h"
 
 void Missile::draw() {
 
@@ -21,7 +22,7 @@ void Missile::update(double delta) {
 			}
 
 			if(bot->shield < 0) bot->shield = 0;
-			if(bot->energy <= 0); //subscribe bot to entity destroyer
+			if(bot->energy <= 0) addBotToDestroy(bot);
 
 			for(Bot *botAround : bots)
 				if(botAround != bot && getDistance(coord, botAround->coord) < missileBlastRadius + botRadius) {
@@ -37,9 +38,9 @@ void Missile::update(double delta) {
 					}
 
 					if(botAround->shield < 0) botAround->shield = 0;
-					if(botAround->energy <= 0); //subscribe bot to entity destroyer
+					if(botAround->energy <= 0) addBotToDestroy(botAround);
 				}
-			//subscribe weapon to entity destroyer
+			addWeaponToDestroy(this);
 		}
 
 	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
@@ -64,9 +65,9 @@ void Missile::update(double delta) {
 				}
 
 				if(botAround->shield < 0) botAround->shield = 0;
-				if(botAround->energy <= 0); //subscribe bot to entity destroyer
+				if(botAround->energy <= 0) addBotToDestroy(botAround);
 			}
-		//subscribe weapon to entity destroyer
+		addWeaponToDestroy(this);
 	}
 }
 
@@ -90,9 +91,9 @@ void Laser::update(double delta) {
 			}
 
 			if(bot->shield < 0) bot->shield = 0;
-			if(bot->energy <= 0); //subscribe bot to entity destroyer
+			if(bot->energy <= 0) addBotToDestroy(bot);
 
-			//subscribe weapon to entity destroyer
+			addWeaponToDestroy(this);
 		}
 
 	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
@@ -103,5 +104,5 @@ void Laser::update(double delta) {
 		coord.x > battleBox.bottomRight.x - weaponRadius ||
 		coord.y < battleBox.topLeft.y + weaponRadius ||
 		coord.y > battleBox.bottomRight.y - weaponRadius)
-		;//subscribe weapon to entity destroyer
+		addWeaponToDestroy(this);
 }
