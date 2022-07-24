@@ -82,7 +82,7 @@ void display() {
 				al_set_target_backbuffer(window);
 				break;
 			case ALLEGRO_EVENT_MOUSE_AXES:
-				if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
+				infoBoxScroll(event.mouse.dz);
 				break;
 		} event = {};
 
