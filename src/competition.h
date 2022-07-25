@@ -12,9 +12,9 @@ struct GPSdata {
 	float x, y, heading;
 };
 
-int addRadarGetId(int angle, int width, int range);
+int addRadarGetId(float angle, float width, int range);
 
-int addRangeGetId(int angle, int range);
+int addRangeGetId(float angle, int range);
 
 void setSensorStatus(int sensorId, bool enabled);
 

@@ -10,17 +10,17 @@ struct Sensor : drawable, updatable {
 	bool enabled = 1;
 	float data = 0;
 
-	Sensor(float angle, float range) : angle(angle), range(range) {}
+	Sensor(float angle, int range) : angle(angle), range(range) {}
 
 	virtual void priming() {}
 	virtual ~Sensor() {}
 };
 
 struct Radar : Sensor {
-	int width;
+	float width;
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	Radar(int width, int angle, int range) : width(width), Sensor(angle, range) {
+	Radar(float width, float angle, int range) : width(width), Sensor(angle, range) {
 		priming();
 	}
 
@@ -36,7 +36,7 @@ struct Radar : Sensor {
 
 struct LaserRange : Sensor{
 
-	LaserRange(int angle, int range) : Sensor(angle, range) {}
+	LaserRange(float angle, int range) : Sensor(angle, range) {}
 
 	void draw() override;
 	void update(double delta) override;

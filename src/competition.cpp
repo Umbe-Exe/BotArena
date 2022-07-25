@@ -1,30 +1,31 @@
 #include "competition.h"
 #include "data.h"
 
-int addRadarGetId(int angle, int width, int range) {
+int addRadarGetId(float angle, float width, int range) {
 
 	if(width < 0) width *= -1;
+	if(angle < 0) angle += 360;
 	if(range < 0) {
 		range *= -1;
 		angle += 180;
 	}
 
-	angle %= 360;
-	width %= 360;
+	if(angle > 360) angle -= int(angle / 360) * 360;
+	if(width > 360) width -= int(width / 360) * 360;
 	
 	currBot->sensors.push_back(new Radar(width, angle, range > 100 ? 100 : range));
 
 	return (int)currBot->sensors.size() - 1;
 }
 
-int addRangeGetId(int angle, int range) {
+int addRangeGetId(float angle, int range) {
 
 	if(range < 0) {
 		range *= -1;
 		angle += 180;
 	}
 
-	angle %= 360;
+	if(angle > 360) angle -= int(angle / 360) * 360;
 	
 	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range));
 
@@ -40,8 +41,9 @@ void setSensorStatus(int sensorId, bool enabled) {
 int getSensorData(int sensorId) {
 
 	if(currBot->sensors.size() > sensorId && sensorId >= 0)
-		return currBot->sensors[sensorId]->data;
-	else return 0;
+		if(currBot->sensors[sensorId]->enabled)
+			return currBot->sensors[sensorId]->data;
+	return 0;
 }
 
 void setMotorSpeed(int leftTread, int rightTread) {
@@ -63,12 +65,12 @@ int getSystemEnergy(System system) {
 
 	switch(system) {
 		case MISSILES:
-			return currBot->missile;
+			return currBot->missile / maxMissile * 100;
 		case SHIELDS:
-			return currBot->shield;
+			return currBot->shield / maxShield * 100;
 		case LASERS:
-			return currBot->laser;
-	}
+			return currBot->laser / maxLaser * 100;
+	} return 0;
 }
 
 void setSystemChargeRate(System system, int rate) {
