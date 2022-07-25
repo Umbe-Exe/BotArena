@@ -15,7 +15,7 @@
 #define minLaser 20
 
 #define botRadius 0.05f
-#define weaponRadius 0.015f
+#define weaponRadius 0.01f
 #define radarMaxRange 0.15f
 #define rangeMaxRange 0.2f
 #define sensorEnergyConsumption 2

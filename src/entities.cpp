@@ -92,7 +92,7 @@ void scatterBots() {
 
 void primeBitmaps() {
 
-	float weaponWidth = arenaSize * weaponRadius * 2;
+	float weaponWidth = arenaSize * weaponRadius * 2.2f;
 
 	if(missileBitmap) al_destroy_bitmap(missileBitmap);
 
