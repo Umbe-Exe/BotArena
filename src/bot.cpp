@@ -158,9 +158,9 @@ void Bot::update(double delta) {
 	if(updateFn) updateFn(delta);
 ////////////////////////
 ////////////////////////ENERGY HANDLING
-	shield += energy / 100 * shieldChargeRate * delta;
-	missile += energy / 100 * missileChargeRate * delta;
-	laser += energy / 100 * laserChargeRate * delta;
+	shield += generator / maxGeneratorStructure * maxEnergy / 100 * shieldChargeRate * delta;
+	missile += generator / maxGeneratorStructure * maxEnergy / 100 * missileChargeRate * delta;
+	laser += generator / maxGeneratorStructure * maxEnergy / 100 * laserChargeRate * delta;
 	if(shield > maxShield) shield = maxShield;
 	if(missile > maxMissile) missile = maxMissile;
 	if(laser > maxLaser) laser = maxLaser;
@@ -251,21 +251,21 @@ void Bot::update(double delta) {
 				else {
 					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * shield;
 					shield -= bumpDamage + generatorDamage;
-					energy -= generatorDamage;
+					generator -= generatorDamage;
 				}
 
 				if(shield < 0) shield = 0;
-				if(energy <= 0) addBotToDestroy(this);
+				if(generator <= 0) addBotToDestroy(this);
 
 				if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
 				else {
 					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * bots[i]->shield;
 					bots[i]->shield -= bumpDamage + generatorDamage;
-					bots[i]->energy -= generatorDamage;
+					bots[i]->generator -= generatorDamage;
 				}
 
 				if(bots[i]->shield < 0) bots[i]->shield = 0;
-				if(bots[i]->energy <= 0) addBotToDestroy(bots[i]);
+				if(bots[i]->generator <= 0) addBotToDestroy(bots[i]);
 			}
 		}
 ////////////////////////

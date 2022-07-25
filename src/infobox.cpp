@@ -124,7 +124,7 @@ void drawInfobox() {
 		al_draw_filled_rectangle(
 			bitmapX + sysFontWidth + sysFontWidth / 9.f,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i - scrollPos,
-			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxEnergy * bots[i]->energy,
+			bitmapX + sysFontWidth + sysFontWidth / 9.f + (bitmapWidth * 0.9f - (sysFontWidth + sysFontWidth / 9.f)) / maxGeneratorStructure * bots[i]->generator,
 			nameFontHeight + (nameFontHeight + sysFontHeight * 4) * i + sysFontHeight - scrollPos,
 			bots[i]->color);
 

@@ -2,9 +2,15 @@
 
 #define infoBox {{0.75,0},{1,1}}
 
+#define maxGeneratorStructure 1000
+
 #define maxEnergy 100
-#define maxShield 100
-#define maxMissile 100
+
+#define maxShield 500
+
+#define shieldLeakLevel 400
+
+#define maxMissile 200
 #define maxLaser 100
 #define minLaser 20
 
@@ -14,15 +20,13 @@
 #define rangeMaxRange 0.2f
 #define sensorEnergyConsumption 2
 
-#define laserDamageMoltiplicator 0.05f // already normalized on the 100% laser system level (100 * 0.05 = 5 max damage)
+#define laserDamageMoltiplicator 0.05f // already normalized on the 100% laser system level (maxLaser * 0.05 = max damage)
 #define missileBlastRadius 0.1f
-#define missileDamage 10
+#define missileDamage 20
 #define laserSpeed 0.3f
 #define missileSpeed 0.2f
 
-#define shieldLeakLevel 80
-
-#define bumpDamage 15
+#define bumpDamage 30
 #define bumpForce 0.2f
 #define friction 0.2f
 #define maxSpeed 0.1f

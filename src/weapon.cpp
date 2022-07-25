@@ -18,11 +18,11 @@ void Missile::update(double delta) {
 			else {
 				uint8_t generatorDamage = missileDamage - missileDamage / maxShield * bot->shield;
 				bot->shield -= missileDamage + generatorDamage;
-				bot->energy -= generatorDamage;
+				bot->generator -= generatorDamage;
 			}
 
 			if(bot->shield < 0) bot->shield = 0;
-			if(bot->energy <= 0) addBotToDestroy(bot);
+			if(bot->generator <= 0) addBotToDestroy(bot);
 
 			for(Bot *botAround : bots)
 				if(botAround != bot && getDistance(coord, botAround->coord) < missileBlastRadius + botRadius) {
@@ -34,11 +34,11 @@ void Missile::update(double delta) {
 					else {
 						uint8_t generatorDamage = blastDamage - blastDamage / maxShield * botAround->shield;
 						botAround->shield -= blastDamage + generatorDamage;
-						botAround->energy -= generatorDamage;
+						botAround->generator -= generatorDamage;
 					}
 
 					if(botAround->shield < 0) botAround->shield = 0;
-					if(botAround->energy <= 0) addBotToDestroy(botAround);
+					if(botAround->generator <= 0) addBotToDestroy(botAround);
 				}
 			addWeaponToDestroy(this);
 		}
@@ -61,11 +61,11 @@ void Missile::update(double delta) {
 				else {
 					uint8_t generatorDamage = blastDamage - blastDamage / maxShield * botAround->shield;
 					botAround->shield -= blastDamage + generatorDamage;
-					botAround->energy -= generatorDamage;
+					botAround->generator -= generatorDamage;
 				}
 
 				if(botAround->shield < 0) botAround->shield = 0;
-				if(botAround->energy <= 0) addBotToDestroy(botAround);
+				if(botAround->generator <= 0) addBotToDestroy(botAround);
 			}
 		addWeaponToDestroy(this);
 	}
@@ -87,11 +87,11 @@ void Laser::update(double delta) {
 			else {
 				uint8_t generatorDamage = damage - damage / maxShield * bot->shield;
 				bot->shield -= damage + generatorDamage;
-				bot->energy -= generatorDamage;
+				bot->generator -= generatorDamage;
 			}
 
 			if(bot->shield < 0) bot->shield = 0;
-			if(bot->energy <= 0) addBotToDestroy(bot);
+			if(bot->generator <= 0) addBotToDestroy(bot);
 
 			addWeaponToDestroy(this);
 		}

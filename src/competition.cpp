@@ -56,7 +56,7 @@ void setMotorSpeed(int leftTread, int rightTread) {
 }
 
 int getGeneratorOutput() {
-	return currBot->energy;
+	return currBot->generator / maxGeneratorStructure * 100;
 }
 
 int getSystemEnergy(System system) {
