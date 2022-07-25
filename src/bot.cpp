@@ -22,12 +22,11 @@ void Radar::priming() {
 
 void Radar::draw() {
 
-	if(enabled) {
+	if(enabled)
 		al_draw_rotated_bitmap(bitmap,
 							   al_get_bitmap_width(bitmap) / 2,
 							   al_get_bitmap_height(bitmap) / 2,
 							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, DEG_PER_RAD * currBot->heading, 0);
-	}
 }
 
 bool testRayBot(Coord p, Coord d, Coord s) {
@@ -162,9 +161,14 @@ void Bot::update(double delta) {
 	if(updateFn) updateFn(delta);
 ////////////////////////
 ////////////////////////ENERGY HANDLING
-	shield += generator / maxGeneratorStructure * maxEnergy / 100 * shieldChargeRate * delta;
-	missile += generator / maxGeneratorStructure * maxEnergy / 100 * missileChargeRate * delta;
-	laser += generator / maxGeneratorStructure * maxEnergy / 100 * laserChargeRate * delta;
+	uint8_t sensorsDraw = 0;
+	for(Sensor *sensor : sensors) sensorsDraw += sensorEnergyConsumption;
+
+	sensorsDraw -= (100 - (shieldChargeRate + missileChargeRate + laserChargeRate));
+		 
+	shield += generator / maxGeneratorStructure * maxEnergy / 100 * (shieldChargeRate - sensorsDraw / 100 * shieldChargeRate) * delta;
+	missile += generator / maxGeneratorStructure * maxEnergy / 100 * (missileChargeRate - sensorsDraw / 100 * missileChargeRate) * delta;
+	laser += generator / maxGeneratorStructure * maxEnergy / 100 * (laserChargeRate - sensorsDraw / 100 * laserChargeRate) * delta;
 	if(shield > maxShield) shield = maxShield;
 	if(missile > maxMissile) missile = maxMissile;
 	if(laser > maxLaser) laser = maxLaser;
@@ -191,15 +195,15 @@ void Bot::update(double delta) {
 		coord += {lTreadDist * cosf(radians), lTreadDist * sinf(radians)};
 	} else {
 
-		if(rightTreadSpeed == 0) {
+		if(leftTreadSpeed == 0) {
 
 			midRad = botRadius;
-			rotAngle = -lTreadDist * 360.0 / (2 * PI * 2 * botRadius);
+			rotAngle = -rTreadDist * 360.0 / (2 * PI * 2 * botRadius);
 			startAngle = heading + 90;
-		} else if(leftTreadSpeed == 0) {
+		} else if(rightTreadSpeed == 0) {
 
 			midRad = botRadius;
-			rotAngle = rTreadDist * 360.0 / (2 * PI * 2 * botRadius);
+			rotAngle = lTreadDist * 360.0 / (2 * PI * 2 * botRadius);
 			startAngle = heading + 270;
 		} else {
 
@@ -207,13 +211,13 @@ void Bot::update(double delta) {
 
 				innerRad = rTreadDist * 2 * botRadius / (lTreadDist - rTreadDist);
 				midRad = innerRad + 2 * botRadius / 2;
-				rotAngle = -rTreadDist * 360.0 / (2 * PI * innerRad);
-				startAngle = heading + 90;
+				rotAngle = rTreadDist * 360.0 / (2 * PI * innerRad);
+				startAngle = heading - 90;
 			} else {
 				innerRad = lTreadDist * 2 * botRadius / (rTreadDist - lTreadDist);
 				midRad = innerRad + 2 * botRadius / 2;
-				rotAngle = lTreadDist * 360.0 / (2 * PI * innerRad);
-				startAngle = heading + 270;
+				rotAngle = -lTreadDist * 360.0 / (2 * PI * innerRad);
+				startAngle = heading - 270;
 			}
 		}
 		radians = startAngle * DEG_PER_RAD;
