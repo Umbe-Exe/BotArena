@@ -186,6 +186,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="demo_bots\rammingBot.cpp" />
+    <ClCompile Include="demo_bots\Umbe.cpp" />
+    <ClCompile Include="demo_bots\Umbe1.cpp" />
+    <ClCompile Include="demo_bots\Umbe2.cpp" />
+    <ClCompile Include="demo_bots\Umbe3.cpp" />
+    <ClCompile Include="demo_bots\Umbe4.cpp" />
+    <ClCompile Include="demo_bots\Umbe5.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\bot.cpp" />
     <ClCompile Include="src\competition.cpp" />
@@ -196,9 +203,15 @@
     <ClCompile Include="src\update.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\weapon.cpp" />
-    <ClCompile Include="test_bot\test_bot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="demo_bots\rammingBot.h" />
+    <ClInclude Include="demo_bots\Umbe.h" />
+    <ClInclude Include="demo_bots\Umbe1.h" />
+    <ClInclude Include="demo_bots\Umbe2.h" />
+    <ClInclude Include="demo_bots\Umbe3.h" />
+    <ClInclude Include="demo_bots\Umbe4.h" />
+    <ClInclude Include="demo_bots\Umbe5.h" />
     <ClInclude Include="src\Arena.h" />
     <ClInclude Include="src\bot.h" />
     <ClInclude Include="src\competition.h" />
@@ -211,7 +224,6 @@
     <ClInclude Include="src\update.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\weapon.h" />
-    <ClInclude Include="test_bot\test_bot.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\images\background.bmp" />

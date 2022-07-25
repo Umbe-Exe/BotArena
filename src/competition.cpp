@@ -3,15 +3,15 @@
 
 int addRadarGetId(float angle, float width, int range) {
 
-	if(width < 0) width *= -1;
-	if(angle < 0) angle += 360;
 	if(range < 0) {
 		range *= -1;
 		angle += 180;
 	}
 
 	if(angle > 360) angle -= int(angle / 360) * 360;
+	else if(angle < 0) angle += int(angle / -360) * 360;
 	if(width > 360) width -= int(width / 360) * 360;
+	else if(width < 360) width += int(width / -360) * 360;
 	
 	currBot->sensors.push_back(new Radar(width, angle, range > 100 ? 100 : range));
 
@@ -26,6 +26,7 @@ int addRangeGetId(float angle, int range) {
 	}
 
 	if(angle > 360) angle -= int(angle / 360) * 360;
+	else if(angle < 0) angle += int(angle / -360) * 360;
 	
 	currBot->sensors.push_back(new LaserRange(angle, range > 100 ? 100 : range));
 
@@ -43,7 +44,7 @@ int getSensorData(int sensorId) {
 	if(currBot->sensors.size() > sensorId && sensorId >= 0)
 		if(currBot->sensors[sensorId]->enabled)
 			return currBot->sensors[sensorId]->data;
-	return 0;
+	return -1;
 }
 
 void setMotorSpeed(int leftTread, int rightTread) {

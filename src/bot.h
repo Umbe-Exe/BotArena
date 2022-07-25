@@ -62,7 +62,7 @@ struct Bot : drawable, updatable{
 	Coord coord;
 
 	float generator = maxGeneratorStructure, shield = maxShield, missile = maxMissile, laser = maxLaser;
-	int shieldChargeRate = 50, missileChargeRate = 50, laserChargeRate = 0;
+	float shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
 

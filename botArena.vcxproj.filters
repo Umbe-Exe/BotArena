@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="demo_bots">
+      <UniqueIdentifier>{7ff9797d-c3a8-4b20-ba53-7f6b71605abd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -42,14 +45,32 @@
     <ClCompile Include="src\competition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test_bot\test_bot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\infobox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\remover.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe1.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe2.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe3.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe4.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe5.cpp">
+      <Filter>demo_bots</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\rammingBot.cpp">
+      <Filter>demo_bots</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +101,6 @@
     <ClInclude Include="src\competition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test_bot\test_bot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\infobox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -91,6 +109,27 @@
     </ClInclude>
     <ClInclude Include="src\remover.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe1.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe2.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe3.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe4.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\Umbe5.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\rammingBot.h">
+      <Filter>demo_bots</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

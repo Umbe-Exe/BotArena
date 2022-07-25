@@ -96,8 +96,8 @@ void Laser::update(double delta) {
 			addWeaponToDestroy(this);
 		}
 
-	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
-	coord.y += missileSpeed * sinf(heading * DEG_PER_RAD) * delta;
+	coord.x += laserSpeed * cosf(heading * DEG_PER_RAD) * delta;
+	coord.y += laserSpeed * sinf(heading * DEG_PER_RAD) * delta;
 
 	if(
 		coord.x < battleBox.topLeft.x + weaponRadius ||

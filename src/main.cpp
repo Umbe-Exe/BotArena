@@ -1,23 +1,20 @@
-#include "Arena.h"
-#include "../test_bot/test_bot.h"
+#include "../demo_bots/Umbe.h"
+#include "../demo_bots/Umbe1.h"
+#include "../demo_bots/Umbe2.h"
+#include "../demo_bots/Umbe3.h"
+#include "../demo_bots/Umbe4.h"
+#include "../demo_bots/Umbe5.h"
+#include "../demo_bots/rammingBot.h"
 
 int main() {
-	registerBot("A", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("B", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("C", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("D", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("E", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("F", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("G", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("H", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("I", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("J", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("K", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("L", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("M", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("N", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("O", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-	registerBot("P", RANDCOL, "resources/images/Coke.bmp", test_actions, test_init);
-
+	registerUmbe();
+	registerUmbe1();
+	registerUmbe2();
+	registerUmbe3();
+	registerUmbe4();
+	registerUmbe5();
+	
+	registerRam();
+	registerRam();
 	start();
 }

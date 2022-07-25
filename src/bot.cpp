@@ -44,15 +44,23 @@ bool testRayBot(Coord p, Coord d, Coord s) {
 	return 1;
 }
 
-bool isClockwiseAngle(Coord a, Coord b, Coord c) {
-	if((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y) < 0) return 1;
+bool isBotInBetween(Coord start, Coord p, Coord end) {
+
+	p -= currBot->coord;
+
+	float S = atan2f(start.y, start.x);
+	float A = atan2f(p.y, p.x);
+	float E = atan2f(end.y, end.x);
+
+	if(S < E) return S < A &&A < E;
+	else if(S > E && (A > S || A < E)) return 1;
 	return 0;
 }
 
 void Radar::update(double delta) {
 
 	if(enabled) {
-		data = -1;
+		data = 0;
 
 		Coord
 			start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD)},
@@ -64,9 +72,8 @@ void Radar::update(double delta) {
 				if(getDistance(bot->coord, currBot->coord) < botRadius + radarMaxRange / 100 * range && (
 					testRayBot(currBot->coord, start, bot->coord) ||
 					testRayBot(currBot->coord, end, bot->coord) || (
-						isClockwiseAngle(start, currBot->coord, bot->coord) &&
-						isClockwiseAngle(bot->coord, currBot->coord, end)))) {
-					data = +1;
+						isBotInBetween(start, bot->coord, end)))) {
+					data = 1;
 					break;
 				}
 			}
@@ -159,6 +166,8 @@ void Bot::update(double delta) {
 	for(Sensor *sensor : sensors) sensor->update(delta);
 
 	if(updateFn) updateFn(delta);
+
+	bumping = 0;
 ////////////////////////
 ////////////////////////ENERGY HANDLING
 	uint8_t sensorsDraw = 0;
@@ -234,48 +243,48 @@ void Bot::update(double delta) {
 	}
 ////////////////////////
 ////////////////////////BOTS COLLIDING
-		float /*x, y, dist,*/ angle;
-		uint8_t i = 0;
+	float /*x, y, dist,*/ angle;
+	uint8_t i = 0;
 
-		while(bots[i] != this) ++i; ++i;
-		for(; i < bots.size(); ++i) {
+	while(bots[i] != this) ++i; ++i;
+	for(; i < bots.size(); ++i) {
 
-			x = coord.x - bots[i]->coord.x;
-			y = coord.y - bots[i]->coord.y;
-			dist = sqrtf(powf(x, 2) + powf(y, 2));
+		x = coord.x - bots[i]->coord.x;
+		y = coord.y - bots[i]->coord.y;
+		dist = sqrtf(powf(x, 2) + powf(y, 2));
 
-			if(dist < botRadius * 2) {
-				impulseSpeed = bumpForce;
-				bots[i]->impulseSpeed = bumpForce;
-				if(y >= 0) angle = acosf(x / dist);
-				else angle = 2 * PI - acosf(x / dist);
-				angle *= RAD_PER_DEG;
-				impulseHeading = angle;
-				bots[i]->impulseHeading = angle + 180;
-				bumping = 1;
-				bots[i]->bumping = 1;
+		if(dist < botRadius * 2) {
+			impulseSpeed = bumpForce;
+			bots[i]->impulseSpeed = bumpForce;
+			if(y >= 0) angle = acosf(x / dist);
+			else angle = 2 * PI - acosf(x / dist);
+			angle *= RAD_PER_DEG;
+			impulseHeading = angle;
+			bots[i]->impulseHeading = angle + 180;
+			bumping = 1;
+			bots[i]->bumping = 1;
 
-				if(shield > shieldLeakLevel) shield -= bumpDamage;
-				else {
-					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * shield;
-					shield -= bumpDamage + generatorDamage;
-					generator -= generatorDamage;
-				}
-
-				if(shield < 0) shield = 0;
-				if(generator <= 0) addBotToDestroy(this);
-
-				if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
-				else {
-					uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * bots[i]->shield;
-					bots[i]->shield -= bumpDamage + generatorDamage;
-					bots[i]->generator -= generatorDamage;
-				}
-
-				if(bots[i]->shield < 0) bots[i]->shield = 0;
-				if(bots[i]->generator <= 0) addBotToDestroy(bots[i]);
+			if(shield > shieldLeakLevel) shield -= bumpDamage;
+			else {
+				uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * shield;
+				shield -= bumpDamage + generatorDamage;
+				generator -= generatorDamage;
 			}
+
+			if(shield < 0) shield = 0;
+			if(generator <= 0) addBotToDestroy(this);
+
+			if(bots[i]->shield > shieldLeakLevel) bots[i]->shield -= bumpDamage;
+			else {
+				uint8_t generatorDamage = bumpDamage - bumpDamage / maxShield * bots[i]->shield;
+				bots[i]->shield -= bumpDamage + generatorDamage;
+				bots[i]->generator -= generatorDamage;
+			}
+
+			if(bots[i]->shield < 0) bots[i]->shield = 0;
+			if(bots[i]->generator <= 0) addBotToDestroy(bots[i]);
 		}
+	}
 ////////////////////////
 ////////////////////////WALL HIT
 	bool hitWall = 0;
