@@ -26,7 +26,7 @@ void Radar::draw() {
 		al_draw_rotated_bitmap(bitmap,
 							   al_get_bitmap_width(bitmap) / 2,
 							   al_get_bitmap_height(bitmap) / 2,
-							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, DEG_PER_RAD * (currBot->heading + angle), 0);
+							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, DEG_PER_RAD * currBot->heading, 0);
 	}
 }
 
@@ -52,24 +52,26 @@ bool isClockwiseAngle(Coord a, Coord b, Coord c) {
 
 void Radar::update(double delta) {
 
-	data = -1;
+	if(enabled) {
+		data = -1;
 
-	Coord
-		start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD)},
-		end = {cosf((currBot->heading + angle + width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle + width / 2) * DEG_PER_RAD)};
+		Coord
+			start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD)},
+			end = {cosf((currBot->heading + angle + width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle + width / 2) * DEG_PER_RAD)};
 
-	for(Bot *bot : bots)
-		if(bot != currBot) {
+		for(Bot *bot : bots)
+			if(bot != currBot) {
 
-			if(getDistance(bot->coord, currBot->coord) < botRadius + radarMaxRange / 100 * range && (
-				testRayBot(currBot->coord, start, bot->coord) ||
-				testRayBot(currBot->coord, end, bot->coord) || (
-					isClockwiseAngle(start, currBot->coord, bot->coord) &&
-					isClockwiseAngle(bot->coord, currBot->coord, end)))) {
-				data = +1;
-				break;
+				if(getDistance(bot->coord, currBot->coord) < botRadius + radarMaxRange / 100 * range && (
+					testRayBot(currBot->coord, start, bot->coord) ||
+					testRayBot(currBot->coord, end, bot->coord) || (
+						isClockwiseAngle(start, currBot->coord, bot->coord) &&
+						isClockwiseAngle(bot->coord, currBot->coord, end)))) {
+					data = +1;
+					break;
+				}
 			}
-		}
+	}
 }
 
 void LaserRange::draw() {
@@ -103,38 +105,40 @@ inline void segment_segment_intersection(Coord a, Coord b, Coord c, Coord d, std
 
 void LaserRange::update(double delta) {
 
-	data = 0;
+	if(enabled) {
+		data = 0;
 
-	std::set<float> t;
+		std::set<float> t;
 
-	Coord d = {cosf((currBot->heading + angle) * DEG_PER_RAD), sinf((currBot->heading + angle) * DEG_PER_RAD)};
-	Coord m;
-	float b, c, discr, tmp;
+		Coord d = {cosf((currBot->heading + angle) * DEG_PER_RAD), sinf((currBot->heading + angle) * DEG_PER_RAD)};
+		Coord m;
+		float b, c, discr, tmp;
 
-	for(Bot *bot : bots)
-		if(bot != currBot) {
+		for(Bot *bot : bots)
+			if(bot != currBot) {
 
-			m = currBot->coord - bot->coord;
-			b = m.dot(d);
-			c = m.dot(m) - botRadius * botRadius;
+				m = currBot->coord - bot->coord;
+				b = m.dot(d);
+				c = m.dot(m) - botRadius * botRadius;
 
-			if((c > 0.f && b > 0.f) ||
-			   (discr = b * b - c) < 0.f) continue;
+				if((c > 0.f && b > 0.f) ||
+				   (discr = b * b - c) < 0.f) continue;
 
-			tmp = (-b - sqrtf(discr)) / rangeMaxRange;
+				tmp = (-b - sqrtf(discr)) / rangeMaxRange;
 
-			if(tmp < 1.f) t.insert(tmp);
-		}
+				if(tmp < 1.f) t.insert(tmp);
+			}
 
-	d *= rangeMaxRange / 100 * range;
-	d += currBot->coord;
+		d *= rangeMaxRange / 100 * range;
+		d += currBot->coord;
 
-	segment_segment_intersection(currBot->coord, d, battleBox.topLeft, {battleBox.bottomRight.x,battleBox.topLeft.y}, t);
-	segment_segment_intersection(currBot->coord, d, {battleBox.bottomRight.x,battleBox.topLeft.y}, battleBox.bottomRight, t);
-	segment_segment_intersection(currBot->coord, d, battleBox.bottomRight, {battleBox.topLeft.x,battleBox.bottomRight.y}, t);
-	segment_segment_intersection(currBot->coord, d, {battleBox.topLeft.x,battleBox.bottomRight.y}, battleBox.topLeft, t);
+		segment_segment_intersection(currBot->coord, d, battleBox.topLeft, {battleBox.bottomRight.x,battleBox.topLeft.y}, t);
+		segment_segment_intersection(currBot->coord, d, {battleBox.bottomRight.x,battleBox.topLeft.y}, battleBox.bottomRight, t);
+		segment_segment_intersection(currBot->coord, d, battleBox.bottomRight, {battleBox.topLeft.x,battleBox.bottomRight.y}, t);
+		segment_segment_intersection(currBot->coord, d, {battleBox.topLeft.x,battleBox.bottomRight.y}, battleBox.topLeft, t);
 
-	if(t.size()) data = 100 - *t.begin() * 100;
+		if(t.size()) data = 100 - *t.begin() * 100;
+	}
 }
 
 void Bot::draw() {
