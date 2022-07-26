@@ -1,6 +1,7 @@
 #include "bot.h"
 #include "data.h"
 #include "remover.h"
+#include "competition.h"
 #include <allegro5/allegro_primitives.h>
 #include <set>
 
@@ -262,8 +263,8 @@ void Bot::update(double delta) {
 			angle *= RAD_PER_DEG;
 			impulseHeading = angle;
 			bots[i]->impulseHeading = angle + 180;
-			bumping = 1;
-			bots[i]->bumping = 1;
+			bumping |= BotCollision;
+			bots[i]->bumping |= BotCollision;
 
 			if(shield > shieldLeakLevel) shield -= bumpDamage;
 			else {
@@ -304,5 +305,5 @@ void Bot::update(double delta) {
 		coord.y = battleBox.bottomRight.y - botRadius;
 		hitWall = 1;
 	}
-	if(hitWall) bumping = 1;
+	if(hitWall) bumping |= WallHit;
 }

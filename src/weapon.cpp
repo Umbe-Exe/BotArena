@@ -1,6 +1,7 @@
 #include "weapon.h"
 #include "data.h"
 #include "remover.h"
+#include "competition.h"
 
 void Missile::draw() {
 
@@ -39,8 +40,12 @@ void Missile::update(double delta) {
 
 					if(botAround->shield < 0) botAround->shield = 0;
 					if(botAround->generator <= 0) addBotToDestroy(botAround);
+
+					botAround->bumping |= BlastWave;
 				}
 			addWeaponToDestroy(this);
+
+			bot->bumping |= MissileHit;
 		}
 
 	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
@@ -66,6 +71,8 @@ void Missile::update(double delta) {
 
 				if(botAround->shield < 0) botAround->shield = 0;
 				if(botAround->generator <= 0) addBotToDestroy(botAround);
+
+				botAround->bumping |= BlastWave;
 			}
 		addWeaponToDestroy(this);
 	}
@@ -94,6 +101,8 @@ void Laser::update(double delta) {
 			if(bot->generator <= 0) addBotToDestroy(bot);
 
 			addWeaponToDestroy(this);
+
+			bot->bumping |= LaserHit;
 		}
 
 	coord.x += laserSpeed * cosf(heading * DEG_PER_RAD) * delta;

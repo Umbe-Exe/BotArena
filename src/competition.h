@@ -8,6 +8,14 @@ enum Armament {
 	MISSILE, LASER
 };
 
+enum BumpType {
+	WallHit = 1,
+	BotCollision = 2,
+	MissileHit = 4,
+	LaserHit = 8,
+	BlastWave = 16
+};
+
 struct GPSdata {
 	float x, y, heading;
 };

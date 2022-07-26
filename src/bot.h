@@ -66,7 +66,7 @@ struct Bot : drawable, updatable{
 
 	std::vector<Sensor *> sensors;
 
-	bool bumping = 0;
+	char bumping = 0;
 	float impulseSpeed = 0, impulseHeading = 0;
 
 	~Bot() {
