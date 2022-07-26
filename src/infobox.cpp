@@ -19,7 +19,7 @@ uint16_t bitmapX;
 
 void primeInfoboxBitmap() {
 
-	nOfBots = bots.size();
+	nOfBots = (uint8_t)bots.size();
 
 	if(nameFont) al_destroy_font(nameFont);
 	nameFont = al_load_ttf_font("resources/font/typed.ttf", 0.05f * arenaSize, 0);
@@ -33,7 +33,7 @@ void primeInfoboxBitmap() {
 	if(bitmap) al_destroy_bitmap(bitmap);
 	bitmap = al_create_bitmap(
 		(Rect(infoBox).bottomRight.x - Rect(infoBox).topLeft.x) * win_w,
-		(nameFontHeight + sysFontHeight * 4) * nOfBots + (nameFontHeight + sysFontHeight) * terminatedBots.size());
+		(nameFontHeight + sysFontHeight * 4) * nOfBots + (nameFontHeight + sysFontHeight) * (int)terminatedBots.size());
 
 	al_set_target_bitmap(bitmap);
 	al_clear_to_color(al_map_rgb(200, 200, 200));
