@@ -270,10 +270,10 @@ namespace umbe5 {
 			if(DELTA(UM_delay) > 1.f && DELTA(UM_delay) < 10.f) UM_delay += CLOCKS_PER_SEC;
 		} else if((UM_fl > 0 || UM_fr > 0) && UM_fl > UM_fr) {
 			setMotorSpeed(100, 20);
-			if(isBumping()) setMotorSpeed(-10, -100);
+			if(isBumping()) setMotorSpeed(50, -100);
 		} else if((UM_fl > 0 || UM_fr > 0) && UM_fl < UM_fr) {
 			setMotorSpeed(20, 100);
-			if(isBumping()) setMotorSpeed(-100, -10);
+			if(isBumping()) setMotorSpeed(50, -100);
 		} else if(DELTA(UM_delay) > 1.f && DELTA(UM_delay) < 5.f) {
 			setMotorSpeed(100, 100);
 			if(UM_hit > getSystemEnergy(SHIELDS)) {
@@ -290,8 +290,8 @@ namespace umbe5 {
 
 	void ready() {
 
-		RRADAR = addRadarGetId(45 / 2.f, 45, 100);
-		LRADAR = addRadarGetId(-45 / 2.f, 45, 100);
+		RRADAR = addRadarGetId(45 / 2.f + 2, 45, 100);
+		LRADAR = addRadarGetId(-45 / 2.f - 2, 45, 100);
 		RRANGE = addRangeGetId(43, 100);
 		LRANGE = addRangeGetId(317, 100);
 
