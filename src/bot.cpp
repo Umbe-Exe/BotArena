@@ -171,7 +171,8 @@ void Bot::update(double delta) {
 ////////////////////////
 ////////////////////////ENERGY HANDLING
 	uint8_t sensorsDraw = 0;
-	for(Sensor *sensor : sensors) sensorsDraw += sensorEnergyConsumption;
+	for(Sensor *sensor : sensors) 
+		if(sensor->enabled) sensorsDraw += sensorEnergyConsumption;
 
 	sensorsDraw -= (100 - (shieldChargeRate + missileChargeRate + laserChargeRate));
 		 
