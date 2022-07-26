@@ -30,19 +30,19 @@ void Radar::draw() {
 							   currBot->coord.x * arenaSize, currBot->coord.y * arenaSize, DEG_PER_RAD * currBot->heading, 0);
 }
 
-bool testRayBot(Coord p, Coord d, Coord s) {
-	Coord m = p - s;
-	float c = m.dot(m) - botRadius * botRadius;
+float segmentBotIntersection(Coord from, Coord d, Coord to) {
+	
+	Coord m;
+	float b, c, discr;
+			
+	m = from - to;
+	b = m.dot(d);
+	c = m.dot(m) - botRadius * botRadius;
 
-	if(c <= 0.f) return 1;
-	float b = m.dot(d);
-
-	if(b > 0.f) return 0;
-	float disc = b * b - c;
-
-	if(disc < 0.f) return 0;
-
-	return 1;
+	if((c > 0.f && b > 0.f) ||
+	   (discr = b * b - c) < 0.f) return 0;
+					
+	return (-b - sqrtf(discr));
 }
 
 bool isBotInBetween(Coord start, Coord p, Coord end) {
@@ -64,15 +64,20 @@ void Radar::update(double delta) {
 		data = 0;
 
 		Coord
-			start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD)},
-			end = {cosf((currBot->heading + angle + width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle + width / 2) * DEG_PER_RAD)};
+			start = {cosf((currBot->heading + angle - width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle - width / 2) * DEG_PER_RAD) },
+			end = {cosf((currBot->heading + angle + width / 2) * DEG_PER_RAD), sinf((currBot->heading + angle + width / 2) * DEG_PER_RAD) };
+
+		float startColl, endColl;
 
 		for(Bot *bot : bots)
 			if(bot != currBot) {
 
+				startColl = segmentBotIntersection(currBot->coord, start, bot->coord);
+				endColl = segmentBotIntersection(currBot->coord, end, bot->coord);
+
 				if(getDistance(bot->coord, currBot->coord) < botRadius + radarMaxRange / 100 * range && (
-					testRayBot(currBot->coord, start, bot->coord) ||
-					testRayBot(currBot->coord, end, bot->coord) || (
+					(startColl > 0 && startColl / (radarMaxRange / 100 * range) < 1.f) ||
+					(endColl > 0 && endColl / (radarMaxRange / 100 * range) < 1.f) || (
 						isBotInBetween(start, bot->coord, end)))) {
 					data = 1;
 					break;
@@ -118,20 +123,14 @@ void LaserRange::update(double delta) {
 		std::set<float> t;
 
 		Coord d = {cosf((currBot->heading + angle) * DEG_PER_RAD), sinf((currBot->heading + angle) * DEG_PER_RAD)};
-		Coord m;
-		float b, c, discr, tmp;
+		float tmp;
 
 		for(Bot *bot : bots)
 			if(bot != currBot) {
 
-				m = currBot->coord - bot->coord;
-				b = m.dot(d);
-				c = m.dot(m) - botRadius * botRadius;
+				if((tmp = segmentBotIntersection(currBot->coord, d, bot->coord)) == 0) continue;
 
-				if((c > 0.f && b > 0.f) ||
-				   (discr = b * b - c) < 0.f) continue;
-
-				tmp = (-b - sqrtf(discr)) / rangeMaxRange;
+				tmp /= (rangeMaxRange / 100 * range);
 
 				if(tmp < 1.f) t.insert(tmp);
 			}
@@ -144,7 +143,7 @@ void LaserRange::update(double delta) {
 		segment_segment_intersection(currBot->coord, d, battleBox.bottomRight, {battleBox.topLeft.x,battleBox.bottomRight.y}, t);
 		segment_segment_intersection(currBot->coord, d, {battleBox.topLeft.x,battleBox.bottomRight.y}, battleBox.topLeft, t);
 
-		if(t.size()) data = 100 - *t.begin() * 100;
+		if(t.size()) data = range - *t.begin() * range;
 	}
 }
 
