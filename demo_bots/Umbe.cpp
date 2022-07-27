@@ -31,7 +31,7 @@ void manageEnergy() {
 		, generator = getGeneratorOutput();
 
 	if(generator < 60) {
-		if(missle == 100 && laser == 50) {
+		if(missle == 100 && laser == 100) {
 			setSystemChargeRate(SHIELDS, 100);
 			setSystemChargeRate(MISSILES, 0);
 			setSystemChargeRate(LASERS, 0);
