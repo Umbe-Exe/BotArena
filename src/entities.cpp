@@ -123,7 +123,7 @@ void primeBitmaps() {
 	laserBitmap = al_create_bitmap(weaponWidth, weaponWidth);
 	al_set_target_bitmap(laserBitmap);
 
-	al_draw_line(0, weaponWidth / 2, weaponWidth, weaponWidth / 2, al_map_rgb(255, 0, 0), arenaSize * 0.01f);
+	al_draw_line(0, weaponWidth / 2, weaponWidth, weaponWidth / 2, al_map_rgb(255, 0, 0), arenaSize * (weaponRadius / 2));
 
 /////////////////////////////////////////
 
