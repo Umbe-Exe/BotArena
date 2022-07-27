@@ -64,7 +64,7 @@ void display() {
 		running = true,
 		pause = true;
 	ALLEGRO_EVENT event;
-	double previous = al_get_time(), current, delta = 0.0001;
+	double previous = al_get_time(), current, delta = 0.000001;
 
 	while(running) {
 		event = {};
@@ -94,34 +94,38 @@ void display() {
 			event = {};
 			al_wait_for_event(queue, &event);
 
-			if(event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_P) {
-				pause = false;
-				previous = al_get_time() + delta;
-			} else {
-				switch(event.type) {
-					case ALLEGRO_EVENT_KEY_DOWN:
-						if(event.keyboard.keycode == ALLEGRO_KEY_S) {
-							scatterBots();
-							update(delta);
-						}
-						break;
-					case ALLEGRO_EVENT_DISPLAY_CLOSE:
-						running = false;
+			switch(event.type) {
+				case ALLEGRO_EVENT_KEY_DOWN:
+					if(event.keyboard.keycode == ALLEGRO_KEY_S) {
+						scatterBots();
+						update(delta);
+					} else if(event.keyboard.keycode == ALLEGRO_KEY_P) {
 						pause = false;
-						break;
-					case ALLEGRO_EVENT_DISPLAY_RESIZE:
-						al_acknowledge_resize(window);
-						makeBattleBox();
-						primeBitmaps();
-						infoBoxScroll(0);
-						al_set_target_backbuffer(window);
+						previous = al_get_time() + delta;
+					} else if(event.keyboard.keycode == ALLEGRO_KEY_UP) {
+						delta *= 10;
 						update(delta);
-						break;
-					case ALLEGRO_EVENT_MOUSE_AXES:
-						if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
+					} else if(event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+						delta /= 10;
 						update(delta);
-						break;
-				}
+					}
+					break;
+				case ALLEGRO_EVENT_DISPLAY_CLOSE:
+					running = false;
+					pause = false;
+					break;
+				case ALLEGRO_EVENT_DISPLAY_RESIZE:
+					al_acknowledge_resize(window);
+					makeBattleBox();
+					primeBitmaps();
+					infoBoxScroll(0);
+					al_set_target_backbuffer(window);
+					update(delta);
+					break;
+				case ALLEGRO_EVENT_MOUSE_AXES:
+					if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
+					update(delta);
+					break;
 			}
 		}
 
