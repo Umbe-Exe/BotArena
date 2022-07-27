@@ -60,16 +60,20 @@ void update(double delta) {
 
 void display() {
 
-	bool running = true;
-	ALLEGRO_EVENT event{};
-	double previous = al_get_time(), current;
+	bool
+		running = true,
+		pause = true;
+	ALLEGRO_EVENT event;
+	double previous = al_get_time(), current, delta = 0.0001;
 
 	while(running) {
+		event = {};
 		al_get_next_event(queue, &event);
 
 		switch(event.type) {
 			case ALLEGRO_EVENT_KEY_DOWN:
 				if(event.keyboard.keycode == ALLEGRO_KEY_S) scatterBots();
+				else if(event.keyboard.keycode == ALLEGRO_KEY_P) pause = true;
 				break;
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
 				running = false;
@@ -84,10 +88,45 @@ void display() {
 			case ALLEGRO_EVENT_MOUSE_AXES:
 				if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
 				break;
-		} event = {};
+		}
+
+		while(pause) {
+			event = {};
+			al_wait_for_event(queue, &event);
+
+			if(event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_P) {
+				pause = false;
+				previous = al_get_time() + delta;
+			} else {
+				switch(event.type) {
+					case ALLEGRO_EVENT_KEY_DOWN:
+						if(event.keyboard.keycode == ALLEGRO_KEY_S) {
+							scatterBots();
+							update(delta);
+						}
+						break;
+					case ALLEGRO_EVENT_DISPLAY_CLOSE:
+						running = false;
+						pause = false;
+						break;
+					case ALLEGRO_EVENT_DISPLAY_RESIZE:
+						al_acknowledge_resize(window);
+						makeBattleBox();
+						primeBitmaps();
+						infoBoxScroll(0);
+						al_set_target_backbuffer(window);
+						update(delta);
+						break;
+					case ALLEGRO_EVENT_MOUSE_AXES:
+						if(event.mouse.dz != 0) infoBoxScroll(event.mouse.dz);
+						update(delta);
+						break;
+				}
+			}
+		}
 
 		current = al_get_time();
-		update(current - previous);
+		update(delta = current - previous);
 		previous = current;
 	}
 }
