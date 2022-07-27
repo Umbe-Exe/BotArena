@@ -40,4 +40,4 @@ void fireWeapon(Armament weapon, float heading);
 
 GPSdata getGPSdata();
 
-bool isBumping();
+char isBumping();

@@ -1,5 +1,6 @@
 #include "competition.h"
 #include "data.h"
+#include "sound.h"
 
 int addRadarGetId(float angle, float width, int range) {
 
@@ -35,13 +36,13 @@ int addRangeGetId(float angle, int range) {
 
 void setSensorStatus(int sensorId, bool enabled) {
 
-	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+	if((int)currBot->sensors.size() > sensorId && sensorId >= 0)
 		currBot->sensors[sensorId]->enabled = enabled;
 }
 
 int getSensorData(int sensorId) {
 
-	if(currBot->sensors.size() > sensorId && sensorId >= 0)
+	if((int)currBot->sensors.size() > sensorId && sensorId >= 0)
 		if(currBot->sensors[sensorId]->enabled)
 			return currBot->sensors[sensorId]->data;
 	return -1;
@@ -108,12 +109,16 @@ void fireWeapon(Armament weapon, float heading) {
 			if(currBot->missile == maxMissile) {
 				weapons.push_back(new Missile(heading, coord));
 				currBot->missile = 0;
+
+				playMissileSound();
 			}
 			break;
 		case LASER:
 			if(currBot->laser >= minLaser) {
 				weapons.push_back(new Laser(currBot->laser * laserDamageMoltiplicator, heading, coord));
 				currBot->laser = 0;
+
+				playLaserSound();
 			}
 			break;
 	}
@@ -123,6 +128,6 @@ GPSdata getGPSdata() {
 	return {currBot->coord.x - battleBox.topLeft.x, currBot->coord.y - battleBox.topLeft.y, currBot->heading};
 }
 
-bool isBumping() {
+char isBumping() {
 	return currBot->bumping;
 }

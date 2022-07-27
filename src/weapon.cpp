@@ -1,6 +1,7 @@
 #include "weapon.h"
 #include "data.h"
 #include "remover.h"
+#include "sound.h"
 #include "competition.h"
 
 void Missile::draw() {
@@ -46,6 +47,8 @@ void Missile::update(double delta) {
 			addWeaponToDestroy(this);
 
 			bot->bumping |= MissileHit;
+
+			playMissileHitSound();
 		}
 
 	coord.x += missileSpeed * cosf(heading * DEG_PER_RAD) * delta;
@@ -75,6 +78,8 @@ void Missile::update(double delta) {
 				botAround->bumping |= BlastWave;
 			}
 		addWeaponToDestroy(this);
+
+		playMissileHitSound();
 	}
 }
 
@@ -103,6 +108,8 @@ void Laser::update(double delta) {
 			addWeaponToDestroy(this);
 
 			bot->bumping |= LaserHit;
+
+			playLaserHitSound();
 		}
 
 	coord.x += laserSpeed * cosf(heading * DEG_PER_RAD) * delta;
@@ -112,6 +119,9 @@ void Laser::update(double delta) {
 		coord.x < battleBox.topLeft.x + weaponRadius ||
 		coord.x > battleBox.bottomRight.x - weaponRadius ||
 		coord.y < battleBox.topLeft.y + weaponRadius ||
-		coord.y > battleBox.bottomRight.y - weaponRadius)
+		coord.y > battleBox.bottomRight.y - weaponRadius) {
 		addWeaponToDestroy(this);
+
+		playLaserHitSound();
+	}
 }

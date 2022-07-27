@@ -3,9 +3,11 @@
 #include "utils.h"
 #include "update.h"
 #include "infobox.h"
+#include "sound.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
 
 ALLEGRO_DISPLAY *window = nullptr;
 ALLEGRO_EVENT_QUEUE *queue;
@@ -19,6 +21,10 @@ void init() {
 	al_init_image_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
+	
+	al_install_audio();
+
+	loadSounds();
 
 	al_set_new_window_title("Arena");
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
@@ -103,10 +109,10 @@ void display() {
 						pause = false;
 						previous = al_get_time() + delta;
 					} else if(event.keyboard.keycode == ALLEGRO_KEY_UP) {
-						delta *= 10;
+						delta *= 5;
 						update(delta);
 					} else if(event.keyboard.keycode == ALLEGRO_KEY_DOWN) {
-						delta /= 10;
+						delta /= 5;
 						update(delta);
 					}
 					break;
@@ -141,6 +147,15 @@ void destroy() {
 	destroyInfobox();
 	al_destroy_display(window);
 	al_destroy_event_queue(queue);
+
+	al_shutdown_ttf_addon();
+	al_shutdown_font_addon();
+	al_shutdown_image_addon();
+	al_shutdown_primitives_addon();
+	al_uninstall_keyboard();
+	al_uninstall_mouse();
+	al_uninstall_audio();
+	al_uninstall_system();
 }
 
 void start() {

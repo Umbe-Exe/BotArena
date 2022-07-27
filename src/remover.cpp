@@ -1,5 +1,6 @@
 #include "remover.h"
 #include "infobox.h"
+#include "sound.h"
 #include <set>
 
 std::set<uint8_t> bot;
@@ -10,6 +11,8 @@ void addBotToDestroy(Bot *bot) {
 	uint8_t i = 0;
 	while(bots[i] != bot) ++i;
 	::bot.insert(i);
+
+	playBotExplosionSound();
 }
 
 void addWeaponToDestroy(Weapon *weapon) {

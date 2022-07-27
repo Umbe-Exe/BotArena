@@ -2,6 +2,7 @@
 #include "data.h"
 #include "remover.h"
 #include "competition.h"
+#include "sound.h"
 #include <allegro5/allegro_primitives.h>
 #include <set>
 
@@ -284,6 +285,8 @@ void Bot::update(double delta) {
 
 			if(bots[i]->shield < 0) bots[i]->shield = 0;
 			if(bots[i]->generator <= 0) addBotToDestroy(bots[i]);
+
+			playBotCollisionSound();
 		}
 	}
 ////////////////////////
