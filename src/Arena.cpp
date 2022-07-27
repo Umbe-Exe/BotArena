@@ -70,7 +70,7 @@ void display() {
 		running = true,
 		pause = true;
 	ALLEGRO_EVENT event;
-	double previous = al_get_time(), current, delta = 0.000001;
+	double previous = al_get_time(), current, delta = 0.00001;
 
 	while(running) {
 		event = {};
