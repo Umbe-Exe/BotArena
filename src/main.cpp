@@ -5,8 +5,12 @@
 #include "../demo_bots/Umbe4.h"
 #include "../demo_bots/Umbe5.h"
 #include "../demo_bots/rammingBot.h"
+#include "loadConfig.h"
 
 int main() {
+
+	loadConfigFile("config.txt");
+
 	registerUmbe();
 	registerUmbe1();
 	registerUmbe2();

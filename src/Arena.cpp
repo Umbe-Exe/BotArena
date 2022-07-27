@@ -4,6 +4,7 @@
 #include "update.h"
 #include "infobox.h"
 #include "sound.h"
+#include "loadConfig.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
@@ -25,6 +26,7 @@ void init() {
 	al_install_audio();
 
 	loadSounds();
+	lockParameters();
 
 	al_set_new_window_title("Arena");
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);

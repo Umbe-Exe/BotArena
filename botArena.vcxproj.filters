@@ -75,6 +75,9 @@
     <ClCompile Include="src\sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\loadConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Arena.h">
@@ -135,6 +138,9 @@
       <Filter>demo_bots</Filter>
     </ClInclude>
     <ClInclude Include="src\sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\loadConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
