@@ -1,6 +1,5 @@
 #include "..\src\competition.h"
 #include "Umbe2.h"
-#include <time.h>
 
 namespace umbe2 {
 
@@ -13,17 +12,19 @@ namespace umbe2 {
 #define L 1
 #define FORWARD 3
 
-#define DELTA(x) (float)(clock()-x)/CLOCKS_PER_SEC
+#define DELTA(x) (elapsed-x)
+
+	double elapsed = 0;
 
 	int UM_gc[799], UM_s = 0, UM_p = 0; //GOSPER-CURVE NODES, SIZE, POSITION READ OR ABOUT TO BE READ
-	clock_t UM_time = 0; //USED TO GIVE PACE TO THE ROAMING AND TO MAKE TURNS ABOUT 60DEG
-	clock_t UM_delay = 0; //USED TO DELAY ENGAGING AND COME BACK INTO ENEMY SIGHT
+	double UM_time = 0; //USED TO GIVE PACE TO THE ROAMING AND TO MAKE TURNS ABOUT 60DEG
+	double UM_delay = -10; //USED TO DELAY ENGAGING AND COME BACK INTO ENEMY SIGHT
 	int UM_L = 0, UM_R = 0, UM_fl = 0, UM_fr = 0; //LEFT RADAR DATA, RIGHT RADAR DATA, LEFT RANGE DATA, RIGHT RANGE DATA
 	//UM_L AND UM_R ARE USED AS BOOLEANS
 	//f STANDS FOR 'FAR', I JUST KEPT THE NAME FROM A PREVIOUS BOT CONFIGURATION
 
 	int UM_hit = 0;
-	float UM_t = .5f;
+	double UM_t = .5;
 
 	void manageEnergy() {
 
@@ -107,7 +108,7 @@ namespace umbe2 {
 		if(UM_L || UM_R || shield < 60 ||
 		   UM_t == 5.f || UM_hit > shield ||
 		   (missle < 80 && laser < 80) ||
-		   DELTA(UM_delay) < 5.f) {
+		   DELTA(UM_delay) < 5) {
 			setSensorStatus(RRANGE, 0);
 			setSensorStatus(LRANGE, 0);
 		} else {
@@ -115,7 +116,7 @@ namespace umbe2 {
 			setSensorStatus(LRANGE, 1);
 		}
 
-		if(DELTA(UM_delay) < .3f) {
+		if(DELTA(UM_delay) < .3) {
 			setSensorStatus(RRADAR, 0);
 			setSensorStatus(LRADAR, 0);
 		} else {
@@ -151,14 +152,14 @@ namespace umbe2 {
 			case L:
 				if(DELTA(UM_time) > UM_t) {
 					UM_p++;
-					UM_time = clock();
+					UM_time = elapsed;
 					UM_t = .5f;
 				}
 				break;
 			case FORWARD:
 				if(DELTA(UM_time) > .4f) {
 					UM_p++;
-					UM_time = clock();
+					UM_time = elapsed;
 				}
 				break;
 		}
@@ -246,6 +247,8 @@ namespace umbe2 {
 
 	void UmbeActions(double delta) {
 
+		elapsed += delta;
+
 		UM_L = getSensorData(LRADAR);
 		UM_R = getSensorData(RRADAR);
 
@@ -259,29 +262,29 @@ namespace umbe2 {
 			if(getSystemEnergy(LASERS) > 40) fireWeapon(LASER, 0);
 			setMotorSpeed(-100, -100);
 
-			UM_delay = clock();
+			UM_delay = elapsed;
 
 		} else if(UM_L == -1 || UM_R == -1) setMotorSpeed(-100, -100);
 		else if(UM_L == 0 && UM_R == 1) {
 			setMotorSpeed(40, -39);
-			if(DELTA(UM_delay) > 1.f && DELTA(UM_delay) < 10.f) UM_delay += CLOCKS_PER_SEC;
+			if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 10) ++UM_delay;
 		} else if(UM_L == 1 && UM_R == 0) {
 			setMotorSpeed(-39, 40);
-			if(DELTA(UM_delay) > 1.f && DELTA(UM_delay) < 10.f) UM_delay += CLOCKS_PER_SEC;
+			if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 10) ++UM_delay;
 		} else if((UM_fl > 0 || UM_fr > 0) && UM_fl > UM_fr) {
 			setMotorSpeed(100, 20);
 			if(isBumping()) setMotorSpeed(50, -100);
 		} else if((UM_fl > 0 || UM_fr > 0) && UM_fl < UM_fr) {
 			setMotorSpeed(20, 100);
 			if(isBumping()) setMotorSpeed(50, -100);
-		} else if(DELTA(UM_delay) > 1.f && DELTA(UM_delay) < 5.f) {
+		} else if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 5) {
 			setMotorSpeed(100, 100);
 			if(UM_hit > getSystemEnergy(SHIELDS)) {
 				UM_delay -= 5;
 				roam();
 			}
-		} else if(DELTA(UM_delay) < 1.f) {
-			if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) UM_delay -= CLOCKS_PER_SEC;
+		} else if(DELTA(UM_delay) < 1) {
+			if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) --UM_delay;
 		} else roam();
 
 		UM_hit = getSystemEnergy(SHIELDS);
@@ -296,9 +299,6 @@ namespace umbe2 {
 		LRANGE = addRangeGetId(317, 100);
 
 		gl(3); //gosper curve generation
-		UM_time = clock();
-		UM_delay = clock() - 10 * CLOCKS_PER_SEC; //to avoid forward chase at the start
-
 	}
 }
 void registerUmbe2() {
