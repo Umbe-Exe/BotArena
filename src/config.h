@@ -30,3 +30,5 @@
 #define bumpForce 0.2f
 #define friction 0.2f
 #define maxSpeed 0.1f
+
+#define allowSound false
