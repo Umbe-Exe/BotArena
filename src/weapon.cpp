@@ -3,6 +3,7 @@
 #include "remover.h"
 #include "sound.h"
 #include "competition.h"
+#include "particles.h"
 
 void Missile::draw() {
 
@@ -13,6 +14,8 @@ void Missile::draw() {
 }
 
 void Missile::update(double delta) {
+
+	if(allowParticles) createMissileParticleTrail(this);
 
 	for(Bot *bot : bots)
 		if(getDistance(coord, bot->coord) < botRadius + weaponRadius) {
@@ -83,6 +86,15 @@ void Missile::update(double delta) {
 	}
 }
 
+void Missile::createParticleBurst() {
+
+	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
+		AddParticle(coord.x, coord.y,
+					al_map_rgb(156 + rand() % 100, rand() % 30, rand() % 30),
+					360.f * rand() / RAND_MAX,
+					0.3f * rand() / RAND_MAX, .4f);
+}
+
 void Laser::draw() {
 
 	al_draw_rotated_bitmap(laserBitmap,
@@ -124,4 +136,13 @@ void Laser::update(double delta) {
 
 		playLaserHitSound();
 	}
+}
+
+void Laser::createParticleBurst() {
+
+	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
+		AddParticle(coord.x, coord.y,
+					al_map_rgb(255, 0, 0), 
+					360.f * rand() / RAND_MAX,
+					0.1f * rand() / RAND_MAX, .25);
 }

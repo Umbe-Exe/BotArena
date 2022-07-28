@@ -2,6 +2,7 @@
 #include "data.h"
 #include "infobox.h"
 #include "remover.h"
+#include "particles.h"
 
 void logic(double delta) {
 
@@ -10,6 +11,7 @@ void logic(double delta) {
 
 	destroyTheStuff();
 
+	if(allowParticles) updateParticles(delta);
 }
 
 void draw() {
@@ -18,6 +20,8 @@ void draw() {
 
 	for(Bot *bot : bots) bot->draw();
 	for(Weapon *weapon : weapons) weapon->draw();
+
+	if(allowParticles) drawPrticles();
 
 	drawRect(battleBox, {255,255,255,255}, 1);
 

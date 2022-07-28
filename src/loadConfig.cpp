@@ -32,7 +32,7 @@ float bumpForce = 0.2f;
 float friction = 0.2f;
 float maxSpeed = 0.1f;
 
-bool allowSound = false;
+bool allowSound = true;
 bool allowParticles = true;
 
 bool alreadyConfigured = false;
@@ -73,7 +73,7 @@ void loadConfigFile(const char *filename) {
 			al_set_config_value(config, "WEAPON DAMAGE", "laser_damage_moltiplicator", "1.f");
 			al_set_config_value(config, "WEAPON DAMAGE", "bump_damage", "50");
 
-			al_set_config_value(config, "EFFECTS", "allow_sound", "0");
+			al_set_config_value(config, "EFFECTS", "allow_sound", "1");
 			al_set_config_value(config, "EFFECTS", "allow_particles", "1");
 
 			al_save_config_file(filename, config);

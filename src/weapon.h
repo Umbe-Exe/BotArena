@@ -8,6 +8,8 @@ struct Weapon : drawable, updatable{
 	Coord coord;
 
 	Weapon(float heading, Coord coord) : heading(heading), coord(coord) {}
+
+	virtual void createParticleBurst() = 0;
 };
 
 struct Missile : Weapon{
@@ -16,6 +18,8 @@ struct Missile : Weapon{
 
 	void draw() override;
 	void update(double delta) override;
+
+	virtual void createParticleBurst();
 };
 
 struct Laser : Weapon {
@@ -25,4 +29,6 @@ struct Laser : Weapon {
 
 	void draw() override;
 	void update(double delta) override;
+
+	virtual void createParticleBurst();
 };

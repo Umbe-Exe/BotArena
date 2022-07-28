@@ -24,7 +24,7 @@ void loadSounds() {
 }
 
 void playLaserSound() {
-	if(allowSound) al_play_sample(laserSound, 1.f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
+	if(allowSound) al_play_sample(laserSound, 0.5f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
 }
 
 void playLaserHitSound() {
@@ -32,7 +32,7 @@ void playLaserHitSound() {
 }
 
 void playMissileSound() {
-	if(allowSound) al_play_sample(missileSound, 0.2f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
+	if(allowSound) al_play_sample(missileSound, 0.3f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
 }
 
 void playMissileHitSound() {
@@ -40,7 +40,7 @@ void playMissileHitSound() {
 }
 
 void playBotCollisionSound() {
-	if(allowSound) al_play_sample(botCollisionSound, 0.2f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
+	if(allowSound) al_play_sample(botCollisionSound, 0.1f, 0.f, 1.f, ALLEGRO_PLAYMODE_ONCE, 0);
 }
 
 void playBotExplosionSound() {

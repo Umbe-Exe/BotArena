@@ -3,6 +3,7 @@
 #include "remover.h"
 #include "competition.h"
 #include "sound.h"
+#include "particles.h"
 #include <allegro5/allegro_primitives.h>
 #include <set>
 
@@ -287,6 +288,8 @@ void Bot::update(double delta) {
 			if(bots[i]->generator <= 0) addBotToDestroy(bots[i]);
 
 			playBotCollisionSound();
+
+			if(allowParticles) createBotCollisionBurst(x / 2.f + bots[i]->coord.x, y / 2.f + bots[i]->coord.y);
 		}
 	}
 ////////////////////////

@@ -1,6 +1,7 @@
 #include "remover.h"
 #include "infobox.h"
 #include "sound.h"
+#include "particles.h"
 #include <set>
 
 std::set<uint8_t> bot;
@@ -15,12 +16,16 @@ void addBotToDestroy(Bot *bot) {
 	if(bot->deathSignal) bot->deathSignal();
 
 	playBotExplosionSound();
+
+	if(allowParticles) createBotExplosionBurst(bot->coord.x, bot->coord.y);
 }
 
 void addWeaponToDestroy(Weapon *weapon) {
 	uint8_t i = 0;
 	while(weapons[i] != weapon) ++i;
 	::weapon.insert(i);
+
+	if(allowParticles) weapon->createParticleBurst();
 }
 
 void destroyTheStuff() {
