@@ -208,6 +208,7 @@
     <ClCompile Include="src\infobox.cpp" />
     <ClCompile Include="src\loadConfig.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\particles.cpp" />
     <ClCompile Include="src\remover.cpp" />
     <ClCompile Include="src\sound.cpp" />
     <ClCompile Include="src\update.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="src\entities.h" />
     <ClInclude Include="src\infobox.h" />
     <ClInclude Include="src\loadConfig.h" />
+    <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\remover.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\update.h" />
@@ -238,7 +240,6 @@
     <ClInclude Include="src\weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resources\images\background.bmp" />
     <Image Include="resources\images\basic_robot.bmp" />
     <Image Include="resources\images\Benny_Lek.bmp" />
     <Image Include="resources\images\capsule1337.bmp" />
@@ -248,15 +249,12 @@
     <Image Include="resources\images\teemo.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="resources\sounds\entertain.wav" />
-    <Media Include="resources\sounds\fight.wav" />
     <Media Include="resources\sounds\laser.wav" />
     <Media Include="resources\sounds\laserhit.wav" />
     <Media Include="resources\sounds\missile.wav" />
     <Media Include="resources\sounds\missilehit.wav" />
     <Media Include="resources\sounds\robotexplode.wav" />
     <Media Include="resources\sounds\robotscollide.wav" />
-    <Media Include="resources\sounds\turboboost.wav" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\font\typed.ttf" />

@@ -78,6 +78,9 @@
     <ClCompile Include="src\loadConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Arena.h">
@@ -143,11 +146,11 @@
     <ClInclude Include="src\loadConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\particles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resources\images\background.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resources\images\basic_robot.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -171,12 +174,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="resources\sounds\entertain.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resources\sounds\fight.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resources\sounds\laser.wav">
       <Filter>Resource Files</Filter>
     </Media>
@@ -193,9 +190,6 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resources\sounds\robotscollide.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resources\sounds\turboboost.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>
