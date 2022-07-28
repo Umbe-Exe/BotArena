@@ -12,6 +12,8 @@ void addBotToDestroy(Bot *bot) {
 	while(bots[i] != bot) ++i;
 	::bot.insert(i);
 
+	if(bot->deathSignal) bot->deathSignal();
+
 	playBotExplosionSound();
 }
 

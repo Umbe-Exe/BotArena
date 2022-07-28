@@ -8,6 +8,7 @@ struct BotInitData {
 	const char *image;
 	void (*updateFn)(double);
 	void (*initFn)();
+	void (*deathSignal)();
 };
 
 void createBots(std::vector<BotInitData> &data);

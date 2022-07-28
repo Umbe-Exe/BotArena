@@ -44,14 +44,15 @@ struct LaserRange : Sensor{
 
 struct Bot : drawable, updatable{
 
-	Bot(const char *name, const char *image, ALLEGRO_COLOR color, void (*initFn)(), void (*updateFn)(double)) :
+	Bot(const char *name, const char *image, ALLEGRO_COLOR color, void (*initFn)(), void (*updateFn)(double), void (*deathSignal)()) :
 		name(name),
 		image(image),
 		color(color),
-		initFn(initFn), updateFn(updateFn) {}
+		initFn(initFn), updateFn(updateFn), deathSignal(deathSignal) {}
 
 	void (*initFn)();
 	void (*updateFn)(double);
+	void (*deathSignal)();
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 

@@ -34,7 +34,7 @@ void createBots(std::vector<BotInitData> &data) {
 				color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
 		}
 
-		bots.push_back(new Bot(data.name, data.image, color, data.initFn, data.updateFn));
+		bots.push_back(new Bot(data.name, data.image, color, data.initFn, data.updateFn,  data.deathSignal));
 
 		if(data.initFn) {
 			currBot = bots.back();

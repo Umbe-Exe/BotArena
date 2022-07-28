@@ -166,6 +166,6 @@ void start() {
 	destroy();
 }
 
-void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)()) {
-	botsData.push_back({ name, color, img, updateFn, initFn });
+void registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)(), void (*deathSignal)()) {
+	botsData.push_back({ name, color, img, updateFn, initFn, deathSignal });
 }
