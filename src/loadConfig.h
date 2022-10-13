@@ -1,7 +1,20 @@
 #pragma once
+#ifndef ARENA_STATIC
+    #ifdef _WIN32
+        #ifdef EXPORTS
+            #define ARENA_EXPORT __declspec(dllexport)
+        #else
+            #define ARENA_EXPORT __declspec(dllimport)
+        #endif
+    #else
+        #define ARENA_EXPORT
+    #endif
+#else
+    #define ARENA_EXPORT
+#endif
 
-void lockParameters();
-void loadConfigFile(const char *filename = "config.txt");
+void ARENA_EXPORT lockParameters();
+void ARENA_EXPORT loadConfigFile(const char *filename = "config.txt");
 
 struct Game{
 	int maxGeneratorStructure;
@@ -38,4 +51,4 @@ struct Game{
 };
 
 //The size of the arena is (1.f, 1.f)
-Game knowGameParameters();
+Game ARENA_EXPORT knowGameParameters();
