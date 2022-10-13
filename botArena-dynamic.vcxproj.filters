@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{af82a267-8e63-4204-ad7f-14f6eb67e15e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{f2932ce3-0c0d-44ad-8e32-37a97271b8e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{54f6c525-2418-492a-8875-0279c61545f3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\Benny_Lek.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\basic_robot.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\capsule1337.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\Coke.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\grave_digger.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\missile.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\images\teemo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\laser.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\laserhit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\missile.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\missilehit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\robotexplode.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sounds\robotscollide.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\font\typed.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\Arena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\bot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\competition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\infobox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\loadConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\particles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\remover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\update.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\Arena.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\bot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\competition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\entities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\infobox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\loadConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\remover.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\update.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0483aa0b-19e7-4015-8b88-b58ff96a7d5b}</ProjectGuid>
-    <RootNamespace>botArena</RootNamespace>
+    <ProjectGuid>{e8e4c3c9-0f20-4983-b3fa-47f5de9d5940}</ProjectGuid>
+    <RootNamespace>botArenastatic</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -70,44 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
-    <Allegro_AddonImage>true</Allegro_AddonImage>
-    <Allegro_AddonTTF>true</Allegro_AddonTTF>
-    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
-    <Allegro_AddonAudio>true</Allegro_AddonAudio>
-    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
-    <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
-    <Allegro_AddonDialog>false</Allegro_AddonDialog>
-    <Allegro_AddonMemfile>false</Allegro_AddonMemfile>
-    <Allegro_AddonFont>true</Allegro_AddonFont>
-    <Allegro_AddonColor>true</Allegro_AddonColor>
-    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\intermediate\</IntDir>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
-    <Allegro_AddonImage>true</Allegro_AddonImage>
-    <Allegro_AddonTTF>true</Allegro_AddonTTF>
-    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
-    <Allegro_AddonAudio>true</Allegro_AddonAudio>
-    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
-    <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
-    <Allegro_AddonDialog>false</Allegro_AddonDialog>
-    <Allegro_AddonMemfile>false</Allegro_AddonMemfile>
-    <Allegro_AddonFont>true</Allegro_AddonFont>
-    <Allegro_AddonColor>true</Allegro_AddonColor>
-    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\intermediate\</IntDir>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Allegro_LibraryType>DynamicDebug</Allegro_LibraryType>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\intermediate\</IntDir>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
@@ -115,17 +80,31 @@
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
     <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
     <Allegro_AddonDialog>false</Allegro_AddonDialog>
-    <Allegro_AddonMemfile>false</Allegro_AddonMemfile>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>true</Allegro_AddonColor>
-    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\intermediate\</IntDir>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <Allegro_AddonVideo>false</Allegro_AddonVideo>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\intermediate\</IntDir>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>false</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>false</Allegro_AddonVideo>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Allegro_LibraryType>DynamicDebug</Allegro_LibraryType>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\intermediate\</IntDir>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
@@ -133,37 +112,44 @@
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
     <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
     <Allegro_AddonDialog>false</Allegro_AddonDialog>
-    <Allegro_AddonMemfile>false</Allegro_AddonMemfile>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>true</Allegro_AddonColor>
-    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\intermediate\</IntDir>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <Allegro_AddonVideo>false</Allegro_AddonVideo>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\lib\intermediate\</IntDir>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>false</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>false</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>false</Allegro_AddonVideo>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Inputs>
-      </Inputs>
-      <Command>
-      </Command>
-    </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Moving assets</Message>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -172,50 +158,38 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Inputs>
-      </Inputs>
-      <Command>
-      </Command>
-    </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Moving assets</Message>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Inputs>
-      </Inputs>
-      <Command>
-      </Command>
-    </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Moving assets</Message>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -224,76 +198,24 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Inputs>
-      </Inputs>
-      <Command>
-      </Command>
-    </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Moving assets</Message>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="demo_bots\rammingBot.cpp" />
-    <ClCompile Include="demo_bots\Umbe.cpp" />
-    <ClCompile Include="demo_bots\Umbe1.cpp" />
-    <ClCompile Include="demo_bots\Umbe2.cpp" />
-    <ClCompile Include="demo_bots\Umbe3.cpp" />
-    <ClCompile Include="demo_bots\Umbe4.cpp" />
-    <ClCompile Include="demo_bots\Umbe5.cpp" />
-    <ClCompile Include="src\Arena.cpp" />
-    <ClCompile Include="src\bot.cpp" />
-    <ClCompile Include="src\competition.cpp" />
-    <ClCompile Include="src\entities.cpp" />
-    <ClCompile Include="src\infobox.cpp" />
-    <ClCompile Include="src\loadConfig.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\particles.cpp" />
-    <ClCompile Include="src\remover.cpp" />
-    <ClCompile Include="src\sound.cpp" />
-    <ClCompile Include="src\update.cpp" />
-    <ClCompile Include="src\utils.cpp" />
-    <ClCompile Include="src\weapon.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="demo_bots\rammingBot.h" />
-    <ClInclude Include="demo_bots\Umbe.h" />
-    <ClInclude Include="demo_bots\Umbe1.h" />
-    <ClInclude Include="demo_bots\Umbe2.h" />
-    <ClInclude Include="demo_bots\Umbe3.h" />
-    <ClInclude Include="demo_bots\Umbe4.h" />
-    <ClInclude Include="demo_bots\Umbe5.h" />
-    <ClInclude Include="src\Arena.h" />
-    <ClInclude Include="src\bot.h" />
-    <ClInclude Include="src\competition.h" />
-    <ClInclude Include="src\component.h" />
-    <ClInclude Include="src\config.h" />
-    <ClInclude Include="src\data.h" />
-    <ClInclude Include="src\entities.h" />
-    <ClInclude Include="src\infobox.h" />
-    <ClInclude Include="src\loadConfig.h" />
-    <ClInclude Include="src\particles.h" />
-    <ClInclude Include="src\remover.h" />
-    <ClInclude Include="src\sound.h" />
-    <ClInclude Include="src\update.h" />
-    <ClInclude Include="src\utils.h" />
-    <ClInclude Include="src\weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\images\basic_robot.bmp" />
@@ -314,6 +236,38 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\font\typed.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\Arena.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\bot.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\competition.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\component.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\config.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\data.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\entities.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\infobox.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\loadConfig.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\particles.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\remover.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\sound.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\update.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\utils.h" />
+    <ClInclude Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\Arena.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\bot.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\competition.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\entities.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\infobox.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\loadConfig.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\main.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\particles.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\remover.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\sound.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\update.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\utils.cpp" />
+    <ClCompile Include="..\..\..\..\Users\Umberto\source\repos\Umbe-Exe\BotArena\src\weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

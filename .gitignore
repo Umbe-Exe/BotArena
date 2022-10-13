@@ -3,5 +3,10 @@
 /Release
 /x64
 /x86
+/lib
+/bin
+/packages
+/dep
 *.log
 *.txt
+*.user
