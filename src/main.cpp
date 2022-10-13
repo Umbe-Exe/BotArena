@@ -1,4 +1,3 @@
-#ifndef EXPORTS
 #include "../demo_bots/Umbe.h"
 #include "../demo_bots/Umbe1.h"
 #include "../demo_bots/Umbe2.h"
@@ -7,10 +6,8 @@
 #include "../demo_bots/Umbe5.h"
 #include "../demo_bots/rammingBot.h"
 #include "loadConfig.h"
-#endif
 
 int main() {
-#ifndef EXPORTS
 	loadConfigFile("config.txt");
 
 	registerUmbe();
@@ -23,5 +20,4 @@ int main() {
 	registerRam();
 	registerRam();
 	start();
-#endif
 }
