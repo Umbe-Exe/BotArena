@@ -292,6 +292,16 @@ void UmbeActions(double delta) {
 
 void ready() {
 
+	elapsed = 0;
+
+	UM_gc[799] = {}; UM_s = 0; UM_p = 0;
+	UM_time = 0;
+	UM_delay = -10;
+	UM_L = 0; UM_R = 0; UM_fl = 0; UM_fr = 0;
+
+	UM_hit = 0;
+	UM_t = .5;
+
 	RRADAR = addRadarGetId(45 / 2.f + 2, 45, 100);
 	LRADAR = addRadarGetId(-45 / 2.f - 2, 45, 100);
 	RRANGE = addRangeGetId(43, 100);
