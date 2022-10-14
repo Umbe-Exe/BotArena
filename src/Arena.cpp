@@ -15,6 +15,18 @@ ALLEGRO_EVENT_QUEUE *queue;
 
 std::vector<BotInitData> botsData;
 
+void (*manager)() = nullptr;
+bool running, pause = 1;
+
+void appointManager(void (*manager)(), bool startPaused) {
+	::manager = manager;
+	pause = startPaused;
+}
+
+void end() {
+	running = 0;
+}
+
 void init() {
 
 	al_init();
@@ -68,9 +80,7 @@ void update(double delta) {
 
 void display() {
 
-	bool
-		running = true,
-		pause = true;
+	running = true;
 	ALLEGRO_EVENT event;
 	double previous = al_get_time(), current, delta = 0.00001;
 
@@ -136,6 +146,7 @@ void display() {
 					break;
 			}
 		}
+		if(manager) manager();
 
 		current = al_get_time();
 		update(delta = current - previous);

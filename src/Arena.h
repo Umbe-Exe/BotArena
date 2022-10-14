@@ -22,6 +22,10 @@ enum COLOR {
 };
 
 void ARENA_EXPORT start();
+void ARENA_EXPORT end();
+
+//manager() will be called every iteration of the game loop
+void ARENA_EXPORT appointManager(void (*manager)(), bool startPaused = 1);
 
 //The image background is considered as the color rgb(255, 0, 255)
 void ARENA_EXPORT registerBot(const char *name, COLOR color, const char *img, void (*updateFn)(double), void (*initFn)(), void (*deathSignal)() = nullptr);
