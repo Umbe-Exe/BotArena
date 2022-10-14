@@ -155,7 +155,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>
@@ -191,7 +191,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>
@@ -222,7 +222,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>
@@ -258,7 +258,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\lib\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>

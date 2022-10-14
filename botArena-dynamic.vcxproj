@@ -203,7 +203,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -225,7 +225,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -243,7 +243,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -265,7 +265,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\dynamic\resources"  /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

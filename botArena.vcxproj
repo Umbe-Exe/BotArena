@@ -160,7 +160,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Moving assets</Message>
@@ -188,7 +188,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Moving assets</Message>
@@ -212,7 +212,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Moving assets</Message>
@@ -240,7 +240,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i</Command>
+      <Command>xcopy "$(SolutionDir)resources" "$(SolutionDir)$(Configuration)\$(Platform)\resources"  /e /i /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Moving assets</Message>
