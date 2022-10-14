@@ -155,4 +155,6 @@ void destroyInfobox() {
 	al_destroy_bitmap(bitmap);
 	al_destroy_font(nameFont);
 	al_destroy_font(sysFont);
+	bitmap = nullptr;
+	nameFont = sysFont = nullptr;
 }

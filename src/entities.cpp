@@ -53,6 +53,7 @@ void destroyBots() {
 void destroyWeapons() {
 	al_destroy_bitmap(missileBitmap);
 	al_destroy_bitmap(laserBitmap);
+	missileBitmap = laserBitmap = nullptr;
 
 	for(Weapon *i : weapons) delete i;
 
