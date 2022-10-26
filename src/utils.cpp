@@ -1,81 +1,22 @@
-#include "utils.h"
-#include "data.h"
-#include <allegro5/allegro_primitives.h>
+#include "arena_impl.h"
 
-int win_w, win_h;
-float arenaSize;
-
-Rect battleBox{};
-
-void transposeEntities(Coord vector) {
-	for(Bot *bot : bots) bot->coord += vector;
+void Arena_Impl::transposeEntities(Coord vector) {
+	for(Bot &bot : bots) bot.coord += vector;
 	for(Weapon *weapon : weapons) weapon->coord += vector;
 }
 
-void makeBattleBox() {
-	win_w = al_get_display_width(window);
-	win_h = al_get_display_height(window);
+void Arena_Impl::makeBattleBox() {
+	if(window) {
+		win_w = al_get_display_width(window);
+		win_h = al_get_display_height(window);
 
-	if(Rect(infoBox).topLeft.x * win_w < win_h) arenaSize = Rect(infoBox).topLeft.x * win_w;
-	else arenaSize = win_h;
+		if(infoBox.topLeft.x * win_w < win_h) arenaSize = infoBox.topLeft.x * win_w;
+		else arenaSize = win_h;
 
-	Coord location = {(Rect(infoBox).topLeft.x / 2.f * win_w - arenaSize / 2.f) / arenaSize,(win_h / 2.f - arenaSize / 2.f) / arenaSize};
+		Coord location = {(infoBox.topLeft.x / 2.f * win_w - arenaSize / 2.f) / arenaSize,(win_h / 2.f - arenaSize / 2.f) / arenaSize};
 
-	transposeEntities(location - battleBox.topLeft);
+		transposeEntities(location - battleBox.topLeft);
 
-	battleBox = {location,location + Coord{1,1}};
-}
-
-void drawFilledRect(Rect rect, ALLEGRO_COLOR color) {
-
-	al_draw_filled_rectangle(
-		win_w * rect.topLeft.x,
-		win_h * rect.topLeft.y,
-		win_w * rect.bottomRight.x,
-		win_h * rect.bottomRight.y,
-		color);
-}
-
-void drawRect(Rect rect, ALLEGRO_COLOR color, float thickness) {
-
-	al_draw_rectangle(
-		arenaSize * rect.topLeft.x,
-		arenaSize * rect.topLeft.y,
-		arenaSize * rect.bottomRight.x,
-		arenaSize * rect.bottomRight.y,
-		color, thickness);
-}
-
-void drawFilledCircle(Circle circle, ALLEGRO_COLOR color) {
-
-	al_draw_filled_circle(
-		arenaSize * circle.center.x,
-		arenaSize * circle.center.y,
-		arenaSize * circle.radius,
-		color);
-}
-
-void drawCircle(Circle circle, ALLEGRO_COLOR color, float thickness) {
-
-	al_draw_circle(
-		arenaSize * circle.center.x,
-		arenaSize * circle.center.y,
-		arenaSize * circle.radius,
-		color, thickness);
-}
-
-void drawFilledTriangle(Triangle triangle, ALLEGRO_COLOR color) {
-
-	al_draw_filled_triangle(
-		arenaSize * triangle.a.x,
-		arenaSize * triangle.a.y,
-		arenaSize * triangle.b.x,
-		arenaSize * triangle.b.y,
-		arenaSize * triangle.c.x,
-		arenaSize * triangle.c.y,
-		color);
-}
-
-float getDistance(Coord one, Coord two) {
-	return sqrtf((one.x - two.x) * (one.x - two.x) + (one.y - two.y) * (one.y - two.y));
+		battleBox = {location,location + Coord{1,1}};
+	} else battleBox = {{0,0},{1,1}};
 }

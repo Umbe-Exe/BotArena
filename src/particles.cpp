@@ -1,27 +1,51 @@
-#include "particles.h"
-#include "utils.h"
-#include "data.h"
+#ifdef PARTICLES
+#include "arena_impl.h"
 #include <vector>
 
-struct Particle {
-	float x;
-	float y;
-	ALLEGRO_COLOR color;
-	ALLEGRO_COLOR initialC;
-	float heading;
-	float speed;
-	float timeToLive;
-	float initialTTL;
-};
+std::vector<Particle> laserBurst;
+std::vector<Particle> missileBurst;
+std::vector<Particle> botCollision;
+std::vector<Particle> botExplosion;
 
-std::vector<Particle> particles;
+Particles prtcls;
 
-void AddParticle(float x, float y, ALLEGRO_COLOR color, float heading, float speed, float timeToLive){
-
-	particles.push_back({x, y, color, color, heading, speed, timeToLive, timeToLive});
+Particles::Particles() {
+	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
+		laserBurst.emplace_back(0, 0,
+								al_map_rgb(255, 0, 0),
+								360.f * rand() / RAND_MAX,
+								0.1f * rand() / RAND_MAX, .25f);
+	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
+		missileBurst.emplace_back(0, 0,
+								  al_map_rgb(156 + rand() % 100, rand() % 30, rand() % 30),
+								  360.f * rand() / RAND_MAX,
+								  0.3f * rand() / RAND_MAX, .4f);
+	for(uint16_t particleCount = 0; particleCount < 100; ++particleCount)
+		botCollision.emplace_back(0, 0,
+								  al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
+								  360.f * rand() / RAND_MAX,
+								  0.1f * rand() / RAND_MAX, 1.f);
+	for(uint16_t particleCount = 0; particleCount < 1000; ++particleCount)
+		botExplosion.emplace_back(0, 0,
+								  al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
+								  360.f * rand() / RAND_MAX,
+								  0.3f * rand() / RAND_MAX, 3.f);
 }
 
-void updateParticles(double delta) {
+const std::vector<Particle> getParticleData(ParticleType type) {
+	switch(type) {
+		case ParticleType::LASERBURST:
+			return laserBurst;
+		case ParticleType::MISSILEBURST:
+			return missileBurst;
+		case ParticleType::BOTCOLLISION:
+			return botCollision;
+		default:
+			return botExplosion;
+	}
+}
+
+void Arena_Impl::updateParticles(double delta) {
 
 	float dist, radians, fadePct, addPct;
 	unsigned char r, g, b;
@@ -47,34 +71,14 @@ void updateParticles(double delta) {
 	}
 }
 
-void createMissileParticleTrail(Missile *missile) {
-
-	AddParticle(missile->coord.x, missile->coord.y,
-				al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
-				missile->heading + 150 + 60.f * rand() / RAND_MAX,
-				0.1f * rand() / RAND_MAX, 0.2f);
-}
-
-void createBotCollisionBurst(float x, float y) {
-
-	for(uint16_t particleCount = 0; particleCount < 100; ++particleCount)
-		AddParticle(x, y,
-					al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
-					360.f * rand() / RAND_MAX,
-					0.1f * rand() / RAND_MAX, 1.f);
-}
-
-void createBotExplosionBurst(float x, float y) {
-
-	for(uint16_t particleCount = 0; particleCount < 1000; ++particleCount)
-		AddParticle(x, y,
-					al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
-					360.f * rand() / RAND_MAX,
-					0.3f * rand() / RAND_MAX, 3.f);
-}
-
-void drawPrticles() {
+void Arena_Impl::drawPrticles() {
 
 	for(Particle &particle : particles)
 		al_draw_pixel(particle.x * arenaSize, particle.y * arenaSize, particle.color);
 }
+
+Particle::Particle(float x, float y, ALLEGRO_COLOR color, float heading, float speed, float timeToLive)
+	: x(x), y(y), color(color), initialC(color), heading(heading), speed(speed), timeToLive(timeToLive)
+	, initialTTL(timeToLive) {}
+
+#endif

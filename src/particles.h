@@ -1,16 +1,35 @@
 #pragma once
-#include "weapon.h"
+#ifdef PARTICLES
+#include <vector>
 #include <allegro5/allegro.h>
 
-void AddParticle(float x, float y, ALLEGRO_COLOR color, float heading, float speed, float timeToLive);
+struct Particles {
+	Particles();
+};
 
-void updateParticles(double delta);
+enum class ParticleType {
+	LASERBURST, MISSILEBURST,
+	BOTCOLLISION, BOTEXPLOSION
+};
 
-void drawPrticles();
+struct Particle {
+	float x;
+	float y;
+	ALLEGRO_COLOR color;
+	ALLEGRO_COLOR initialC;
+	float heading;
+	float speed;
+	float timeToLive;
+	float initialTTL;
 
+	Particle(float x,
+			 float y,
+			 ALLEGRO_COLOR color,
+			 float heading,
+			 float speed,
+			 float timeToLive);
+};
 
-void createMissileParticleTrail(Missile *missile);
+const std::vector<Particle> getParticleData(ParticleType type);
 
-void createBotCollisionBurst(float x, float y);
-
-void createBotExplosionBurst(float x, float y);
+#endif

@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9853edf6-069f-430c-b916-9e4985c93535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0564a432-779d-4c71-812b-72387a43c35b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="demo_bots">
-      <UniqueIdentifier>{7ff9797d-c3a8-4b20-ba53-7f6b71605abd}</UniqueIdentifier>
+      <UniqueIdentifier>{59250d37-5182-42ac-897c-676847764512}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -24,130 +22,83 @@
     <ClCompile Include="src\Arena.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\update.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\bot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\weapon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\competition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\infobox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\remover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="demo_bots\Umbe.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\Umbe1.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\Umbe2.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\Umbe3.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\Umbe4.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\Umbe5.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
-    <ClCompile Include="demo_bots\rammingBot.cpp">
-      <Filter>demo_bots</Filter>
-    </ClCompile>
     <ClCompile Include="src\sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\loadConfig.cpp">
+    <ClCompile Include="src\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\particles.cpp">
+    <ClCompile Include="src\weapon.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_bots\Umbe.cpp">
+      <Filter>demo_bots</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Arena.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\update.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils.h">
+    <ClInclude Include="src\arena_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\weapon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\data.h">
+    <ClInclude Include="src\common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\competition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\infobox.h">
+    <ClInclude Include="src\particles.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\remover.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe1.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe2.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe3.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe4.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\Umbe5.h">
-      <Filter>demo_bots</Filter>
-    </ClInclude>
-    <ClInclude Include="demo_bots\rammingBot.h">
-      <Filter>demo_bots</Filter>
     </ClInclude>
     <ClInclude Include="src\sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\loadConfig.h">
+    <ClInclude Include="src\sync.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\particles.h">
+    <ClInclude Include="src\utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="demo_bots\rammingBot.h">
+      <Filter>demo_bots</Filter>
+    </ClInclude>
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="demo_bots\Umbe.h">
+      <Filter>demo_bots</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,16 @@
 #pragma once
+#ifdef SOUND
 
-void loadSounds();
+struct Sound {
+	Sound();
+	~Sound();
+};
 
-void playLaserSound();
-void playLaserHitSound();
-void playMissileSound();
-void playMissileHitSound();
-void playBotCollisionSound();
-void playBotExplosionSound();
+enum class SoundType {
+	LASER, LASERHIT, MISSILE,
+	MISSILEHIT, BOTCOLLISION, BOTEXPLOSION
+};
+
+void playSound(SoundType sound);
+
+#endif

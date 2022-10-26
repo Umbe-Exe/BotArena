@@ -1,104 +1,49 @@
-#include "entities.h"
-#include "data.h"
-#include "infobox.h"
-#include <allegro5/allegro_primitives.h>
+#include "arena_impl.h"
+#include "common.h"
 
-std::vector<Bot *> bots;
-Bot * currBot;
-
-ALLEGRO_BITMAP *missileBitmap = nullptr, *laserBitmap = nullptr;
-
-std::vector<Weapon *> weapons;
-
-void createBots(std::vector<BotInitData> &data) {
-
-	ALLEGRO_COLOR color;
-
-	for(auto &data : data) {
-
-		switch(data.color) {
-			case RED:
-				color = {255,0,0,1};
-				break;
-			case BLUE:
-				color = {0,0,255,1};
-				break;
-			case GREEN:
-				color = {0,255,0,1};
-				break;
-			case YELLOW:
-				color = {255,255,0,1};
-				break;
-			case RANDCOL:
-			default:
-				color = al_map_rgb(rand() % 150,rand() % 150,rand() % 150);
-		}
-
-		bots.push_back(new Bot(data.name, data.image, color, data.initFn, data.updateFn,  data.deathSignal));
-
-		if(data.initFn) {
-			currBot = bots.back();
-			currBot->initFn();
-		}
-	}
-}
-
-void destroyBots() {
-	for(Bot *bot : bots) delete bot;
-
-	bots.clear();
-	bots.shrink_to_fit();
-}
-
-void destroyWeapons() {
-	al_destroy_bitmap(missileBitmap);
-	al_destroy_bitmap(laserBitmap);
-	missileBitmap = laserBitmap = nullptr;
+void Arena_Impl::destroyWeapons() {
+	if(missileBitmap) al_destroy_bitmap(missileBitmap);
+	if(laserBitmap) al_destroy_bitmap(laserBitmap);
 
 	for(Weapon *i : weapons) delete i;
-
-	weapons.clear();
-	weapons.shrink_to_fit();
 }
 
-void scatterBots() {
+void Arena_Impl::scatterBots() {
 
 	uint16_t botWidth = (botRadius + 0.005f) * 2 * arenaSize;
 
 	const uint8_t size = 1.f / ((botRadius + 0.005f) * 2);
 
-	bool **sector;
-	sector = (bool **)_alloca(sizeof(bool *) * size);
-	for(uint8_t i = 0; i < size; ++i) {
-		sector[i] = (bool *)_alloca(sizeof(bool) * size);
-
+	bool *sector = new bool[size * size];
+	for(uint8_t i = 0; i < size; ++i)
 		for(int j = 0; j < size; ++j)
-			sector[i][j] = 0;
-	}
+			sector[size * i + j] = 0;
 
 	uint8_t col, row;
 
-	for(Bot *bot : bots) {
+	for(Bot &bot : bots) {
 
 		do {
 			col = rand() % size;
 			row = rand() % size;
-		} while(sector[row][col]);
+		} while(sector[size * row + col]);
 
-		sector[row][col] = 1;
+		sector[size * row + col] = 1;
 
-		bot->coord = {
+		bot.coord = {
 			col * (botRadius + 0.005f) * 2 + botRadius + 0.005f,
 			row * (botRadius + 0.005f) * 2 + botRadius + 0.005f
 		};
 
-		bot->coord += battleBox.topLeft;
+		bot.coord += battleBox.topLeft;
 
-		bot->heading = rand() % 360;
+		bot.heading = rand() % 360;
 	}
+
+	delete[] sector;
 }
 
-void primeBitmaps() {
+void Arena_Impl::primeBitmaps() {
 
 	float weaponWidth = arenaSize * weaponRadius * 2.2f;
 
@@ -138,22 +83,22 @@ void primeBitmaps() {
 	float botWidth = arenaSize * botRadius * 2;
 	float small = botWidth * 0.9;
 
-	for(Bot *bot : bots) {
+	for(Bot &bot : bots) {
 		
-		if(bot->bitmap) al_destroy_bitmap(bot->bitmap);
+		if(bot.bitmap) al_destroy_bitmap(bot.bitmap);
 
-		bot->bitmap = al_create_bitmap(botWidth, botWidth);
-		al_set_target_bitmap(bot->bitmap);
+		bot.bitmap = al_create_bitmap(botWidth, botWidth);
+		al_set_target_bitmap(bot.bitmap);
 
-		drawCircle({{botRadius,botRadius},botRadius - 0.005f}, bot->color, 0.01f * arenaSize);
-		drawFilledTriangle({
+		drawCircle(arenaSize, {{botRadius,botRadius},botRadius - 0.005f}, bot.color, 0.01f * arenaSize);
+		drawFilledTriangle(arenaSize, {
 			{botRadius,0},
 			{botRadius * 2,botRadius},
-			{botRadius, botRadius * 2}}, bot->color);
+			{botRadius, botRadius * 2}}, bot.color);
 
-		if(bot->image) {
+		if(bot.image) {
 
-			ALLEGRO_BITMAP *image = al_load_bitmap(bot->image);
+			ALLEGRO_BITMAP *image = al_load_bitmap(bot.image);
 
 			al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
@@ -172,8 +117,8 @@ void primeBitmaps() {
 			al_destroy_bitmap(image);
 		}
 
-		currBot = bot;
-		for(Sensor *sensor : bot->sensors) sensor->priming();
+		currBot = &bot;
+		for(Sensor *sensor : bot.sensors) sensor->priming();
 	}
 
 /////////////////////////////////////////

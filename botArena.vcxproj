@@ -146,7 +146,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;SOUND;PARTICLES;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -172,7 +172,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;SOUND;PARTICLES;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -198,7 +198,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;SOUND;PARTICLES;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -224,7 +224,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARENA_STATIC;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARENA_STATIC;SOUND;PARTICLES;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -250,48 +250,33 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="demo_bots\rammingBot.cpp" />
     <ClCompile Include="demo_bots\Umbe.cpp" />
-    <ClCompile Include="demo_bots\Umbe1.cpp" />
-    <ClCompile Include="demo_bots\Umbe2.cpp" />
-    <ClCompile Include="demo_bots\Umbe3.cpp" />
-    <ClCompile Include="demo_bots\Umbe4.cpp" />
-    <ClCompile Include="demo_bots\Umbe5.cpp" />
     <ClCompile Include="src\Arena.cpp" />
     <ClCompile Include="src\bot.cpp" />
     <ClCompile Include="src\competition.cpp" />
     <ClCompile Include="src\entities.cpp" />
     <ClCompile Include="src\infobox.cpp" />
-    <ClCompile Include="src\loadConfig.cpp" />
+    <ClCompile Include="src\loop.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\parameters.cpp" />
     <ClCompile Include="src\particles.cpp" />
     <ClCompile Include="src\remover.cpp" />
     <ClCompile Include="src\sound.cpp" />
-    <ClCompile Include="src\update.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo_bots\rammingBot.h" />
     <ClInclude Include="demo_bots\Umbe.h" />
-    <ClInclude Include="demo_bots\Umbe1.h" />
-    <ClInclude Include="demo_bots\Umbe2.h" />
-    <ClInclude Include="demo_bots\Umbe3.h" />
-    <ClInclude Include="demo_bots\Umbe4.h" />
-    <ClInclude Include="demo_bots\Umbe5.h" />
     <ClInclude Include="src\Arena.h" />
+    <ClInclude Include="src\arena_impl.h" />
     <ClInclude Include="src\bot.h" />
+    <ClInclude Include="src\common.h" />
     <ClInclude Include="src\competition.h" />
-    <ClInclude Include="src\component.h" />
-    <ClInclude Include="src\config.h" />
-    <ClInclude Include="src\data.h" />
-    <ClInclude Include="src\entities.h" />
-    <ClInclude Include="src\infobox.h" />
-    <ClInclude Include="src\loadConfig.h" />
+    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\particles.h" />
-    <ClInclude Include="src\remover.h" />
     <ClInclude Include="src\sound.h" />
-    <ClInclude Include="src\update.h" />
+    <ClInclude Include="src\sync.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\weapon.h" />
   </ItemGroup>
