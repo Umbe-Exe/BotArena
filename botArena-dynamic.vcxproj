@@ -41,6 +41,32 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Arena.h" />
+    <ClInclude Include="src\arena_impl.h" />
+    <ClInclude Include="src\bot.h" />
+    <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\competition.h" />
+    <ClInclude Include="src\particles.h" />
+    <ClInclude Include="src\sound.h" />
+    <ClInclude Include="src\sync.h" />
+    <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Arena.cpp" />
+    <ClCompile Include="src\bot.cpp" />
+    <ClCompile Include="src\competition.cpp" />
+    <ClCompile Include="src\entities.cpp" />
+    <ClCompile Include="src\infobox.cpp" />
+    <ClCompile Include="src\loop.cpp" />
+    <ClCompile Include="src\parameters.cpp" />
+    <ClCompile Include="src\particles.cpp" />
+    <ClCompile Include="src\remover.cpp" />
+    <ClCompile Include="src\sound.cpp" />
+    <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\weapon.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -161,7 +187,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;WIN32;_DEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;SOUND;PARTICLES;WIN32;_DEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -181,7 +207,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;WIN32;NDEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;SOUND;PARTICLES;WIN32;NDEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -201,7 +227,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;_DEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;SOUND;PARTICLES;_DEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -221,7 +247,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;NDEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ALLEGRO_NO_MAGIC_MAIN;EXPORTS;SOUND;PARTICLES;NDEBUG;BOTARENADYNAMIC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>

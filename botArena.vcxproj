@@ -273,7 +273,6 @@
     <ClInclude Include="src\bot.h" />
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\competition.h" />
-    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\sync.h" />

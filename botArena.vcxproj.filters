@@ -96,7 +96,6 @@
     <ClInclude Include="demo_bots\rammingBot.h">
       <Filter>demo_bots</Filter>
     </ClInclude>
-    <ClInclude Include="src\main.h" />
     <ClInclude Include="demo_bots\Umbe.h">
       <Filter>demo_bots</Filter>
     </ClInclude>
