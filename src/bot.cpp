@@ -100,39 +100,39 @@ void LaserRange::update(double delta) {
 
 void Bot::draw() {
 
-	arena.currBot = this;
+	arena->currBot = this;
 
 	for(Sensor *sensor : sensors) sensor->draw();
 
 	al_draw_rotated_bitmap(bitmap,
 			       al_get_bitmap_width(bitmap) / 2,
 			       al_get_bitmap_height(bitmap) / 2,
-			       coord.x * arena.arenaSize, coord.y * arena.arenaSize, DEG_PER_RAD * heading, 0);
+			       coord.x * arena->arenaSize, coord.y * arena->arenaSize, DEG_PER_RAD * heading, 0);
 }
 
 void Bot::update(double delta) {
 	
-	arena.currBot = this;
+	arena->currBot = this;
 
 	for(Sensor *sensor : sensors) sensor->update(delta);
 
-	controller.onUpdate(delta);
+	controller->onUpdate(delta);
 
 	bumping = 0;
 ////////////////////////
 ////////////////////////ENERGY HANDLING
 	uint8_t sensorsDraw = 0;
 	for(Sensor *sensor : sensors)
-		if(sensor->enabled) sensorsDraw += arena.sensorEnergyConsumption;
+		if(sensor->enabled) sensorsDraw += arena->sensorEnergyConsumption;
 
 	sensorsDraw -= (100 - (shieldChargeRate + missileChargeRate + laserChargeRate));
 
-	shield += generator / arena.maxGeneratorStructure * arena.maxEnergy / 100 * (shieldChargeRate - sensorsDraw / 100 * shieldChargeRate) * delta;
-	missile += generator / arena.maxGeneratorStructure * arena.maxEnergy / 100 * (missileChargeRate - sensorsDraw / 100 * missileChargeRate) * delta;
-	laser += generator / arena.maxGeneratorStructure * arena.maxEnergy / 100 * (laserChargeRate - sensorsDraw / 100 * laserChargeRate) * delta;
-	if(shield > arena.maxShield) shield = arena.maxShield;
-	if(missile > arena.maxMissile) missile = arena.maxMissile;
-	if(laser > arena.maxLaser) laser = arena.maxLaser;
+	shield += generator / arena->maxGeneratorStructure * arena->maxEnergy / 100 * (shieldChargeRate - sensorsDraw / 100 * shieldChargeRate) * delta;
+	missile += generator / arena->maxGeneratorStructure * arena->maxEnergy / 100 * (missileChargeRate - sensorsDraw / 100 * missileChargeRate) * delta;
+	laser += generator / arena->maxGeneratorStructure * arena->maxEnergy / 100 * (laserChargeRate - sensorsDraw / 100 * laserChargeRate) * delta;
+	if(shield > arena->maxShield) shield = arena->maxShield;
+	if(missile > arena->maxMissile) missile = arena->maxMissile;
+	if(laser > arena->maxLaser) laser = arena->maxLaser;
 ////////////////////////
 ////////////////////////MOVEMENT
 	float rotAngle, startAngle, lTreadDist, rTreadDist, x, y, innerRad, midRad,
@@ -143,12 +143,12 @@ void Bot::update(double delta) {
 		radians = impulseHeading * DEG_PER_RAD;
 		dist = impulseSpeed * delta;
 		coord += {dist *cosf(radians), dist *sinf(radians)};
-		impulseSpeed -= arena.friction * delta;
+		impulseSpeed -= arena->friction * delta;
 		if(impulseSpeed < 0) impulseSpeed = 0;
 	}
 
-	lTreadDist = arena.maxSpeed * leftTreadSpeed / (100.0 / delta);
-	rTreadDist = arena.maxSpeed * rightTreadSpeed / (100.0 / delta);
+	lTreadDist = arena->maxSpeed * leftTreadSpeed / (100.0 / delta);
+	rTreadDist = arena->maxSpeed * rightTreadSpeed / (100.0 / delta);
 
 	if(leftTreadSpeed == rightTreadSpeed) {
 
@@ -158,24 +158,24 @@ void Bot::update(double delta) {
 
 		if(leftTreadSpeed == 0) {
 
-			midRad = arena.botRadius;
-			rotAngle = -rTreadDist * 360.0 / (2 * PI * 2 * arena.botRadius);
+			midRad = arena->botRadius;
+			rotAngle = -rTreadDist * 360.0 / (2 * PI * 2 * arena->botRadius);
 			startAngle = heading + 90;
 		} else if(rightTreadSpeed == 0) {
 
-			midRad = arena.botRadius;
-			rotAngle = lTreadDist * 360.0 / (2 * PI * 2 * arena.botRadius);
+			midRad = arena->botRadius;
+			rotAngle = lTreadDist * 360.0 / (2 * PI * 2 * arena->botRadius);
 			startAngle = heading + 270;
 		} else {
 			if(abs(leftTreadSpeed) > abs(rightTreadSpeed)) {
 
-				innerRad = rTreadDist * 2 * arena.botRadius / (lTreadDist - rTreadDist);
-				midRad = innerRad + 2 * arena.botRadius / 2;
+				innerRad = rTreadDist * 2 * arena->botRadius / (lTreadDist - rTreadDist);
+				midRad = innerRad + 2 * arena->botRadius / 2;
 				rotAngle = rTreadDist * 360.0 / (2 * PI * innerRad);
 				startAngle = heading - 90;
 			} else {
-				innerRad = lTreadDist * 2 * arena.botRadius / (rTreadDist - lTreadDist);
-				midRad = innerRad + 2 * arena.botRadius / 2;
+				innerRad = lTreadDist * 2 * arena->botRadius / (rTreadDist - lTreadDist);
+				midRad = innerRad + 2 * arena->botRadius / 2;
 				rotAngle = -lTreadDist * 360.0 / (2 * PI * innerRad);
 				startAngle = heading - 270;
 			}
@@ -196,57 +196,57 @@ void Bot::update(double delta) {
 ////////////////////////
 ////////////////////////BOTS COLLIDING
 	float /*x, y, dist,*/ angle;
-	uint8_t i = (this - arena.bots.data() + 1);
+	uint8_t i = (this - arena->bots.data() + 1);
 
-	for(; i < arena.bots.size(); ++i) {
+	for(; i < arena->bots.size(); ++i) {
 
-		x = coord.x - arena.bots[i].coord.x;
-		y = coord.y - arena.bots[i].coord.y;
+		x = coord.x - arena->bots[i].coord.x;
+		y = coord.y - arena->bots[i].coord.y;
 		dist = sqrtf(powf(x, 2) + powf(y, 2));
 
-		if(dist < arena.botRadius * 2) {
-			impulseSpeed = arena.bumpForce;
-			arena.bots[i].impulseSpeed = arena.bumpForce;
+		if(dist < arena->botRadius * 2) {
+			impulseSpeed = arena->bumpForce;
+			arena->bots[i].impulseSpeed = arena->bumpForce;
 			if(y >= 0) angle = acosf(x / dist);
 			else angle = 2 * PI - acosf(x / dist);
 			angle *= RAD_PER_DEG;
 			impulseHeading = angle;
-			arena.bots[i].impulseHeading = angle + 180;
+			arena->bots[i].impulseHeading = angle + 180;
 			bumping |= BotCollision;
-			arena.bots[i].bumping |= BotCollision;
+			arena->bots[i].bumping |= BotCollision;
 
-			if(shield > arena.shieldLeakLevel) shield -= arena.bumpDamage;
+			if(shield > arena->shieldLeakLevel) shield -= arena->bumpDamage;
 			else {
-				uint8_t generatorDamage = arena.bumpDamage - arena.bumpDamage / arena.maxShield * shield;
-				shield -= arena.bumpDamage + generatorDamage;
+				uint8_t generatorDamage = arena->bumpDamage - arena->bumpDamage / arena->maxShield * shield;
+				shield -= arena->bumpDamage + generatorDamage;
 				generator -= generatorDamage;
 			}
 
 			if(shield < 0) shield = 0;
-			if(generator <= 0) arena.addBotToDestroy(this);
+			if(generator <= 0) arena->addBotToDestroy(this);
 
-			if(arena.bots[i].shield > arena.shieldLeakLevel) arena.bots[i].shield -= arena.bumpDamage;
+			if(arena->bots[i].shield > arena->shieldLeakLevel) arena->bots[i].shield -= arena->bumpDamage;
 			else {
-				uint8_t generatorDamage = arena.bumpDamage - arena.bumpDamage / arena.maxShield * arena.bots[i].shield;
-				arena.bots[i].shield -= arena.bumpDamage + generatorDamage;
-				arena.bots[i].generator -= generatorDamage;
+				uint8_t generatorDamage = arena->bumpDamage - arena->bumpDamage / arena->maxShield * arena->bots[i].shield;
+				arena->bots[i].shield -= arena->bumpDamage + generatorDamage;
+				arena->bots[i].generator -= generatorDamage;
 			}
 
-			if(arena.bots[i].shield < 0) arena.bots[i].shield = 0;
-			if(arena.bots[i].generator <= 0) arena.addBotToDestroy(&arena.bots[i]);
+			if(arena->bots[i].shield < 0) arena->bots[i].shield = 0;
+			if(arena->bots[i].generator <= 0) arena->addBotToDestroy(&arena->bots[i]);
 
 #ifdef SOUND
-			if(arena.allowFeedback && arena.allowSound)
+			if(arena->allowFeedback && arena->allowSound)
 				playSound(SoundType::BOTCOLLISION);
 #endif
 #ifdef PARTICLES
-			if(arena.allowFeedback && arena.allowParticles) {
+			if(arena->allowFeedback && arena->allowParticles) {
 				auto &vec = getParticleData(ParticleType::BOTCOLLISION);
 
-				arena.particles.reserve(arena.particles.size() + vec.size());
+				arena->particles.reserve(arena->particles.size() + vec.size());
 
-				for(auto &particle : vec) arena.particles.emplace_back(
-					x / 2.f + arena.bots[i].coord.x, y / 2.f + arena.bots[i].coord.y, particle.color, particle.heading, particle.speed,
+				for(auto &particle : vec) arena->particles.emplace_back(
+					x / 2.f + arena->bots[i].coord.x, y / 2.f + arena->bots[i].coord.y, particle.color, particle.heading, particle.speed,
 					particle.timeToLive);
 			}
 #endif
@@ -254,19 +254,19 @@ void Bot::update(double delta) {
 	}
 ////////////////////////
 ////////////////////////WALL HIT
-	if(coord.x < arena.battleBox.topLeft.x + arena.botRadius) {
-		coord.x = arena.battleBox.topLeft.x + arena.botRadius;
+	if(coord.x < arena->battleBox.topLeft.x + arena->botRadius) {
+		coord.x = arena->battleBox.topLeft.x + arena->botRadius;
 		bumping |= WallHit;
-	} else if(coord.x > arena.battleBox.bottomRight.x - arena.botRadius) {
-		coord.x = arena.battleBox.bottomRight.x - arena.botRadius;
+	} else if(coord.x > arena->battleBox.bottomRight.x - arena->botRadius) {
+		coord.x = arena->battleBox.bottomRight.x - arena->botRadius;
 		bumping |= WallHit;
 	}
 
-	if(coord.y < arena.battleBox.topLeft.y + arena.botRadius) {
-		coord.y = arena.battleBox.topLeft.y + arena.botRadius;
+	if(coord.y < arena->battleBox.topLeft.y + arena->botRadius) {
+		coord.y = arena->battleBox.topLeft.y + arena->botRadius;
 		bumping |= WallHit;
-	} else if(coord.y > arena.battleBox.bottomRight.y - arena.botRadius) {
-		coord.y = arena.battleBox.bottomRight.y - arena.botRadius;
+	} else if(coord.y > arena->battleBox.bottomRight.y - arena->botRadius) {
+		coord.y = arena->battleBox.bottomRight.y - arena->botRadius;
 		bumping |= WallHit;
 	}
 }
@@ -294,10 +294,10 @@ Bot &Bot::operator=(const Bot &bot) {
 
 	bitmap = al_clone_bitmap(bot.bitmap);
 	sensors.clear();
-	Bot *tmp = arena.currBot;
-	arena.currBot = this;
+	Bot *tmp = arena->currBot;
+	arena->currBot = this;
 	for(Sensor *sensor : bot.sensors) sensors.push_back(sensor->clone());
-	arena.currBot = tmp;
+	arena->currBot = tmp;
 
 	return *this;
 }

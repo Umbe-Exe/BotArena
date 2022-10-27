@@ -128,7 +128,7 @@ void Arena_Impl::operator()() {
 		if(queue) al_destroy_event_queue(queue);		
 	}
 
-	for(auto &bot : bots) delete &bot.controller;
+	for(auto &bot : bots) delete bot.controller;
 }
 
 void Arena_Impl::feedback(bool status) {
@@ -222,8 +222,8 @@ void Arena_Impl::initBots() {
 				color = al_map_rgb(rand() % 150, rand() % 150, rand() % 150);
 		}
 
-		bots.push_back({
-			*this, controller->name(), controller->pathToImage(), color, *controller});
+		bots.emplace_back(
+			this, controller->name(), controller->pathToImage(), color, controller);
 
 		controller->arena = this;
 

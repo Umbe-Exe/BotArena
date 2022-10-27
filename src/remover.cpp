@@ -4,7 +4,7 @@ void Arena_Impl::addBotToDestroy(Bot *bot) {
 
 	exploding_bot.insert(bot - bots.data());
 
-	bot->controller.onDeath();
+	bot->controller->onDeath();
 
 #ifdef SOUND
 	playSound(SoundType::BOTEXPLOSION);

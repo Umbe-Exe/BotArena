@@ -52,12 +52,12 @@ struct LaserRange : Sensor{
 
 struct Bot {
 
-	Bot(Arena_Impl &arena, const char *name, const char *image, ALLEGRO_COLOR color, Controller &controller) :
+	Bot(Arena_Impl *arena, const char *name, const char *image, ALLEGRO_COLOR color, Controller *controller) :
 		arena(arena),
-		generator(arena.maxGeneratorStructure),
-		shield(arena.maxShield),
-		missile(arena.maxMissile),
-		laser(arena.maxLaser),
+		generator(arena->maxGeneratorStructure),
+		shield(arena->maxShield),
+		missile(arena->maxMissile),
+		laser(arena->maxLaser),
 		name(name),
 		image(image),
 		color(color),
@@ -82,8 +82,8 @@ struct Bot {
 	char bumping = 0;
 	float impulseSpeed = 0, impulseHeading = 0;
 
-	Arena_Impl &arena;
-	Controller &controller;
+	Arena_Impl *arena;
+	Controller *controller;
 
 	~Bot() {
 		for(Sensor *sensor : sensors) delete sensor;
