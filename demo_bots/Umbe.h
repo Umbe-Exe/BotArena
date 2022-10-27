@@ -11,15 +11,12 @@ class Umbe : public Controller {
 	double elapsed = 0;
 
 	int gc[799], s = 0, p = 0;
-	double delay_attack = -10, search_time, walk_time = 0;
-	int Lr = 0, Rr = 0, Ll = 0, Rl = 0; 
+	double time = 0; 
+	double delay = -10;
+	int Lr = 0, Rr = 0, Ll = 0, Rl = 0;
 
-	bool attackSet = 0;
-	bool searchSet = 0;
-	bool walk_timeSet = 0;
-
-	float target = 0;
-	bool targetSet = 0;
+	int hit = 0;
+	double t = .5;
 
 	void rg(int st);
 	void gl(int st);

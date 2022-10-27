@@ -5,6 +5,7 @@
 #define R 0
 #define L 1
 #define FORWARD 3
+#define delta(x) elapsed-x
 
 void Umbe::gl(int st) {
 	st -= 1;
@@ -163,9 +164,10 @@ void Umbe::manageEnergy() {
 		setSystemChargeRate(LASERS, 30);
 	}
 
-	if(Lr || Rr || shield < 60 || searchSet ||
+	if(Lr || Rr || shield < 60 ||
+	   t == 5.f || hit > shield ||
 	   (missle < 80 && laser < 80) ||
-	   attackSet) {
+	   delta(delay) < 5) {
 		setSensorStatus(RRANGE, 0);
 		setSensorStatus(LRANGE, 0);
 	} else {
@@ -173,7 +175,7 @@ void Umbe::manageEnergy() {
 		setSensorStatus(LRANGE, 1);
 	}
 
-	if(attackSet && elapsed - delay_attack < .3f) {
+	if(delta(delay) < .3) {
 		setSensorStatus(RRADAR, 0);
 		setSensorStatus(LRADAR, 0);
 	} else {
@@ -187,39 +189,38 @@ void Umbe::roam() {
 
 	if(p == s - 1) p = 0;
 
+	if(hit > getSystemEnergy(SHIELDS)) {
+		t = 5.f;
+		p = 0;
+	}
+
 	switch(gc[p]) {
 		case R:
-			if(!targetSet) {
-				target = getGPSdata().heading + 60;
-				if(target > 360) target -= 360;
-				targetSet = 1;
-				setMotorSpeed(100, -100);
-			}
+			setMotorSpeed(100, -100);
 			break;
 		case L:
-			if(!targetSet) {
-				target = getGPSdata().heading - 60;
-				if(target < 0) target += 360;
-				targetSet = 1;
-				setMotorSpeed(-100, 100);
-			}
+			setMotorSpeed(-100, 100);
 			break;
 		case FORWARD:
-			if(!walk_timeSet) {
-				walk_time = elapsed + .6f;
-				walk_timeSet = 1;
-				setMotorSpeed(100, 100);
-			}
-			if(!targetSet&&walk_timeSet&&walk_time - elapsed < 0) {
-				p++;
-				walk_timeSet = 0;
-			}
+			setMotorSpeed(100, 100);
 			break;
 	}
 
-	if(targetSet&&abs(getGPSdata().heading - target) < 5.f) {
-		p++;
-		targetSet = 0;
+	switch(gc[p]) {
+		case R:
+		case L:
+			if(delta(time) > t) {
+				p++;
+				time = elapsed;
+				t = .5f;
+			}
+			break;
+		case FORWARD:
+			if(delta(time) > .4f) {
+				p++;
+				time = elapsed;
+			}
+			break;
 	}
 }
 
@@ -234,51 +235,37 @@ void Umbe::onUpdate(double delta) {
 	Ll = getSensorData(LRANGE);
 	Rl = getSensorData(RRANGE);
 
-
-	if(isBumping() & MissileHit || isBumping() & LaserHit || isBumping() & BotCollision) search_time = elapsed + 1.f;
-
 	if(Lr == 1 && Rr == 1) {
 		if(getSystemEnergy(MISSILES) == 100) fireWeapon(MISSILE, 0);
 		if(getSystemEnergy(LASERS) > 40) fireWeapon(LASER, 0);
 		setMotorSpeed(-100, -100);
 
-		delay_attack = elapsed + 5.f;
+		delay = elapsed;
 
 	} else if(Lr == -1 || Rr == -1) setMotorSpeed(-100, -100);
 	else if(Lr == 0 && Rr == 1) {
-		setMotorSpeed(100, -99);
-		if(delay_attack - elapsed < 1 && delay_attack - elapsed > 5) ++delay_attack;
+		setMotorSpeed(40, -39);
+		if(delta(delay) > 1 && delta(delay) < 10) ++delay;
 	} else if(Lr == 1 && Rr == 0) {
-		setMotorSpeed(-99, 100);
-		if(delay_attack - elapsed < 1 && delay_attack - elapsed > 5) ++delay_attack;
-	} else if(search_time > elapsed) setMotorSpeed(-100, 100);
-	else if(delay_attack > elapsed) {
-		if(delay_attack - elapsed < 1 && delay_attack - elapsed > 5) {
-			setMotorSpeed(100, 100);
-			if(isBumping() & MissileHit || isBumping() & LaserHit || isBumping() & BotCollision) {
-				delay_attack -= 5;
-				search_time = elapsed + 1.f;
-			}
-		} else if(delay_attack - elapsed > 4) {
-			if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) setMotorSpeed(100, 100);
+		setMotorSpeed(-39, 40);
+		if(delta(delay) > 1 && delta(delay) < 10) ++delay;
+	} else if((Ll > 0 || Rl > 0) && Ll > Rl) {
+		setMotorSpeed(100, 20);
+		if(isBumping()) setMotorSpeed(50, -100);
+	} else if((Ll > 0 || Rl > 00) && Ll > Rl) {
+		setMotorSpeed(20, 100);
+		if(isBumping()) setMotorSpeed(50, -100);
+	} else if(delta(delay) > 1 && delta(delay) < 5) {
+		setMotorSpeed(100, 100);
+		if(hit > getSystemEnergy(SHIELDS)) {
+			delay -= 5;
+			roam();
 		}
-	} else if(Ll > Rl) {
-		
-		if(!target) {
-			setMotorSpeed(100, -100);
-			target = getGPSdata().heading + 10;
-			if(target > 360) target -= 360;
-			targetSet = 1;
-		}
-	} else if(Ll < Rl) {
-		
-		if(!target) {
-			setMotorSpeed(-100, 100);
-		target = getGPSdata().heading - 10;
-		if(target < 0) target += 360;
-		targetSet = 1;
-		}
+	} else if(delta(delay) < 1) {
+		if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) --delay;
 	} else roam();
+
+	hit = getSystemEnergy(SHIELDS);
 
 }
 
