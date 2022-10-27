@@ -4,7 +4,7 @@
 #include <thread>
 
 void arena1() {
-    Arena arena("ArenaX");
+    Arena arena("Arena1");
 
     arena.registerController(new Rammer());
     arena.registerController(new Rammer());
@@ -16,12 +16,34 @@ void arena1() {
     arena.start();
 }
 
+void arena2() {
+    Arena arena("Arena2");
+
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+    arena.registerController(new Rammer());
+
+    arena.start();
+}
+
 int main() {
 
     std::thread t1(arena1);
-    std::thread t2(arena1);
+    std::thread t2(arena2);
 
-    Arena arena("Arena");
+    Arena arena("Arena1");
 
 
     arena.registerController(new Umbe());
