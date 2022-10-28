@@ -1,4 +1,3 @@
-#include "..\src\competition.h"
 #include "Umbe.h"
 #include <cmath>
 
