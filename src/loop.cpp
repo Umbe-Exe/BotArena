@@ -1,6 +1,4 @@
-#include "arena_impl.h"
 #include "sync.h"
-#include "common.h"
 
 AllegroSystem sync;
 

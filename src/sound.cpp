@@ -1,7 +1,5 @@
 #ifdef SOUND
 #include "sound.h"
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
 
 ALLEGRO_SAMPLE *laserSound;
 ALLEGRO_SAMPLE *laserHitSound;
@@ -9,8 +7,6 @@ ALLEGRO_SAMPLE *missileSound;
 ALLEGRO_SAMPLE *missileHitSound;
 ALLEGRO_SAMPLE *botCollisionSound;
 ALLEGRO_SAMPLE *botExplosionSound;
-
-Sound sound;
 
 void loadSounds() {
 	al_reserve_samples(100);
@@ -21,18 +17,6 @@ void loadSounds() {
 	missileHitSound = al_load_sample("resources/sounds/missilehit.wav");
 	botCollisionSound = al_load_sample("resources/sounds/robotscollide.wav");
 	botExplosionSound = al_load_sample("resources/sounds/robotexplode.wav");
-}
-
-Sound::Sound() {
-	al_init();
-	al_install_audio();
-	al_init_acodec_addon();
-	loadSounds();
-}
-
-Sound::~Sound() {
-	al_uninstall_audio();
-	al_uninstall_system();
 }
 
 void playSound(SoundType sound) {

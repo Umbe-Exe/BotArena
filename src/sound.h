@@ -1,10 +1,9 @@
 #pragma once
 #ifdef SOUND
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
-struct Sound {
-	Sound();
-	~Sound();
-};
+void loadSounds();
 
 enum class SoundType {
 	LASER, LASERHIT, MISSILE,

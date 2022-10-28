@@ -5,12 +5,10 @@
 
 #ifdef SOUND
 #include "sound.h"
-extern Sound sound;
 #endif
 
 #ifdef PARTICLES
 #include "particles.h"
-extern Particles prtcls;
 #endif
 
 struct Bot;

@@ -3,9 +3,8 @@
 #include <vector>
 #include <allegro5/allegro.h>
 
-struct Particles {
-	Particles();
-};
+void loadParticles();
+void unloadParticles();
 
 enum class ParticleType {
 	LASERBURST, MISSILEBURST,
@@ -22,14 +21,15 @@ struct Particle {
 	float timeToLive;
 	float initialTTL;
 
-	Particle(float x,
-			 float y,
-			 ALLEGRO_COLOR color,
-			 float heading,
-			 float speed,
-			 float timeToLive);
+	Particle(
+		float x,
+		float y,
+		ALLEGRO_COLOR color,
+		float heading,
+		float speed,
+		float timeToLive);
 };
 
-const std::vector<Particle> getParticleData(ParticleType type);
+const std::vector<Particle> &getParticleData(ParticleType type);
 
 #endif

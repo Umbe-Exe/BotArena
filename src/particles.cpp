@@ -1,49 +1,65 @@
 #ifdef PARTICLES
 #include "arena_impl.h"
-#include <vector>
 
-std::vector<Particle> laserBurst;
-std::vector<Particle> missileBurst;
-std::vector<Particle> botCollision;
-std::vector<Particle> botExplosion;
+std::vector<Particle> *laserBurst;
+std::vector<Particle> *missileBurst;
+std::vector<Particle> *botCollision;
+std::vector<Particle> *botExplosion;
 
-Particles prtcls;
+void loadParticles() {
 
-Particles::Particles() {
+	laserBurst = new std::vector<Particle>;
+	missileBurst = new std::vector<Particle>;
+	botCollision = new std::vector<Particle>;
+	botExplosion = new std::vector<Particle>;
+
 	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
-		laserBurst.emplace_back(0, 0,
+		laserBurst->emplace_back(0, 0,
 								al_map_rgb(255, 0, 0),
 								360.f * rand() / RAND_MAX,
 								0.1f * rand() / RAND_MAX, .25f);
 	for(uint16_t particleCount = 0; particleCount < 200; ++particleCount)
-		missileBurst.emplace_back(0, 0,
+		missileBurst->emplace_back(0, 0,
 								  al_map_rgb(156 + rand() % 100, rand() % 30, rand() % 30),
 								  360.f * rand() / RAND_MAX,
 								  0.3f * rand() / RAND_MAX, .4f);
 	for(uint16_t particleCount = 0; particleCount < 100; ++particleCount)
-		botCollision.emplace_back(0, 0,
+		botCollision->emplace_back(0, 0,
 								  al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
 								  360.f * rand() / RAND_MAX,
 								  0.1f * rand() / RAND_MAX, 1.f);
 	for(uint16_t particleCount = 0; particleCount < 1000; ++particleCount)
-		botExplosion.emplace_back(0, 0,
+		botExplosion->emplace_back(0, 0,
 								  al_map_rgb(rand() % 256, rand() % 256, rand() % 256),
 								  360.f * rand() / RAND_MAX,
 								  0.3f * rand() / RAND_MAX, 3.f);
 }
 
-const std::vector<Particle> getParticleData(ParticleType type) {
+void unloadParticles() {
+	delete laserBurst;
+	delete 	missileBurst;
+	delete 	botCollision;
+	delete 	botExplosion;
+}
+
+const std::vector<Particle> &getParticleData(ParticleType type) {
 	switch(type) {
 		case ParticleType::LASERBURST:
-			return laserBurst;
+			return *laserBurst;
 		case ParticleType::MISSILEBURST:
-			return missileBurst;
+			return *missileBurst;
 		case ParticleType::BOTCOLLISION:
-			return botCollision;
+			return *botCollision;
 		default:
-			return botExplosion;
+			return *botExplosion;
 	}
 }
+
+Particle::Particle(float x, float y, ALLEGRO_COLOR color, float heading, float speed, float timeToLive) :
+	x(x), y(y), color(color),
+	initialC(color), heading(heading),
+	speed(speed), timeToLive(timeToLive),
+	initialTTL(timeToLive) {};
 
 void Arena_Impl::updateParticles(double delta) {
 
@@ -76,9 +92,5 @@ void Arena_Impl::drawPrticles() {
 	for(Particle &particle : particles)
 		al_draw_pixel(particle.x * arenaSize, particle.y * arenaSize, particle.color);
 }
-
-Particle::Particle(float x, float y, ALLEGRO_COLOR color, float heading, float speed, float timeToLive)
-	: x(x), y(y), color(color), initialC(color), heading(heading), speed(speed), timeToLive(timeToLive)
-	, initialTTL(timeToLive) {}
 
 #endif
