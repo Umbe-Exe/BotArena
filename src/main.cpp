@@ -43,8 +43,7 @@ int main() {
     std::thread t1(arena1);
     std::thread t2(arena2);
 
-    Arena arena("Arena1");
-
+    Arena arena("Arena3");
 
     arena.registerController(new Umbe());
     arena.registerController(new Umbe());
