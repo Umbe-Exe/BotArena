@@ -1,30 +1,90 @@
-#include "..\src\competition.h"
 #include "Umbe.h"
-
-int RRADAR = 0;
-int LRADAR = 0;
-int RRANGE = 0;
-int LRANGE = 0;
+#include <cmath>
 
 #define R 0
 #define L 1
 #define FORWARD 3
+#define delta(x) elapsed-x
 
-#define DELTA(x) (elapsed-x)
+void Umbe::gl(int st) {
+	st -= 1;
 
-double elapsed = 0;
+	if(st > 0) {
+		gc[s++] = L;
+		rg(st);
+		gc[s++] = R;
+		gl(st);
+		gl(st);
+		gc[s++] = R;
+		gc[s++] = R;
+		gl(st);
+		gc[s++] = R;
+		rg(st);
+		gc[s++] = L;
+		gc[s++] = L;
+		rg(st);
+		gc[s++] = L;
+		gl(st);
+	}
+	if(st == 0) {
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+		gc[s++] = FORWARD;
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+		gc[s++] = R;
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+		gc[s++] = FORWARD;
+		gc[s++] = L;
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+	}
+}
 
-int UM_gc[799], UM_s = 0, UM_p = 0; //GOSPER-CURVE NODES, SIZE, POSITION READ OR ABOUT TO BE READ
-double UM_time = 0; //USED TO GIVE PACE TO THE ROAMING AND TO MAKE TURNS ABOUT 60DEG
-double UM_delay = -10; //USED TO DELAY ENGAGING AND COME BACK INTO ENEMY SIGHT
-int UM_L = 0, UM_R = 0, UM_fl = 0, UM_fr = 0; //LEFT RADAR DATA, RIGHT RADAR DATA, LEFT RANGE DATA, RIGHT RANGE DATA
-//UM_L AND UM_R ARE USED AS BOOLEANS
-//f STANDS FOR 'FAR', I JUST KEPT THE NAME FROM A PREVIOUS BOT CONFIGURATION
+void Umbe::rg(int st) {
+	st -= 1;
 
-int UM_hit = 0;
-double UM_t = .5;
+	if(st > 0) {
+		rg(st);
+		gc[s++] = R;
+		gl(st);
+		gc[s++] = R;
+		gc[s++] = R;
+		gl(st);
+		gc[s++] = L;
+		rg(st);
+		gc[s++] = L;
+		gc[s++] = L;
+		rg(st);
+		rg(st);
+		gc[s++] = L;
+		gl(st);
+		gc[s++] = R;
+	}
+	if(st == 0) {
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+		gc[s++] = R;
+		gc[s++] = FORWARD;
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+		gc[s++] = L;
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+		gc[s++] = FORWARD;
+		gc[s++] = L;
+		gc[s++] = FORWARD;
+		gc[s++] = R;
+	}
+}
 
-void manageEnergy() {
+void Umbe::manageEnergy() {
 
 	int shield = getSystemEnergy(SHIELDS)
 		, missle = getSystemEnergy(MISSILES)
@@ -103,10 +163,10 @@ void manageEnergy() {
 		setSystemChargeRate(LASERS, 30);
 	}
 
-	if(UM_L || UM_R || shield < 60 ||
-	   UM_t == 5.f || UM_hit > shield ||
+	if(Lr || Rr || shield < 60 ||
+	   t == 5.f || hit > shield ||
 	   (missle < 80 && laser < 80) ||
-	   DELTA(UM_delay) < 5) {
+	   delta(delay) < 5) {
 		setSensorStatus(RRANGE, 0);
 		setSensorStatus(LRANGE, 0);
 	} else {
@@ -114,7 +174,7 @@ void manageEnergy() {
 		setSensorStatus(LRANGE, 1);
 	}
 
-	if(DELTA(UM_delay) < .3) {
+	if(delta(delay) < .3) {
 		setSensorStatus(RRADAR, 0);
 		setSensorStatus(LRADAR, 0);
 	} else {
@@ -124,16 +184,16 @@ void manageEnergy() {
 
 }
 
-void roam() {
+void Umbe::roam() {
 
-	if(UM_p == UM_s) UM_p = 0;
+	if(p == s - 1) p = 0;
 
-	if(UM_hit > getSystemEnergy(SHIELDS)) {
-		UM_t = 5.f;
-		UM_p = 0;
+	if(hit > getSystemEnergy(SHIELDS)) {
+		t = 5.f;
+		p = 0;
 	}
 
-	switch(UM_gc[UM_p]) {
+	switch(gc[p]) {
 		case R:
 			setMotorSpeed(100, -100);
 			break;
@@ -145,162 +205,70 @@ void roam() {
 			break;
 	}
 
-	switch(UM_gc[UM_p]) {
+	switch(gc[p]) {
 		case R:
 		case L:
-			if(DELTA(UM_time) > UM_t) {
-				UM_p++;
-				UM_time = elapsed;
-				UM_t = .5f;
+			if(delta(time) > t) {
+				p++;
+				time = elapsed;
+				t = .5f;
 			}
 			break;
 		case FORWARD:
-			if(DELTA(UM_time) > .4f) {
-				UM_p++;
-				UM_time = elapsed;
+			if(delta(time) > .4f) {
+				p++;
+				time = elapsed;
 			}
 			break;
 	}
 }
 
-void rg(int st);
-
-void gl(int st) {
-	st -= 1;
-
-	if(st > 0) {
-		UM_gc[UM_s++] = L;
-		rg(st);
-		UM_gc[UM_s++] = R;
-		gl(st);
-		gl(st);
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = R;
-		gl(st);
-		UM_gc[UM_s++] = R;
-		rg(st);
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = L;
-		rg(st);
-		UM_gc[UM_s++] = L;
-		gl(st);
-	}
-	if(st == 0) {
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-	}
-}
-
-void rg(int st) {
-	st -= 1;
-
-	if(st > 0) {
-		rg(st);
-		UM_gc[UM_s++] = R;
-		gl(st);
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = R;
-		gl(st);
-		UM_gc[UM_s++] = L;
-		rg(st);
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = L;
-		rg(st);
-		rg(st);
-		UM_gc[UM_s++] = L;
-		gl(st);
-		UM_gc[UM_s++] = R;
-	}
-	if(st == 0) {
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = R;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = L;
-		UM_gc[UM_s++] = FORWARD;
-		UM_gc[UM_s++] = R;
-	}
-}
-
-void UmbeActions(double delta) {
-
+void Umbe::onUpdate(double delta) {
 	elapsed += delta;
 
-	UM_L = getSensorData(LRADAR);
-	UM_R = getSensorData(RRADAR);
+	Lr = getSensorData(LRADAR);
+	Rr = getSensorData(RRADAR);
 
 	manageEnergy();
 
-	UM_fl = getSensorData(LRANGE);
-	UM_fr = getSensorData(RRANGE);
+	Ll = getSensorData(LRANGE);
+	Rl = getSensorData(RRANGE);
 
-	if(UM_L == 1 && UM_R == 1) {
+	if(Lr == 1 && Rr == 1) {
 		if(getSystemEnergy(MISSILES) == 100) fireWeapon(MISSILE, 0);
 		if(getSystemEnergy(LASERS) > 40) fireWeapon(LASER, 0);
 		setMotorSpeed(-100, -100);
 
-		UM_delay = elapsed;
+		delay = elapsed;
 
-	} else if(UM_L == -1 || UM_R == -1) setMotorSpeed(-100, -100);
-	else if(UM_L == 0 && UM_R == 1) {
+	} else if(Lr == -1 || Rr == -1) setMotorSpeed(-100, -100);
+	else if(Lr == 0 && Rr == 1) {
 		setMotorSpeed(40, -39);
-		if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 10) ++UM_delay;
-	} else if(UM_L == 1 && UM_R == 0) {
+		if(delta(delay) > 1 && delta(delay) < 10) ++delay;
+	} else if(Lr == 1 && Rr == 0) {
 		setMotorSpeed(-39, 40);
-		if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 10) ++UM_delay;
-	} else if((UM_fl > 0 || UM_fr > 0) && UM_fl > UM_fr) {
+		if(delta(delay) > 1 && delta(delay) < 10) ++delay;
+	} else if((Ll > 0 || Rl > 0) && Ll > Rl) {
 		setMotorSpeed(100, 20);
 		if(isBumping()) setMotorSpeed(50, -100);
-	}
-	else if((UM_fl > 0 || UM_fr > 0) && UM_fl < UM_fr) {
+	} else if((Ll > 0 || Rl > 00) && Ll > Rl) {
 		setMotorSpeed(20, 100);
 		if(isBumping()) setMotorSpeed(50, -100);
-	} else if(DELTA(UM_delay) > 1 && DELTA(UM_delay) < 5) {
+	} else if(delta(delay) > 1 && delta(delay) < 5) {
 		setMotorSpeed(100, 100);
-		if(UM_hit > getSystemEnergy(SHIELDS)) {
-			UM_delay -= 5;
+		if(hit > getSystemEnergy(SHIELDS)) {
+			delay -= 5;
 			roam();
 		}
-	} else if(DELTA(UM_delay) < 1) {
-		if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) --UM_delay;
+	} else if(delta(delay) < 1) {
+		if(getSystemEnergy(MISSILES) == 100.f || getSystemEnergy(LASERS) > 40.f) --delay;
 	} else roam();
 
-	UM_hit = getSystemEnergy(SHIELDS);
+	hit = getSystemEnergy(SHIELDS);
 
 }
 
-void ready() {
-
-	elapsed = 0;
-
-	UM_gc[799] = {}; UM_s = 0; UM_p = 0;
-	UM_time = 0;
-	UM_delay = -10;
-	UM_L = 0; UM_R = 0; UM_fl = 0; UM_fr = 0;
-
-	UM_hit = 0;
-	UM_t = .5;
+void Umbe::onStart() {
 
 	RRADAR = addRadarGetId(45 / 2.f + 2, 45, 100);
 	LRADAR = addRadarGetId(-45 / 2.f - 2, 45, 100);
@@ -308,8 +276,4 @@ void ready() {
 	LRANGE = addRangeGetId(317, 100);
 
 	gl(3); //gosper curve generation
-}
-
-void registerUmbe() {
-	registerBot("Umbe", RANDCOL, "resources/images/Coke.bmp", UmbeActions, ready);
 }

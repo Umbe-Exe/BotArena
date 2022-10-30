@@ -1,27 +1,29 @@
 #pragma once
-#include "component.h"
-#include "utils.h"
-#include "config.h"
-#include <allegro5/allegro.h>
-#include <vector>
+#include "common.h"
+#include "arena_impl.h"
 
-struct Sensor : drawable, updatable {
+struct Sensor {
 	float angle, range;
 	bool enabled = 1;
 	float data = 0;
 
-	Sensor(float angle, int range) : angle(angle), range(range) {}
+	Arena_Impl &arena;
 
+	Sensor(Arena_Impl &arena, float angle, float range) : arena(arena), angle(angle), range(range) {}
+
+	virtual void draw() = 0;
+	virtual void update(double delta) = 0;
 	virtual void priming() {}
 	virtual ~Sensor() {}
+	virtual Sensor *clone() = 0;
 };
 
 struct Radar : Sensor {
 	float width;
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
-	Radar(float width, float angle, int range) : width(width), Sensor(angle, range) {
-		priming();
+	Radar(Arena_Impl &arena, float width, float angle, float range) : width(width), Sensor(arena, angle, range) {
+		if(arena.allowFeedback) priming();
 	}
 
 	void priming() override;
@@ -30,39 +32,49 @@ struct Radar : Sensor {
 	void update(double delta) override;
 
 	~Radar() override {
-		al_destroy_bitmap(bitmap);
+		if(bitmap) al_destroy_bitmap(bitmap);
+	}
+	Sensor *clone() {
+		return new Radar(arena, width, angle, range);
 	}
 };
 
 struct LaserRange : Sensor{
 
-	LaserRange(float angle, int range) : Sensor(angle, range) {}
+	LaserRange(Arena_Impl &arena, float angle, float range) : Sensor(arena, angle, range) {}
 
 	void draw() override;
 	void update(double delta) override;
+	Sensor *clone() {
+		return new LaserRange(arena, angle, range);
+	}
 };
 
-struct Bot : drawable, updatable{
+struct Bot {
 
-	Bot(const char *name, const char *image, ALLEGRO_COLOR color, void (*initFn)(), void (*updateFn)(double), void (*deathSignal)()) :
+	Bot(Arena_Impl *arena, const char *name, const char *image, ALLEGRO_COLOR color, Controller *controller) :
+		arena(arena),
+		generator(arena->maxGeneratorStructure),
+		shield(arena->maxShield),
+		missile(arena->maxMissile),
+		laser(arena->maxLaser),
 		name(name),
 		image(image),
 		color(color),
-		initFn(initFn), updateFn(updateFn), deathSignal(deathSignal) {}
+		controller(controller) {}
 
-	void (*initFn)();
-	void (*updateFn)(double);
-	void (*deathSignal)();
+	Bot &operator=(const Bot &bot);
+
 	const char *name, *image;
 	ALLEGRO_COLOR color;
 
 	ALLEGRO_BITMAP *bitmap = nullptr;
 
 	float heading = 0;
-	int leftTreadSpeed = 0, rightTreadSpeed = 0;
-	Coord coord;
+	float leftTreadSpeed = 0, rightTreadSpeed = 0;
+	Coord coord{};
 
-	float generator = maxGeneratorStructure, shield = maxShield, missile = maxMissile, laser = maxLaser;
+	float generator, shield, missile, laser;
 	float shieldChargeRate = 0, missileChargeRate = 0, laserChargeRate = 0;
 
 	std::vector<Sensor *> sensors;
@@ -70,12 +82,15 @@ struct Bot : drawable, updatable{
 	char bumping = 0;
 	float impulseSpeed = 0, impulseHeading = 0;
 
+	Arena_Impl *arena;
+	Controller *controller;
+
 	~Bot() {
 		for(Sensor *sensor : sensors) delete sensor;
 
-		al_destroy_bitmap(bitmap);
+		if(bitmap) al_destroy_bitmap(bitmap);
 	}
 
-	void draw() override;
-	void update(double delta) override;
+	void draw();
+	void update(double delta);
 };

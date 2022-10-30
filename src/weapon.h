@@ -1,34 +1,41 @@
 #pragma once
-#include "component.h"
-#include "utils.h"
-#include "config.h"
+#include "common.h"
+#include "arena_impl.h"
 
-struct Weapon : drawable, updatable{
+struct Weapon {
 	float heading;
 	Coord coord;
 
-	Weapon(float heading, Coord coord) : heading(heading), coord(coord) {}
+	Arena_Impl &arena;
 
+	Weapon(Arena_Impl &arena, float heading, Coord coord) : arena(arena), heading(heading), coord(coord) {}
+
+	virtual void draw() = 0;
+	virtual void update(double delta) = 0;
+#ifdef PARTICLES
 	virtual void createParticleBurst() = 0;
+#endif
 };
 
 struct Missile : Weapon{
 
-	Missile(float heading, Coord coord) : Weapon(heading, coord) {}
+	Missile(Arena_Impl &arena, float heading, Coord coord) : Weapon(arena, heading, coord) {}
 
 	void draw() override;
 	void update(double delta) override;
-
-	virtual void createParticleBurst();
+#ifdef PARTICLES
+	void createParticleBurst() override;
+#endif
 };
 
 struct Laser : Weapon {
 	float damage;
 
-	Laser(float damage, float heading, Coord coord) : damage(damage), Weapon(heading, coord) {}
+	Laser(Arena_Impl &arena, float damage, float heading, Coord coord) : damage(damage), Weapon(arena, heading, coord) {}
 
 	void draw() override;
 	void update(double delta) override;
-
-	virtual void createParticleBurst();
+#ifdef PARTICLES
+	void createParticleBurst() override;
+#endif
 };

@@ -1,47 +1,9 @@
-#include "loadConfig.h"
-#include "config.h"
-#include <allegro5/allegro.h>
-#include <string>
+#include "arena_impl.h"
+#include "common.h"
 
-int maxGeneratorStructure = 10000;
+void Arena_Impl::loadConfigFile(const char *filename) {
 
-int maxEnergy = 100;
-
-int maxShield = 10000;
-
-int shieldLeakLevel = 10000;
-
-int maxMissile = 200;
-int maxLaser = 100;
-int minLaser = 20;
-
-float botRadius = 0.05f;
-float weaponRadius = 0.01f;
-float radarMaxRange = 0.15f;
-float rangeMaxRange = 0.2f;
-int sensorEnergyConsumption = 2;
-
-float laserDamageMoltiplicator = 1.f;
-float missileBlastRadius = 0.1f;
-int missileDamage = 200;
-float laserSpeed = 0.5f;
-float missileSpeed = 0.2f;
-
-int bumpDamage = 50;
-float bumpForce = 0.2f;
-float friction = 0.2f;
-float maxSpeed = 0.1f;
-
-bool allowSound = true;
-bool allowParticles = true;
-
-bool alreadyConfigured = false;
-
-void lockParameters() {
-	alreadyConfigured = true;
-}
-
-void loadConfigFile(const char *filename) {
+	bool alreadyConfigured = false;
 
 	if(!alreadyConfigured) {
 		ALLEGRO_CONFIG *config = al_load_config_file(filename);
@@ -75,11 +37,12 @@ void loadConfigFile(const char *filename) {
 
 			al_set_config_value(config, "EFFECTS", "allow_sound", "1");
 			al_set_config_value(config, "EFFECTS", "allow_particles", "1");
+			al_set_config_value(config, "EFFECTS", "allow_infobox", "1");
+			al_set_config_value(config, "EFFECTS", "allow_feedback", "1");
 
 			al_save_config_file(filename, config);
 			al_destroy_config(config);
 		} else {
-			std::string newFile = "The file (" + std::string(filename) + ") has a problem.txt";
 
 			const char *value;
 
@@ -124,7 +87,7 @@ void loadConfigFile(const char *filename) {
 			else goto repeat;
 			if(value = al_get_config_value(config, "PROPORTIONS", "bump_force"))
 				bumpForce = atof(value);
-			else goto repeat; 
+			else goto repeat;
 			if(value = al_get_config_value(config, "PROPORTIONS", "friction"))
 				friction = atof(value);
 			else goto repeat;
@@ -143,56 +106,32 @@ void loadConfigFile(const char *filename) {
 			if(value = al_get_config_value(config, "WEAPON DAMAGE", "bump_damage"))
 				bumpDamage = atoi(value);
 			else goto repeat;
+#ifdef SOUND
 			if(value = al_get_config_value(config, "EFFECTS", "allow_sound"))
 				allowSound = atoi(value);
 			else goto repeat;
+#endif
+#ifdef PARTICLES
 			if(value = al_get_config_value(config, "EFFECTS", "allow_particles"))
 				allowParticles = atoi(value);
+			else goto repeat;
+#endif
+			if(value = al_get_config_value(config, "EFFECTS", "allow_infobox"))
+				allowInfobox = atoi(value);
+			else goto repeat;
+			if(value = al_get_config_value(config, "EFFECTS", "allow_feedback"))
+				allowFeedback = atoi(value);
 			else goto repeat;
 
 			alreadyConfigured = true;
 
 			repeat:
-			if(!alreadyConfigured) loadConfigFile(newFile.c_str());
+			if(!alreadyConfigured) {
+				std::string newFile = "The file (" + std::string(filename) + ") has a problem.txt";
+				loadConfigFile(newFile.c_str());
+			}
 
 			al_destroy_config(config);
 		}
 	}
-}
-
-Game knowGameParameters() {
-	return
-	{
-		maxGeneratorStructure,
-
-		maxEnergy,
-
-		maxShield,
-
-		shieldLeakLevel,
-
-		maxMissile,
-		maxLaser,
-		minLaser,
-
-		botRadius,
-		weaponRadius,
-		radarMaxRange,
-		rangeMaxRange,
-		sensorEnergyConsumption,
-	
-		laserDamageMoltiplicator,
-		missileBlastRadius,
-		missileDamage,
-		laserSpeed,
-		missileSpeed,
-
-		bumpDamage,
-		bumpForce,
-		friction,
-		maxSpeed,
-
-		allowSound,
-		allowParticles
-	};
 }

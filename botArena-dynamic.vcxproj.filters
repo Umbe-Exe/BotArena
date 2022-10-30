@@ -4,11 +4,11 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{f2932ce3-0c0d-44ad-8e32-37a97271b8e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{0ef3d013-3a59-4412-bc42-d8e97faefc76}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{dc07510f-c5c4-49d1-8eb1-d63848e1dcfe}</UniqueIdentifier>
+      <UniqueIdentifier>{401dda86-0e1d-4792-92fb-5a7c0cefc631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{08d49a41-0ab1-45ad-a59a-db5f63f2a58e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,43 +63,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\competition.h">
+    <ClInclude Include="src\Arena.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Arena.h">
+    <ClInclude Include="src\arena_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\component.h">
+    <ClInclude Include="src\common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\infobox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\loadConfig.h">
+    <ClInclude Include="src\competition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\remover.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\update.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils.h">
@@ -125,7 +107,10 @@
     <ClCompile Include="src\infobox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\loadConfig.cpp">
+    <ClCompile Include="src\loop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\particles.cpp">
@@ -135,9 +120,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\update.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utils.cpp">

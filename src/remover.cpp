@@ -1,48 +1,53 @@
-#include "remover.h"
-#include "infobox.h"
-#include "sound.h"
-#include "particles.h"
-#include <set>
+#include "arena_impl.h"
+#include <iostream>
+void Arena_Impl::addBotToDestroy(Bot *bot) {
 
-std::set<uint8_t> bot;
-std::set<uint8_t> weapon;
-std::vector<const char *> terminatedBots;
+	exploding_bot.insert(bot - bots.data());
 
-void addBotToDestroy(Bot *bot) {
-	uint8_t i = 0;
-	while(bots[i] != bot) ++i;
-	::bot.insert(i);
+	bot->controller->onDeath();
 
-	if(bot->deathSignal) bot->deathSignal();
+#ifdef SOUND
+	playSound(SoundType::BOTEXPLOSION);
+#endif
+#ifdef PARTICLES
+	if(allowFeedback && allowParticles) {
+		auto &vec = getParticleData(ParticleType::BOTEXPLOSION);
 
-	playBotExplosionSound();
+		particles.reserve(particles.size() + vec.size());
 
-	if(allowParticles) createBotExplosionBurst(bot->coord.x, bot->coord.y);
+		for(auto &particle : vec) particles.emplace_back(
+			bot->coord.x, bot->coord.y, particle.color, particle.heading, particle.speed,
+			particle.timeToLive);
+	}
+#endif
 }
 
-void addWeaponToDestroy(Weapon *weapon) {
+void Arena_Impl::addWeaponToDestroy(Weapon *weapon) {
 	uint8_t i = 0;
 	while(weapons[i] != weapon) ++i;
-	::weapon.insert(i);
+	exploding_weapon.insert(i);
 
-	if(allowParticles) weapon->createParticleBurst();
+#ifdef PARTICLES
+	if(allowFeedback && allowParticles) weapon->createParticleBurst();
+#endif
 }
 
-void destroyTheStuff() {
+void Arena_Impl::destroyBotsAndWeapons() {
 
-	if(bot.size()) {
-		for(auto it = bot.rbegin(); it != bot.rend(); it++) {
-			terminatedBots.push_back(bots[*it]->name);
+	if(exploding_bot.size()) {
+		for(auto it = exploding_bot.rbegin(); it != exploding_bot.rend(); ++it) {
+			terminatedBots.push_back(bots[*it].name);
 			bots.erase(bots.begin() + *it);
 		}
 
-		bot.clear();
-		primeInfoboxBitmap();
+		exploding_bot.clear();
+		if(allowFeedback && allowInfobox) primeInfoboxBitmap();
 		al_set_target_backbuffer(window);
 	}
 
-	if(weapon.size()) {
-		for(auto it = weapon.rbegin(); it != weapon.rend(); it++) weapons.erase(weapons.begin() + *it);
-		weapon.clear();
+	if(exploding_weapon.size()) {
+		for(auto it = exploding_weapon.rbegin(); it != exploding_weapon.rend(); ++it) 
+			weapons.erase(weapons.begin() + *it);
+		exploding_weapon.clear();
 	}
 }
