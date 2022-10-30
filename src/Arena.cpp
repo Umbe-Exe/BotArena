@@ -1,6 +1,30 @@
 #include "arena_impl.h"
+#include <iostream>
+
+void initAllegroOnce() {
+	al_init();
+	al_init_primitives_addon();
+	al_init_image_addon();
+	al_init_font_addon();
+	al_init_ttf_addon();
+	al_install_keyboard();
+	al_install_mouse();
+
+#ifdef SOUND
+	al_init_acodec_addon();
+	al_install_audio();
+	loadSounds();
+#endif
+#ifdef PARTICLES
+	loadParticles();
+#endif
+}
+
+std::once_flag allegroInitFlag;
 
 Arena::Arena(const char *title, const char *filename) {
+	std::call_once(allegroInitFlag, initAllegroOnce);
+
 	pimpl = new Arena_Impl;
 
 	pimpl->loadConfigFile(filename);

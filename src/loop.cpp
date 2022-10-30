@@ -1,12 +1,9 @@
-#include "sync.h"
-
-AllegroSystem sync;
+#include "arena_impl.h"
 
 void Arena_Impl::operator()() {
 
 	if(allowFeedback) {
 
-		sync.m.lock();
 		al_set_new_display_flags(ALLEGRO_RESIZABLE);
 		window = al_create_display(500, 300);
 		al_set_window_title(window, title);
@@ -15,8 +12,7 @@ void Arena_Impl::operator()() {
 		al_register_event_source(queue, al_get_display_event_source(window));
 		al_register_event_source(queue, al_get_keyboard_event_source());
 		al_register_event_source(queue, al_get_mouse_event_source());
-		sync.m.unlock();
-
+		
 		if(!allowInfobox) infoBox = {{1,1},{1,1}};
 	}
 
@@ -125,15 +121,12 @@ void Arena_Impl::operator()() {
 		if(window) al_destroy_display(window);
 		if(queue) al_destroy_event_queue(queue);		
 	}
-
-	for(auto &bot : bots) delete bot.controller;
 }
 
 void Arena_Impl::feedback(bool status) {
 	if(status != allowFeedback) {
 		if(status) {
 
-			sync.m.lock();
 			al_init_primitives_addon();
 			al_set_new_display_flags(ALLEGRO_RESIZABLE);
 			window = al_create_display(500, 300);
@@ -143,7 +136,6 @@ void Arena_Impl::feedback(bool status) {
 			al_register_event_source(queue, al_get_display_event_source(window));
 			al_register_event_source(queue, al_get_keyboard_event_source());
 			al_register_event_source(queue, al_get_mouse_event_source());
-			sync.m.unlock();
 
 			if(!allowInfobox) infoBox = {{1,1},{1,1}};
 
