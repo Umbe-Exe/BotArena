@@ -4,6 +4,9 @@ void Arena_Impl::operator()() {
 
 	if(allowFeedback) {
 
+		static std::mutex mutex;
+		std::lock_guard<std::mutex> lock(mutex);
+
 		al_set_new_display_flags(ALLEGRO_RESIZABLE);
 		window = al_create_display(500, 300);
 		al_set_window_title(window, title);
